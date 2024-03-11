@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.10)
+project(arcade)
+
+set(CMAKE_CXX_STANDARD 20)
+
+set(WARNING_FLAGS -Wall -Wextra -W -g -g3 -ggdb -std=c++20)
+set(LDL_FLAGS -ldl -fno-gnu-unique)
+set(NCURSES_FLAGS -lncurses)
+set(SFML_FLAGS -lsfml-graphics -lsfml-window -lsfml-system)
+set(SDL_FLAGS -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer)
+
+include_directories(src/Core)
+include_directories(src/Games)
+include_directories(src/Graphics)
+
+add_executable(arcade src/Core/Main.cpp)
+target_compile_options(arcade PUBLIC ${WARNING_FLAGS} ${LDL_FLAGS})
+
+# Graphical libraries
+add_library(arcade_ncurses SHARED src/Graphics/Ncurses/Main.cpp)
+add_library(arcade_sdl2 SHARED src/Graphics/SDL2/Main.cpp)
+add_library(arcade_sfml SHARED src/Graphics/SFML/Main.cpp)
+
+set_target_properties(arcade_ncurses PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set_target_properties(arcade_sdl2 PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Games libraries
+add_library(arcade_nibbler SHARED src/Games/Nibbler/Main.cpp)
+add_library(arcade_centipede SHARED src/Games/Centipede/Main.cpp)
+
+set_target_properties(arcade_nibbler PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set_target_properties(arcade_centipede PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+target_link_libraries(arcade arcade_ncurses ${NCURSES_FLAGS})
+target_link_libraries(arcade arcade_sdl2 ${SDL_FLAGS})
+target_link_libraries(arcade arcade_sfml ${SFML_FLAGS})
+target_link_libraries(arcade arcade_nibbler)
+target_link_libraries(arcade arcade_centipede)

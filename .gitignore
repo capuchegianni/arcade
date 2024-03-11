@@ -1,0 +1,9 @@
+*.so
+*.o
+*.log
+.vscode
+CMakeFiles
+*.cmake
+CMakeCache.txt
+arcade
+Makefile
