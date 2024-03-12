@@ -15,17 +15,44 @@ add_executable(arcade src/Core/Main.cpp src/Errors/Errors.cpp)
 target_compile_options(arcade PUBLIC ${WARNING_FLAGS} ${LDL_FLAGS})
 
 # Graphical libraries
-add_library(arcade_ncurses SHARED src/Graphics/Ncurses/Main.cpp src/Graphics/Ncurses/NcursesWrapper.cpp src/Errors/Errors.cpp)
-add_library(arcade_sdl2 SHARED src/Graphics/SDL2/Main.cpp src/Graphics/SDL2/SDL2Wrapper.cpp src/Errors/Errors.cpp)
-add_library(arcade_sfml SHARED src/Graphics/SFML/Main.cpp src/Errors/Errors.cpp)
+set(ncurses_src
+    src/Graphics/Ncurses/Main.cpp
+    src/Graphics/Ncurses/NcursesWrapper.cpp
+    src/Errors/Errors.cpp
+)
+
+set(sdl2_src
+    src/Graphics/SDL2/Main.cpp
+    src/Graphics/SDL2/SDL2Wrapper.cpp
+    src/Errors/Errors.cpp
+)
+
+set(sfml_src
+    src/Graphics/SFML/Main.cpp
+    src/Errors/Errors.cpp
+)
+
+add_library(arcade_ncurses SHARED ${ncurses_src})
+add_library(arcade_sdl2 SHARED ${sdl2_src})
+add_library(arcade_sfml SHARED ${sfml_src})
 
 set_target_properties(arcade_ncurses PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set_target_properties(arcade_sdl2 PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Games libraries
-add_library(arcade_nibbler SHARED src/Games/Nibbler/Main.cpp src/Errors/Errors.cpp)
-add_library(arcade_centipede SHARED src/Games/Centipede/Main.cpp src/Errors/Errors.cpp)
+set(nibbler_src
+    src/Games/Nibbler/Main.cpp
+    src/Errors/Errors.cpp
+)
+
+set(centipede_src
+    src/Games/Centipede/Main.cpp
+    src/Errors/Errors.cpp
+)
+
+add_library(arcade_nibbler SHARED ${nibbler_src})
+add_library(arcade_centipede SHARED ${centipede_src})
 
 set_target_properties(arcade_nibbler PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set_target_properties(arcade_centipede PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
