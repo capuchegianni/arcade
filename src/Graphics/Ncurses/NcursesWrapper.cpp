@@ -72,7 +72,7 @@ void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int y, int x)
     getyx(win.get(), y, x);
 }
 
-int NcursesWrapper::n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, const char *fmt)
+int NcursesWrapper::n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, std::string fmt)
 {
     return ::mvprintw(y, x, "%s", fmt);
 }
