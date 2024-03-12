@@ -1,6 +1,7 @@
 *.so
 *.o
 *.log
+*.pdf
 .vscode
 CMakeFiles
 *.cmake

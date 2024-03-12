@@ -17,7 +17,7 @@ add_executable(arcade src/Core/Main.cpp)
 target_compile_options(arcade PUBLIC ${WARNING_FLAGS} ${LDL_FLAGS})
 
 # Graphical libraries
-add_library(arcade_ncurses SHARED src/Graphics/Ncurses/Main.cpp)
+add_library(arcade_ncurses SHARED src/Graphics/Ncurses/Main.cpp src/Graphics/Ncurses/NcursesWrapper.cpp)
 add_library(arcade_sdl2 SHARED src/Graphics/SDL2/Main.cpp)
 add_library(arcade_sfml SHARED src/Graphics/SFML/Main.cpp)
 
