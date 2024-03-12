@@ -74,7 +74,7 @@ void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int y, int x)
 
 int NcursesWrapper::n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, std::string fmt)
 {
-    return ::mvprintw(y, x, "%s", fmt);
+    return ::mvprintw(y, x, "%s", fmt.c_str());
 }
 
 int NcursesWrapper::n_start_color()
