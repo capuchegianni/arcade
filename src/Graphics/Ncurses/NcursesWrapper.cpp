@@ -7,9 +7,9 @@
 
 #include "../../../include/Graphics/Ncurses/NcursesWrapper.hpp"
 
-WINDOW *NcursesWrapper::n_initscr()
+std::shared_ptr<WINDOW> NcursesWrapper::n_initscr()
 {
-    return ::initscr();
+    return std::shared_ptr<WINDOW>(::initscr(), ::delwin);
 }
 
 int NcursesWrapper::n_refresh()
@@ -17,9 +17,9 @@ int NcursesWrapper::n_refresh()
     return ::refresh();
 }
 
-int NcursesWrapper::n_wrefresh(WINDOW *win)
+int NcursesWrapper::n_wrefresh(std::shared_ptr<WINDOW> win)
 {
-    return ::wrefresh(win);
+    return ::wrefresh(win.get());
 }
 
 int NcursesWrapper::n_endwin()
@@ -37,9 +37,9 @@ int NcursesWrapper::n_noecho()
     return ::noecho();
 }
 
-int NcursesWrapper::n_keypad(WINDOW *win, bool bf)
+int NcursesWrapper::n_keypad(std::shared_ptr<WINDOW> win, bool bf)
 {
-    return ::keypad(win, bf);
+    return ::keypad(win.get(), bf);
 }
 
 int NcursesWrapper::n_halfdelay(int tenths)
@@ -52,27 +52,27 @@ int NcursesWrapper::n_clear()
     return ::clear();
 }
 
-int NcursesWrapper::n_wclear(WINDOW *win)
+int NcursesWrapper::n_wclear(std::shared_ptr<WINDOW> win)
 {
-    return ::wclear(win);
+    return ::wclear(win.get());
 }
 
-int NcursesWrapper::n_wmove(WINDOW *win, int y, int x)
+int NcursesWrapper::n_wmove(std::shared_ptr<WINDOW> win, int y, int x)
 {
-    return ::wmove(win, y, x);
+    return ::wmove(win.get(), y, x);
 }
 
-void NcursesWrapper::n_getmaxyx(WINDOW *win, int y, int x)
+void NcursesWrapper::n_getmaxyx(std::shared_ptr<WINDOW> win, int y, int x)
 {
-    getmaxyx(win, y, x);
+    getmaxyx(win.get(), y, x);
 }
 
-void NcursesWrapper::n_getyx(WINDOW *win, int y, int x)
+void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int y, int x)
 {
-    getyx(win, y, x);
+    getyx(win.get(), y, x);
 }
 
-int NcursesWrapper::n_mvprintw(WINDOW *win, int y, int x, const char *fmt)
+int NcursesWrapper::n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, const char *fmt)
 {
     return ::mvprintw(y, x, "%s", fmt);
 }
@@ -90,9 +90,4 @@ int NcursesWrapper::n_init_pair(short pair, short f, short b)
 int NcursesWrapper::n_init_color(short color, short r, short g, short b)
 {
     return ::init_color(color, r, g, b);
-}
-
-int NcursesWrapper::delwin(WINDOW *win)
-{
-    return ::delwin(win);
 }
