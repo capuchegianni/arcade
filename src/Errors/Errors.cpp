@@ -7,7 +7,7 @@
 
 #include "../../include/Errors.hpp"
 
-Error::Error(std::string const& message, int status) :
+Error::Error(std::string const message, int status) :
     _message(message),
     _status(status) { }
 
@@ -19,14 +19,14 @@ int Error::getStatus() const {
     return this->_status;
 }
 
-FileError::FileError(std::string const& message, int status) :
+FileError::FileError(std::string const message, int status) :
     Error(message, status) { }
 
-NcursesError::NcursesError(std::string const& message, int status) :
+NcursesError::NcursesError(std::string const message, int status) :
     Error(message, status) { }
 
-SfmlError::SfmlError(std::string const& message, int status) :
+SfmlError::SfmlError(std::string const message, int status) :
     Error(message, status) { }
 
-Sdl2Error::Sdl2Error(std::string const& message, int status) :
+Sdl2Error::Sdl2Error(std::string const message, int status) :
     Error(message, status) { }
