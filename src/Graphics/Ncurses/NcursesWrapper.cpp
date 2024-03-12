@@ -5,7 +5,7 @@
 ** NcursesWrapper
 */
 
-#include "NcursesWrapper.hpp"
+#include "../../../include/Graphics/Ncurses/NcursesWrapper.hpp"
 
 WINDOW *NcursesWrapper::n_initscr()
 {
