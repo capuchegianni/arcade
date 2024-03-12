@@ -16,10 +16,12 @@ class Error : public std::exception {
 
         const char *what() const noexcept;
         int getStatus() const;
+        std::string getType() const;
 
     protected:
         std::string _message;
         int _status;
+        std::string _type;
 };
 
 class FileError : public Error {
