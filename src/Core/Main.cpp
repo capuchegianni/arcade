@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include "../../include/Errors.hpp"
 
 int main(void) {
     std::cout << "Hello, Core!" << std::endl;

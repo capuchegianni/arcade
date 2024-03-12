@@ -5,7 +5,7 @@
 ** Error
 */
 
-#include "Errors.hpp"
+#include "../../include/Errors.hpp"
 
 Error::Error(std::string const& message, int status) :
     _message(message),

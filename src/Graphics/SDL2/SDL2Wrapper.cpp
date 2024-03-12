@@ -5,7 +5,7 @@
 ** SDL2Wrapper
 */
 
-#include "SDL2Wrapper.hpp"
+#include "../../../include/Graphics/SDL2/SDL2Wrapper.hpp"
 
 int SDL2Wrapper::SDL_Init(Uint32 flags)
 {
