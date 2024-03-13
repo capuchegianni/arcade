@@ -11,30 +11,41 @@ set(SDL_FLAGS -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer)
 
 include_directories(include)
 
-add_executable(arcade src/Core/Main.cpp src/Errors/Errors.cpp)
+# Core executable
+set(core_src
+    src/Core/Main.cpp
+    src/Errors/Errors.cpp
+    src/Core/CoreModule.cpp
+)
+
+add_executable(arcade src/Core/Main.cpp ${core_src})
 target_compile_options(arcade PUBLIC ${WARNING_FLAGS} ${LDL_FLAGS})
 
 # Graphical libraries
 set(ncurses_src
-    src/Graphics/Ncurses/Main.cpp
-    src/Graphics/Ncurses/NcursesWrapper.cpp
-    src/Errors/Errors.cpp
+src/Graphics/Ncurses/Main.cpp
+src/Graphics/Ncurses/NcursesWrapper.cpp
+src/Errors/Errors.cpp
 )
 
 set(sdl2_src
-    src/Graphics/SDL2/Main.cpp
-    src/Graphics/SDL2/SDL2Wrapper.cpp
-    src/Errors/Errors.cpp
+src/Graphics/SDL2/Main.cpp
+src/Graphics/SDL2/SDL2Wrapper.cpp
+src/Errors/Errors.cpp
 )
 
 set(sfml_src
-    src/Graphics/SFML/Main.cpp
-    src/Errors/Errors.cpp
+src/Graphics/SFML/Main.cpp
+src/Errors/Errors.cpp
 )
 
 add_library(arcade_ncurses SHARED ${ncurses_src})
 add_library(arcade_sdl2 SHARED ${sdl2_src})
 add_library(arcade_sfml SHARED ${sfml_src})
+
+target_compile_options(arcade_ncurses PUBLIC ${WARNING_FLAGS} ${NCURSES_FLAGS})
+target_compile_options(arcade_sdl2 PUBLIC ${WARNING_FLAGS} ${SDL_FLAGS})
+target_compile_options(arcade_sfml PUBLIC ${WARNING_FLAGS} ${SFML_FLAGS})
 
 set_target_properties(arcade_ncurses PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
 set_target_properties(arcade_sdl2 PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
