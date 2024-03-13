@@ -17,3 +17,21 @@ void CoreModule::checkFile(const std::string path) const {
     if (!std::filesystem::exists(path))
         throw FileError("File '" + path + "' not found", 84);
 }
+
+void CoreModule::loadLibrary(const std::string path) {
+    LdlWrapper lib(path);
+
+    this->_module = lib.createModule();
+    this->checkLibrary();
+}
+
+void CoreModule::checkLibrary() {
+    std::array<std::string, 3> libs = {
+        "Ncurses",
+        "SFML",
+        "SDL2"
+    };
+
+    if (std::find(libs.begin(), libs.end(), this->_module->getLibraryType()) == libs.end())
+        throw FileError("Invalid library type '" + this->_module->getLibraryType() + "'", 84);
+}
