@@ -10,11 +10,13 @@
 #include "../Errors.hpp"
 #include <iostream>
 #include <memory>
+#include <array>
+#include <algorithm>
+#include <filesystem>
 
 class CoreModule {
     public:
         ~CoreModule() = default;
 
-        void initCore();
-        void checkFile(const std::string path);
+        void checkFile(const std::string path) const;
 };
