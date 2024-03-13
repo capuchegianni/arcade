@@ -13,4 +13,5 @@ class IGraphicalModule {
 
         virtual void initWindow() = 0;
         virtual void destroyWindow() = 0;
+        virtual void getLibraryType() = 0;
 };

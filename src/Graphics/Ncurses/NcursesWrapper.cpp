@@ -62,17 +62,17 @@ int NcursesWrapper::n_wmove(std::shared_ptr<WINDOW> win, int y, int x)
     return ::wmove(win.get(), y, x);
 }
 
-void NcursesWrapper::n_getmaxyx(std::shared_ptr<WINDOW> win, int y, int x)
+void NcursesWrapper::n_getmaxyx(std::shared_ptr<WINDOW> win, int& y, int& x)
 {
     getmaxyx(win.get(), y, x);
 }
 
-void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int y, int x)
+void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int& y, int& x)
 {
     getyx(win.get(), y, x);
 }
 
-int NcursesWrapper::n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, std::string fmt)
+int NcursesWrapper::n_mvprintw(int y, int x, std::string fmt)
 {
     return ::mvprintw(y, x, "%s", fmt.c_str());
 }

@@ -13,6 +13,7 @@
 
 class NcursesGraphicalModule : public AGraphicalModule {
     public:
+        NcursesGraphicalModule();
         ~NcursesGraphicalModule() = default;
 
         void initWindow();
@@ -20,3 +21,5 @@ class NcursesGraphicalModule : public AGraphicalModule {
     private:
         std::shared_ptr<WINDOW> _window;
 };
+
+extern "C" std::unique_ptr<AGraphicalModule> createModule();

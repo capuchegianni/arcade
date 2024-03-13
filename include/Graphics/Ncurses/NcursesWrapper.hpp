@@ -28,9 +28,9 @@ class NcursesWrapper {
     int n_clear();
     int n_wclear(std::shared_ptr<WINDOW> win);
     int n_wmove(std::shared_ptr<WINDOW> win, int y, int x);
-    void n_getmaxyx(std::shared_ptr<WINDOW> win, int y, int x);
-    void n_getyx(std::shared_ptr<WINDOW> win, int y, int x);
-    int n_mvprintw(std::shared_ptr<WINDOW> win, int y, int x, std::string fmt);
+    void n_getmaxyx(std::shared_ptr<WINDOW> win, int& y, int& x);
+    void n_getyx(std::shared_ptr<WINDOW> win, int& y, int& x);
+    int n_mvprintw(int y, int x, std::string fmt);
     int n_start_color();
     int n_init_pair(short pair, short f, short b);
     int n_init_color(short color, short r, short g, short b);
