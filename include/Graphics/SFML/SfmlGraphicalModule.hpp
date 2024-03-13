@@ -12,6 +12,7 @@
 
 class SfmlGraphicalModule : public AGraphicalModule {
     public:
+        SfmlGraphicalModule();
         ~SfmlGraphicalModule() = default;
 
         void initWindow();
@@ -19,3 +20,5 @@ class SfmlGraphicalModule : public AGraphicalModule {
     private:
         sf::RenderWindow _window;
 };
+
+extern "C" std::unique_ptr<AGraphicalModule> createModule();
