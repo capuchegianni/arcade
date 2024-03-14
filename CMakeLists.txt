@@ -21,6 +21,7 @@ set(core_src
 )
 
 add_executable(arcade ${core_src})
+set_target_properties(arcade PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../)
 target_compile_options(arcade PUBLIC ${WARNING_FLAGS})
 target_link_libraries(arcade ${LDL_FLAGS} ${NCURSES_FLAGS} ${SDL_FLAGS} ${SFML_FLAGS})
 
@@ -60,9 +61,9 @@ target_link_libraries(arcade_ncurses ${NCURSES_FLAGS})
 target_link_libraries(arcade_sdl2 ${SDL_FLAGS})
 target_link_libraries(arcade_sfml ${SFML_FLAGS})
 
-set_target_properties(arcade_ncurses PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
-set_target_properties(arcade_sdl2 PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
-set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
+set_target_properties(arcade_ncurses PROPERTIES LIBRARY_OUTPUT_DIRECTORY ../lib PREFIX "")
+set_target_properties(arcade_sdl2 PROPERTIES LIBRARY_OUTPUT_DIRECTORY ../lib PREFIX "")
+set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ../lib PREFIX "")
 
 # Games libraries
 set(nibbler_src
@@ -78,8 +79,8 @@ set(centipede_src
 add_library(arcade_nibbler SHARED ${nibbler_src})
 add_library(arcade_centipede SHARED ${centipede_src})
 
-set_target_properties(arcade_nibbler PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
-set_target_properties(arcade_centipede PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib PREFIX "")
+set_target_properties(arcade_nibbler PROPERTIES LIBRARY_OUTPUT_DIRECTORY ../lib PREFIX "")
+set_target_properties(arcade_centipede PROPERTIES LIBRARY_OUTPUT_DIRECTORY ../lib PREFIX "")
 
 target_link_libraries(arcade arcade_ncurses ${NCURSES_FLAGS})
 target_link_libraries(arcade arcade_sdl2 ${SDL_FLAGS})
