@@ -7,7 +7,7 @@
 
 #include "../../include/Core/LdlWrapper.hpp"
 
-LdlWrapper::LdlWrapper(const std::string filename) :
+LdlWrapper::LdlWrapper(const std::string& filename) :
     _handle(dlopen(filename.c_str(), RTLD_LAZY), dlclose) {
     void *handle = dlopen(filename.c_str(), RTLD_LAZY);
 
@@ -24,9 +24,9 @@ T LdlWrapper::getFunction(const std::string& name) {
     return func;
 }
 
-std::unique_ptr<AGraphicalModule> LdlWrapper::createModule() {
+std::unique_ptr<AGraphicalModule> LdlWrapper::createLib(const std::string& func) {
     using create_t = std::unique_ptr<AGraphicalModule> (*)();
-    create_t create = this->getFunction<create_t>("createModule");
+    create_t create = this->getFunction<create_t>(func);
 
     return create();
 }

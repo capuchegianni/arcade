@@ -10,6 +10,6 @@
 Sdl2GraphicalModule::Sdl2GraphicalModule() :
     AGraphicalModule("SDL2") { }
 
-extern "C" std::unique_ptr<AGraphicalModule> createModule() {
+extern "C" std::unique_ptr<AGraphicalModule> createLib() {
     return std::make_unique<Sdl2GraphicalModule>();
 }

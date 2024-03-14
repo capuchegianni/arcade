@@ -17,10 +17,10 @@ using DlCloseType = int (*)(void *);
 
 class LdlWrapper {
     public:
-        LdlWrapper(const std::string filename);
+        LdlWrapper(const std::string& filename);
         ~LdlWrapper() = default;
 
-        std::unique_ptr<AGraphicalModule> createModule();
+        std::unique_ptr<AGraphicalModule> createLib(const std::string& func);
         template<typename T>
         T getFunction(const std::string& name);
 

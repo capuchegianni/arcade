@@ -7,7 +7,7 @@
 
 #include "../../include/Core/CoreModule.hpp"
 
-void CoreModule::checkFile(const std::string path) const {
+void CoreModule::checkFile(const std::string& path) const {
     if (path.empty())
         throw FileError("Invalid empty filename", 84);
     if (path.rfind(".so") != path.size() - 3)
@@ -18,10 +18,10 @@ void CoreModule::checkFile(const std::string path) const {
         throw FileError("File '" + path + "' not found", 84);
 }
 
-void CoreModule::loadLibrary(const std::string path) {
+void CoreModule::loadLibrary(const std::string& path, const std::string& func) {
     LdlWrapper lib(path);
 
-    this->_module = lib.createModule();
+    this->_module = lib.createLib(func);
     this->checkLibrary();
 }
 

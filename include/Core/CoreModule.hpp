@@ -24,8 +24,8 @@ class CoreModule {
     public:
         ~CoreModule() = default;
 
-        void checkFile(const std::string path) const;
-        void loadLibrary(const std::string path);
+        void checkFile(const std::string& path) const;
+        void loadLibrary(const std::string& path, const std::string& func);
         void checkLibrary();
 
     private:

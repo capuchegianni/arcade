@@ -21,4 +21,4 @@ class SfmlGraphicalModule : public AGraphicalModule {
         sf::RenderWindow _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createModule();
+extern "C" std::unique_ptr<AGraphicalModule> createLib();
