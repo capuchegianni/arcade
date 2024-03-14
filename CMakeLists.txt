@@ -17,7 +17,6 @@ set(core_src
     src/Errors/Errors.cpp
     src/Core/CoreModule.cpp
     src/Core/LdlWrapper.cpp
-    src/Graphics/AGraphicalModule.cpp
 )
 
 add_executable(arcade ${core_src})
