@@ -9,6 +9,7 @@
 
 #include "../AGraphicalModule.hpp"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class SfmlGraphicalModule : public AGraphicalModule {
     public:
