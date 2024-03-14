@@ -16,10 +16,6 @@
 #include <filesystem>
 #include <dlfcn.h>
 
-#include "../Graphics/Ncurses/NcursesGraphicalModule.hpp"
-#include "../Graphics/SDL2/Sdl2GraphicalModule.hpp"
-#include "../Graphics/SFML/SfmlGraphicalModule.hpp"
-
 class CoreModule {
     public:
         ~CoreModule() = default;

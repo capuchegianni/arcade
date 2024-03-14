@@ -9,18 +9,20 @@
 
 LdlWrapper::LdlWrapper(const std::string& filename) :
     _handle(dlopen(filename.c_str(), RTLD_LAZY), dlclose) {
-    void *handle = dlopen(filename.c_str(), RTLD_LAZY);
-
-    if (!handle)
+    if (!this->_handle.get()) {
+        this->_handle.get_deleter();
         throw FileError("Failed to load library '" + filename + "'\n" + dlerror(), 84);
+    }
 }
 
 template<typename T>
 T LdlWrapper::getFunction(const std::string& name) {
     T func = reinterpret_cast<T>(dlsym(_handle.get(), name.c_str()));
 
-    if (!func)
+    if (!func) {
+        this->_handle.get_deleter();
         throw FileError("Failed to load symbol '" + name + "'\n" + dlerror(), 84);
+    }
     return func;
 }
 
