@@ -13,3 +13,11 @@ NcursesGraphicalModule::NcursesGraphicalModule() :
 extern "C" std::unique_ptr<AGraphicalModule> createLib() {
     return std::make_unique<NcursesGraphicalModule>();
 }
+
+void NcursesGraphicalModule::initWindow() {
+    return;
+}
+
+void NcursesGraphicalModule::destroyWindow() {
+    return;
+}

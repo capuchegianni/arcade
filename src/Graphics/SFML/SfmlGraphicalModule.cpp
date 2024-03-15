@@ -13,3 +13,11 @@ SfmlGraphicalModule::SfmlGraphicalModule() :
 extern "C" std::unique_ptr<AGraphicalModule> createLib() {
     return std::make_unique<SfmlGraphicalModule>();
 }
+
+void SfmlGraphicalModule::initWindow() {
+    return;
+}
+
+void SfmlGraphicalModule::destroyWindow() {
+    return;
+}

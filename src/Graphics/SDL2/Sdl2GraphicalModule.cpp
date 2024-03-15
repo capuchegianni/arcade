@@ -13,3 +13,11 @@ Sdl2GraphicalModule::Sdl2GraphicalModule() :
 extern "C" std::unique_ptr<AGraphicalModule> createLib() {
     return std::make_unique<Sdl2GraphicalModule>();
 }
+
+void Sdl2GraphicalModule::initWindow() {
+    return;
+}
+
+void Sdl2GraphicalModule::destroyWindow() {
+    return;
+}
