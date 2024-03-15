@@ -3,8 +3,8 @@ project(arcade)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(WARNING_FLAGS -Wall -Wextra -W -g -g3 -ggdb -std=c++20)
-set(LDL_FLAGS -ldl -fno-gnu-unique)
+set(WARNING_FLAGS -Wall -Wextra -W -g -g3 -ggdb -std=c++20 -fno-gnu-unique)
+set(LDL_FLAGS -ldl)
 set(NCURSES_FLAGS -lncurses)
 set(SFML_FLAGS -lsfml-graphics -lsfml-window -lsfml-system)
 set(SDL_FLAGS -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer)
@@ -20,8 +20,8 @@ set(core_src
 )
 
 add_executable(arcade ${core_src})
-target_compile_options(arcade PUBLIC ${WARNING_FLAGS})
-target_link_libraries(arcade ${LDL_FLAGS} ${NCURSES_FLAGS} ${SDL_FLAGS} ${SFML_FLAGS})
+target_compile_options(arcade PRIVATE ${WARNING_FLAGS})
+target_link_libraries(arcade ${LDL_FLAGS})
 
 # Graphical libraries
 set(ncurses_src
