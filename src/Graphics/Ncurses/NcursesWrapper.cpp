@@ -7,9 +7,9 @@
 
 #include "../../../include/Graphics/Ncurses/NcursesWrapper.hpp"
 
-std::shared_ptr<WINDOW> NcursesWrapper::n_initscr()
+WINDOW *NcursesWrapper::n_initscr()
 {
-    return std::shared_ptr<WINDOW>(::initscr(), ::delwin);
+    return ::initscr();
 }
 
 int NcursesWrapper::n_refresh()
@@ -17,9 +17,9 @@ int NcursesWrapper::n_refresh()
     return ::refresh();
 }
 
-int NcursesWrapper::n_wrefresh(std::shared_ptr<WINDOW> win)
+int NcursesWrapper::n_wrefresh(WINDOW *win)
 {
-    return ::wrefresh(win.get());
+    return ::wrefresh(win);
 }
 
 int NcursesWrapper::n_endwin()
@@ -37,9 +37,9 @@ int NcursesWrapper::n_noecho()
     return ::noecho();
 }
 
-int NcursesWrapper::n_keypad(std::shared_ptr<WINDOW> win, bool bf)
+int NcursesWrapper::n_keypad(WINDOW *win, bool bf)
 {
-    return ::keypad(win.get(), bf);
+    return ::keypad(win, bf);
 }
 
 int NcursesWrapper::n_halfdelay(int tenths)
@@ -52,24 +52,24 @@ int NcursesWrapper::n_clear()
     return ::clear();
 }
 
-int NcursesWrapper::n_wclear(std::shared_ptr<WINDOW> win)
+int NcursesWrapper::n_wclear(WINDOW *win)
 {
-    return ::wclear(win.get());
+    return ::wclear(win);
 }
 
-int NcursesWrapper::n_wmove(std::shared_ptr<WINDOW> win, int y, int x)
+int NcursesWrapper::n_wmove(WINDOW *win, int y, int x)
 {
-    return ::wmove(win.get(), y, x);
+    return ::wmove(win, y, x);
 }
 
-void NcursesWrapper::n_getmaxyx(std::shared_ptr<WINDOW> win, int& y, int& x)
+void NcursesWrapper::n_getmaxyx(WINDOW *win, int& y, int& x)
 {
-    getmaxyx(win.get(), y, x);
+    getmaxyx(win, y, x);
 }
 
-void NcursesWrapper::n_getyx(std::shared_ptr<WINDOW> win, int& y, int& x)
+void NcursesWrapper::n_getyx(WINDOW *win, int& y, int& x)
 {
-    getyx(win.get(), y, x);
+    getyx(win, y, x);
 }
 
 int NcursesWrapper::n_mvprintw(int y, int x, std::string fmt)
@@ -90,4 +90,9 @@ int NcursesWrapper::n_init_pair(short pair, short f, short b)
 int NcursesWrapper::n_init_color(short color, short r, short g, short b)
 {
     return ::init_color(color, r, g, b);
+}
+
+int NcursesWrapper::n_getch()
+{
+    return ::getch();
 }
