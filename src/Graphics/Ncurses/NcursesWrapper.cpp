@@ -62,12 +62,12 @@ int NcursesWrapper::n_wmove(WINDOW *win, int y, int x)
     return ::wmove(win, y, x);
 }
 
-void NcursesWrapper::n_getmaxyx(WINDOW *win, int& y, int& x)
+void NcursesWrapper::n_getmaxyx(WINDOW *win, int y, int x)
 {
     getmaxyx(win, y, x);
 }
 
-void NcursesWrapper::n_getyx(WINDOW *win, int& y, int& x)
+void NcursesWrapper::n_getyx(WINDOW *win, int y, int x)
 {
     getyx(win, y, x);
 }
