@@ -18,8 +18,6 @@ class NcursesGraphicalModule : public AGraphicalModule {
 
         void initWindow();
         void destroyWindow();
-    private:
-        std::shared_ptr<WINDOW> _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createModule();
+extern "C" std::unique_ptr<AGraphicalModule> createLib();

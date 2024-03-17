@@ -9,6 +9,7 @@
 
 #include "../Errors.hpp"
 #include "LdlWrapper.hpp"
+#include "../Graphics/AGraphicalModule.hpp"
 #include <iostream>
 #include <memory>
 #include <array>
@@ -16,18 +17,16 @@
 #include <filesystem>
 #include <dlfcn.h>
 
-#include "../Graphics/Ncurses/NcursesGraphicalModule.hpp"
-#include "../Graphics/SDL2/Sdl2GraphicalModule.hpp"
-#include "../Graphics/SFML/SfmlGraphicalModule.hpp"
-
 class CoreModule {
     public:
-        ~CoreModule() = default;
+        ~CoreModule();
 
-        void checkFile(const std::string path) const;
-        void loadLibrary(const std::string path);
+        void checkFile(const std::string& path) const;
+        void loadLibrary(const std::string& path, const std::string& func);
         void checkLibrary();
+        std::unique_ptr<AGraphicalModule>& getModule();
 
     private:
         std::unique_ptr<AGraphicalModule> _module;
+        LdlWrapper _graphicalLib;
 };

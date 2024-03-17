@@ -9,6 +9,7 @@
 
 #include "../AGraphicalModule.hpp"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class SfmlGraphicalModule : public AGraphicalModule {
     public:
@@ -18,7 +19,7 @@ class SfmlGraphicalModule : public AGraphicalModule {
         void initWindow();
         void destroyWindow();
     private:
-        sf::RenderWindow _window;
+        std::shared_ptr<sf::RenderWindow> _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createModule();
+extern "C" std::unique_ptr<AGraphicalModule> createLib();

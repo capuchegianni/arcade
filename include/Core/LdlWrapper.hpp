@@ -13,17 +13,19 @@
 #include "../Errors.hpp"
 #include "../Graphics/AGraphicalModule.hpp"
 
-using DlCloseType = int (*)(void *);
-
 class LdlWrapper {
     public:
-        LdlWrapper(const std::string filename);
+        LdlWrapper() = default;
+        LdlWrapper(const std::string& path);
         ~LdlWrapper() = default;
 
-        std::unique_ptr<AGraphicalModule> createModule();
+        void openLib(const std::string& path);
         template<typename T>
         T getFunction(const std::string& name);
+        std::unique_ptr<AGraphicalModule> createLib(const std::string& func);
+        void closeLib();
+        void *getLib() const;
 
     private:
-        std::unique_ptr<void, DlCloseType> _handle;
+        void *_handle;
 };

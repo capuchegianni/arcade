@@ -22,4 +22,4 @@ class Sdl2GraphicalModule : public AGraphicalModule {
         std::shared_ptr<SDL_Window> _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createModule();
+extern "C" std::unique_ptr<AGraphicalModule> createLib();
