@@ -9,7 +9,6 @@
 
 #include "../AGraphicalModule.hpp"
 #include "SDL2Wrapper.hpp"
-#include <memory>
 
 class Sdl2GraphicalModule : public AGraphicalModule {
     public:
@@ -22,4 +21,4 @@ class Sdl2GraphicalModule : public AGraphicalModule {
         std::shared_ptr<SDL_Window> _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createLib();
+extern "C" std::shared_ptr<AGraphicalModule> createLib();

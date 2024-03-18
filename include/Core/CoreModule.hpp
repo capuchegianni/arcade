@@ -7,15 +7,7 @@
 
 #pragma once
 
-#include "../Errors.hpp"
 #include "LdlWrapper.hpp"
-#include "../Graphics/AGraphicalModule.hpp"
-#include <iostream>
-#include <memory>
-#include <array>
-#include <algorithm>
-#include <filesystem>
-#include <dlfcn.h>
 
 class CoreModule {
     public:
@@ -24,9 +16,12 @@ class CoreModule {
         void checkFile(const std::string& path) const;
         void loadLibrary(const std::string& path, const std::string& func);
         void checkLibrary();
-        std::unique_ptr<AGraphicalModule>& getModule();
+        std::shared_ptr<AGraphicalModule>& getModule();
+        LdlWrapper& getLib();
+        void closeLib();
 
     private:
-        std::unique_ptr<AGraphicalModule> _module;
+        void *_handle = nullptr;
+        std::shared_ptr<AGraphicalModule> _module = nullptr;
         LdlWrapper _graphicalLib;
 };

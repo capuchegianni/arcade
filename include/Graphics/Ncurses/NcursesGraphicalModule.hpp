@@ -9,7 +9,6 @@
 
 #include "../AGraphicalModule.hpp"
 #include "NcursesWrapper.hpp"
-#include <memory>
 
 class NcursesGraphicalModule : public AGraphicalModule {
     public:
@@ -20,4 +19,4 @@ class NcursesGraphicalModule : public AGraphicalModule {
         void destroyWindow();
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createLib();
+extern "C" std::shared_ptr<AGraphicalModule> createLib();

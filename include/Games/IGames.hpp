@@ -8,6 +8,8 @@
 #ifndef IGAMES_HPP_
 #define IGAMES_HPP_
 
+#include "../Libs.hpp"
+
 class IGames {
     public:
     protected:

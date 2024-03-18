@@ -10,7 +10,7 @@
 NcursesGraphicalModule::NcursesGraphicalModule() :
     AGraphicalModule("Ncurses") { }
 
-extern "C" std::unique_ptr<AGraphicalModule> createLib() {
+extern "C" std::shared_ptr<AGraphicalModule> createLib() {
     return std::make_unique<NcursesGraphicalModule>();
 }
 

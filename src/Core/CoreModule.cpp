@@ -8,7 +8,7 @@
 #include "../../include/Core/CoreModule.hpp"
 
 CoreModule::~CoreModule() {
-    this->_module->destroyWindow();
+    this->closeLib();
 }
 
 void CoreModule::checkFile(const std::string& path) const {
@@ -23,10 +23,9 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::loadLibrary(const std::string& path, const std::string& func) {
-    LdlWrapper lib(path);
-
-    this->_graphicalLib = lib;
-    this->_module = lib.createLib(func);
+    this->_graphicalLib.openLib(path);
+    this->_handle = this->_graphicalLib.getHandle();
+    this->_module = this->_graphicalLib.createLib(func);
     this->checkLibrary();
 }
 
@@ -41,6 +40,19 @@ void CoreModule::checkLibrary() {
         throw FileError("Invalid library type '" + this->_module->getLibraryType() + "'", 84);
 }
 
-std::unique_ptr<AGraphicalModule>& CoreModule::getModule() {
+std::shared_ptr<AGraphicalModule>& CoreModule::getModule() {
     return this->_module;
+}
+
+LdlWrapper& CoreModule::getLib() {
+    return this->_graphicalLib;
+}
+
+void CoreModule::closeLib() {
+    if (this->_handle) {
+        this->_module->destroyWindow();
+        this->_module.reset();
+        dlclose(this->_handle);
+        std::cout << "Library closed" << std::endl;
+    }
 }

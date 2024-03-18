@@ -8,8 +8,9 @@
 #ifndef AGAMES_HPP_
 #define AGAMES_HPP_
 
+#include "../Libs.hpp"
+
 #include "Tiles.hpp"
-#include <vector>
 #include "IGames.hpp"
 
 class AGames : public IGames {

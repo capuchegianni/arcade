@@ -8,7 +8,6 @@
 #pragma once
 
 #include "IGraphicalModule.hpp"
-#include <iostream>
 
 class AGraphicalModule : public IGraphicalModule {
     public:

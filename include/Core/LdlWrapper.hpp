@@ -7,10 +7,6 @@
 
 #pragma once
 
-#include <iostream>
-#include <memory>
-#include <dlfcn.h>
-#include "../Errors.hpp"
 #include "../Graphics/AGraphicalModule.hpp"
 
 class LdlWrapper {
@@ -22,10 +18,9 @@ class LdlWrapper {
         void openLib(const std::string& path);
         template<typename T>
         T getFunction(const std::string& name);
-        std::unique_ptr<AGraphicalModule> createLib(const std::string& func);
-        void closeLib();
-        void *getLib() const;
+        std::shared_ptr<AGraphicalModule> createLib(const std::string& func);
+        void *getHandle() const;
 
     private:
-        void *_handle;
+        void *_handle = nullptr;
 };

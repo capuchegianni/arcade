@@ -5,7 +5,6 @@
 ** Main
 */
 
-#include <iostream>
 #include "../../include/Core/CoreModule.hpp"
 
 int main(int ac, char **av) {
