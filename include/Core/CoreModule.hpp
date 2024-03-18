@@ -25,8 +25,11 @@ class CoreModule {
         void loadLibrary(const std::string& path, const std::string& func);
         void checkLibrary();
         std::unique_ptr<AGraphicalModule>& getModule();
+        LdlWrapper& getLib();
+        void closeLib();
 
     private:
-        std::unique_ptr<AGraphicalModule> _module;
+        void *_handle = nullptr;
+        std::unique_ptr<AGraphicalModule> _module = nullptr;
         LdlWrapper _graphicalLib;
 };

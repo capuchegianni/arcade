@@ -8,7 +8,8 @@
 #include "../../include/Core/CoreModule.hpp"
 
 CoreModule::~CoreModule() {
-    this->_module->destroyWindow();
+    this->closeLib();
+    std::cout << "Library closed" << std::endl;
 }
 
 void CoreModule::checkFile(const std::string& path) const {
@@ -23,10 +24,9 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::loadLibrary(const std::string& path, const std::string& func) {
-    LdlWrapper lib(path);
-
-    this->_graphicalLib = lib;
-    this->_module = lib.createLib(func);
+    this->_graphicalLib.openLib(path);
+    this->_handle = this->_graphicalLib.getHandle();
+    this->_module = this->getLib().createLib(func);
     this->checkLibrary();
 }
 
@@ -43,4 +43,16 @@ void CoreModule::checkLibrary() {
 
 std::unique_ptr<AGraphicalModule>& CoreModule::getModule() {
     return this->_module;
+}
+
+LdlWrapper& CoreModule::getLib() {
+    return this->_graphicalLib;
+}
+
+void CoreModule::closeLib() {
+    if (this->_handle) {
+        this->_module->destroyWindow();
+        this->_module.release();
+        dlclose(this->_handle);
+    }
 }

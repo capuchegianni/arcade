@@ -23,9 +23,8 @@ class LdlWrapper {
         template<typename T>
         T getFunction(const std::string& name);
         std::unique_ptr<AGraphicalModule> createLib(const std::string& func);
-        void closeLib();
-        void *getLib() const;
+        void *getHandle() const;
 
     private:
-        void *_handle;
+        void *_handle = nullptr;
 };
