@@ -8,6 +8,8 @@
 #ifndef TILES_HPP_
 #define TILES_HPP_
 
+#include "../Libs.hpp"
+
 enum Type {
     EMPTY,
     WALL,

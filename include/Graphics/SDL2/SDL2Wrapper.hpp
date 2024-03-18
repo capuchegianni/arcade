@@ -9,8 +9,7 @@
 #define SDL2WRAPPER_HPP_
 
 #include <SDL2/SDL.h>
-#include <memory>
-#include <string>
+#include "../../Libs.hpp"
 
 class SDL2Wrapper {
     public:

@@ -9,7 +9,6 @@
 
 #include "../AGraphicalModule.hpp"
 #include "SDL2Wrapper.hpp"
-#include <memory>
 
 class Sdl2GraphicalModule : public AGraphicalModule {
     public:

@@ -9,8 +9,7 @@
 #define NCURSES_HPP_
 
 #include <ncurses.h>
-#include <memory>
-#include <string>
+#include "../../Libs.hpp"
 
 class NcursesWrapper {
     public:

@@ -9,7 +9,6 @@
 
 #include "../AGraphicalModule.hpp"
 #include "NcursesWrapper.hpp"
-#include <memory>
 
 class NcursesGraphicalModule : public AGraphicalModule {
     public:

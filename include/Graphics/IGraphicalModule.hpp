@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <iostream>
+#include "../Libs.hpp"
 
 class IGraphicalModule {
     public:

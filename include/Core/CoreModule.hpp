@@ -7,15 +7,7 @@
 
 #pragma once
 
-#include "../Errors.hpp"
 #include "LdlWrapper.hpp"
-#include "../Graphics/AGraphicalModule.hpp"
-#include <iostream>
-#include <memory>
-#include <array>
-#include <algorithm>
-#include <filesystem>
-#include <dlfcn.h>
 
 class CoreModule {
     public:
