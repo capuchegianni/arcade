@@ -22,7 +22,7 @@ class LdlWrapper {
         void openLib(const std::string& path);
         template<typename T>
         T getFunction(const std::string& name);
-        std::unique_ptr<AGraphicalModule> createLib(const std::string& func);
+        std::shared_ptr<AGraphicalModule> createLib(const std::string& func);
         void *getHandle() const;
 
     private:

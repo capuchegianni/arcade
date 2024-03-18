@@ -24,12 +24,12 @@ class CoreModule {
         void checkFile(const std::string& path) const;
         void loadLibrary(const std::string& path, const std::string& func);
         void checkLibrary();
-        std::unique_ptr<AGraphicalModule>& getModule();
+        std::shared_ptr<AGraphicalModule>& getModule();
         LdlWrapper& getLib();
         void closeLib();
 
     private:
         void *_handle = nullptr;
-        std::unique_ptr<AGraphicalModule> _module = nullptr;
+        std::shared_ptr<AGraphicalModule> _module = nullptr;
         LdlWrapper _graphicalLib;
 };

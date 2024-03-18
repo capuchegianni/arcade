@@ -22,4 +22,4 @@ class SfmlGraphicalModule : public AGraphicalModule {
         std::shared_ptr<sf::RenderWindow> _window;
 };
 
-extern "C" std::unique_ptr<AGraphicalModule> createLib();
+extern "C" std::shared_ptr<AGraphicalModule> createLib();
