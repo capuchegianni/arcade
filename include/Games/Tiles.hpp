@@ -9,24 +9,16 @@
 #define TILES_HPP_
 
 #include "../Libs.hpp"
-
-enum Type {
-    EMPTY,
-    WALL,
-    PLAYER_HEAD,
-    PLAYER_BODY,
-    ENEMY,
-    ITEM
-};
+#include "../Enums.hpp"
 
 class Tiles {
     public:
-        bool isType(Type type);
-        void setType(Type type);
-        Type getType() const;
+        bool isType(TilesType type);
+        void setType(TilesType type);
+        TilesType getType() const;
 
     private:
-        Type _type = EMPTY;
+        TilesType _type = EMPTY;
 };
 
 #endif /* !TILES_HPP_ */
