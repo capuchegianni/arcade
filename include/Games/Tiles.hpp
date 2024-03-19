@@ -13,10 +13,12 @@
 enum Type {
     EMPTY,
     WALL,
-    PLAYER,
+    PLAYER_HEAD,
+    PLAYER_BODY,
     ENEMY,
     ITEM
 };
+
 class Tiles {
     public:
         bool isType(Type type);
