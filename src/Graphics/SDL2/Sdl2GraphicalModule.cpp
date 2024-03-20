@@ -14,7 +14,9 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
     return std::make_shared<Sdl2GraphicalModule>();
 }
 
-void Sdl2GraphicalModule::initWindow() {
+void Sdl2GraphicalModule::initWindow(const std::string& name, const std::vector<int>& size) {
+    (void)name;
+    (void)size;
     return;
 }
 

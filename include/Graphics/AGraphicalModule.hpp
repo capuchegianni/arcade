@@ -16,7 +16,7 @@ class AGraphicalModule : public IGraphicalModule {
 
         // Window methods
         virtual void createWindow(const std::string& name, const std::vector<int>& size = {1920, 1080}) = 0;
-        virtual void initWindow() = 0;
+        virtual void initWindow(const std::string& name, const std::vector<int>& size = {1920, 1080}) = 0;
         virtual void setWindowSize(const std::vector<int>& size = {1920, 1080}) = 0;
         virtual void setWindowTitle(const std::string& title) = 0;
         virtual void displayWindow() = 0;

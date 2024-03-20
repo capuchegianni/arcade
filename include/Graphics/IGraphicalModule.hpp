@@ -33,7 +33,7 @@ class IGraphicalModule {
         /**
          * @brief Initialize the window and return it
         */
-        virtual void initWindow() = 0;
+        virtual void initWindow(const std::string& name, const std::vector<int>& size) = 0;
 
         /**
          * @brief Set the window size
