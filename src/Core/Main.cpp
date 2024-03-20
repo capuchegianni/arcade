@@ -15,11 +15,11 @@ int main(int ac, char **av) {
             throw FileError("Invalid number of arguments");
         core.checkFile(av[1]);
         core.loadLibrary(av[1], "createLib");
-        core.getModule()->createWindow("Arcade");
+        core.getModule()->createWindow("Arcade", {500, 500});
         while (core.getModule()->isWindowOpen()) {
-            core.getModule()->clearWindow({0, 0, 0, 255});
+            core.getModule()->clearWindow();
             core.getModule()->displayWindow();
-            core.getModule()->pollEvents();
+            core.getModule()->parseKeyboard();
         }
     } catch (const Error& e) {
         std::cerr << e.getType() << ": " << e.what() << std::endl;
