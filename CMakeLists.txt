@@ -62,10 +62,12 @@ set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BI
 
 # Games libraries
 set(nibbler_src
+    src/Games/AGameModule.cpp
     src/Errors/Errors.cpp
 )
 
 set(centipede_src
+    src/Games/AGameModule.cpp
     src/Errors/Errors.cpp
 )
 
