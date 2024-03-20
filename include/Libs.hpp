@@ -14,4 +14,7 @@
 #include <filesystem>
 #include <dlfcn.h>
 #include <vector>
+#include <map>
+#include <string>
+#include <any>
 #include "Errors.hpp"
