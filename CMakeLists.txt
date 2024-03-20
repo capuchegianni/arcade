@@ -25,7 +25,6 @@ target_link_libraries(arcade ${LDL_FLAGS})
 
 # Graphical libraries
 set(ncurses_src
-    src/Graphics/Ncurses/Main.cpp
     src/Errors/Errors.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/Ncurses/NcursesWrapper.cpp
@@ -33,7 +32,6 @@ set(ncurses_src
 )
 
 set(sdl2_src
-    src/Graphics/SDL2/Main.cpp
     src/Errors/Errors.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SDL2/SDL2Wrapper.cpp
@@ -41,7 +39,6 @@ set(sdl2_src
 )
 
 set(sfml_src
-    src/Graphics/SFML/Main.cpp
     src/Errors/Errors.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SFML/SfmlGraphicalModule.cpp
@@ -65,12 +62,10 @@ set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BI
 
 # Games libraries
 set(nibbler_src
-    src/Games/Nibbler/Main.cpp
     src/Errors/Errors.cpp
 )
 
 set(centipede_src
-    src/Games/Centipede/Main.cpp
     src/Errors/Errors.cpp
 )
 
