@@ -9,8 +9,7 @@
 #define IGAMES_HPP_
 
 #include "../Libs.hpp"
-#include "Tiles.hpp"
-#include "../Enums.hpp"
+#include "../GlobalClasses.hpp"
 
 class IGameModule {
     public:

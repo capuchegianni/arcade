@@ -16,6 +16,7 @@ int main(int ac, char **av) {
         core.checkFile(av[1]);
         core.loadLibrary(av[1], "createLib");
         core.getModule()->createWindow("Arcade", {500, 500});
+        std::cout << core.getModule()->getLibraryType() << " window created" << std::endl;
         while (core.getModule()->isWindowOpen()) {
             core.getModule()->clearWindow();
             core.getModule()->displayWindow();
@@ -26,5 +27,4 @@ int main(int ac, char **av) {
         std::cerr << "Exiting with status " << e.getStatus() << std::endl;
         return 84;
     }
-    std::cout << "Hello, Core!" << std::endl;
 }

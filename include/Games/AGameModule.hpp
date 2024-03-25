@@ -9,8 +9,6 @@
 #define AGAMES_HPP_
 
 #include "../Libs.hpp"
-
-#include "Tiles.hpp"
 #include "IGameModule.hpp"
 
 class AGameModule : public IGameModule {
