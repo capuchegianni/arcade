@@ -11,10 +11,15 @@ set(SDL_FLAGS -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer)
 
 include_directories(include)
 
+set(global_src
+    src/Errors/Errors.cpp
+    src/globalClasses/Tiles.cpp
+)
+
 # Core executable
 set(core_src
+    ${global_src}
     src/Core/Main.cpp
-    src/Errors/Errors.cpp
     src/Core/CoreModule.cpp
     src/Core/LdlWrapper.cpp
 )
@@ -25,21 +30,21 @@ target_link_libraries(arcade ${LDL_FLAGS})
 
 # Graphical libraries
 set(ncurses_src
-    src/Errors/Errors.cpp
+    ${global_src}
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/Ncurses/NcursesWrapper.cpp
     src/Graphics/Ncurses/NcursesGraphicalModule.cpp
 )
 
 set(sdl2_src
-    src/Errors/Errors.cpp
+    ${global_src}
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SDL2/SDL2Wrapper.cpp
     src/Graphics/SDL2/Sdl2GraphicalModule.cpp
 )
 
 set(sfml_src
-    src/Errors/Errors.cpp
+    ${global_src}
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SFML/SfmlGraphicalModule.cpp
 )
@@ -62,13 +67,13 @@ set_target_properties(arcade_sfml PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BI
 
 # Games libraries
 set(nibbler_src
+    ${global_src}
     src/Games/AGameModule.cpp
-    src/Errors/Errors.cpp
 )
 
 set(centipede_src
+    ${global_src}
     src/Games/AGameModule.cpp
-    src/Errors/Errors.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})
