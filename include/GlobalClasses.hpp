@@ -1,15 +1,14 @@
 /*
 ** EPITECH PROJECT, 2024
-** B-OOP-400-LIL-4-1-arcade-elouan.rigomont
+** arcade
 ** File description:
-** Tiles
+** GlobalClasses
 */
 
-#ifndef TILES_HPP_
-#define TILES_HPP_
+#pragma once
 
-#include "../Libs.hpp"
-#include "../Enums.hpp"
+#include "./Libs.hpp"
+#include "./Enums.hpp"
 
 class Tiles {
     public:
@@ -20,5 +19,3 @@ class Tiles {
     private:
         TilesType _type = EMPTY;
 };
-
-#endif /* !TILES_HPP_ */
