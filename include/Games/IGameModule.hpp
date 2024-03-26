@@ -15,7 +15,7 @@ class IGameModule {
     public:
         virtual ~IGameModule() = default;
 
-        virtual std::vector<std::vector<Tiles>> ticks(Input key = NONE) = 0;
+        virtual std::vector<std::vector<Tiles>> tick(Input key = NONE) = 0;
         virtual void reset() = 0;
         virtual int getScore() = 0;
         virtual std::string getGameName() const = 0;
