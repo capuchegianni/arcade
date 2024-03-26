@@ -60,4 +60,5 @@ class AGraphicalModule : public IGraphicalModule {
         std::string getLibraryType() const;
     protected:
         std::string _libraryType;
+        bool _isOpen = false;
 };

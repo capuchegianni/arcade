@@ -16,10 +16,12 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
 
 void SfmlGraphicalModule::initWindow(const std::string& name, const std::vector<int>& size) {
     this->_window.create(sf::VideoMode(size[0], size[1]), name);
+    this->_isOpen = true;
 }
 
 void SfmlGraphicalModule::destroyWindow() {
     this->_window.close();
+    this->_isOpen = false;
 }
 
 void SfmlGraphicalModule::createWindow(const std::string &name, const std::vector<int> &size) {
