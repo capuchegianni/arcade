@@ -59,5 +59,5 @@ class AGraphicalModule : public IGraphicalModule {
         // Misc methods
         std::string getLibraryType() const;
     protected:
-        std::string _librabryType;
+        std::string _libraryType;
 };
