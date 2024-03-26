@@ -30,8 +30,12 @@ T LdlWrapper::getFunction(const std::string& name) {
     return func;
 }
 
-std::shared_ptr<AGraphicalModule> LdlWrapper::createLib(const std::string& func) {
+std::shared_ptr<AGraphicalModule> LdlWrapper::createGraphicalLib(const std::string& func) {
     return this->getFunction<std::shared_ptr<AGraphicalModule> (*)()>(func)();
+}
+
+std::shared_ptr<AGameModule> LdlWrapper::createGameLib(const std::string& func) {
+    return this->getFunction<std::shared_ptr<AGameModule> (*)()>(func)();
 }
 
 void *LdlWrapper::getHandle() const {
