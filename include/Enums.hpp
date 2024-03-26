@@ -27,4 +27,12 @@ enum Direction {
     STOP
 };
 
+enum GameStatus {
+    GAME_OVER,
+    GAME_WIN,
+    GAME_PAUSE,
+    GAME_RESTART,
+    GAME_RUNNING
+};
+
 #endif /* !ENUMS_HPP_ */
