@@ -8,8 +8,9 @@
 #pragma once
 
 #include "LdlWrapper.hpp"
+#include "ICoreModule.hpp"
 
-class CoreModule {
+class CoreModule : public ICoreModule {
     public:
         ~CoreModule();
 
@@ -17,19 +18,20 @@ class CoreModule {
         void loadGraphicalLibrary(const std::string& path, const std::string& func);
         std::shared_ptr<AGraphicalModule>& getGraphicalModule();
         LdlWrapper& getGraphicalLib();
-        std::shared_ptr<AGraphicalModule>& changeGraphicalLib(const std::string& path, const std::string& func);
         void closeGraphicalLib();
 
         // Game libraries
         void loadGameLibrary(const std::string& path, const std::string& func);
         std::shared_ptr<AGameModule>& getGameModule();
         LdlWrapper& getGameLib();
-        std::shared_ptr<AGameModule>& changeGameLib(const std::string& path, const std::string& func);
         void closeGameLib();
 
         // Misc
         void checkFile(const std::string& path) const;
         void startGame();
+        void initEntities(const std::vector<IEntities>& entities);
+        void changeGame(const std::string& path, const std::string& func);
+        void changeGraphics(const std::string& path, const std::string& func);
 
     private:
         std::shared_ptr<AGraphicalModule> _graphicalModule = nullptr;
