@@ -12,7 +12,7 @@ int main(int ac, char **av) {
 
     try {
         if (ac != 2)
-            throw FileError("Invalid number of arguments");
+            throw FileError("Invalid number of arguments\nUSAGE: ./arcade path_to_graphical_library.so");
         core.checkFile(av[1]);
         core.loadLibrary(av[1], "createLib");
         core.getModule()->createWindow("Arcade", {500, 500});
