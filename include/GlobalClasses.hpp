@@ -12,10 +12,6 @@
 
 class Tiles {
     public:
-        bool isType(TilesType type);
-        void setType(TilesType type);
-        TilesType getType() const;
 
     private:
-        TilesType _type = EMPTY;
 };
