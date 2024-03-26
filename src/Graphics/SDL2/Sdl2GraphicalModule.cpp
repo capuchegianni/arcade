@@ -56,9 +56,9 @@ bool Sdl2GraphicalModule::isWindowOpen() {
 
 void Sdl2GraphicalModule::parseKeyboard() {
     while (SDL2Wrapper::SDL_PollEvent(&this->_event)) {
-        if (this->_event.type == SDL_QUIT || (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE)) {
+        if (this->_event.type == SDL_QUIT || (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE) ||
+        this->_event.key.keysym.sym == SDLK_ESCAPE)
             this->destroyWindow();
-        }
     }
 }
 
