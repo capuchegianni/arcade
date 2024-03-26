@@ -28,11 +28,11 @@ enum Direction {
 };
 
 enum GameStatus {
-    GAME_OVER,
-    GAME_WIN,
-    GAME_PAUSE,
-    GAME_RESTART,
-    GAME_RUNNING
+    OVER,
+    WIN,
+    PAUSE,
+    RESTART,
+    RUNNING
 };
 
 #endif /* !ENUMS_HPP_ */

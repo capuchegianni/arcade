@@ -9,16 +9,27 @@
 #define IGAMES_HPP_
 
 #include "../Libs.hpp"
-#include "../GlobalClasses.hpp"
+#include "../Enums.hpp"
+#include "../Tiles.hpp"
 
 class IGameModule {
     public:
-        virtual ~IGameModule() = default;
+        ~IGameModule() = default;
 
-        virtual std::vector<std::vector<Tiles>> tick(Input key = NONE) = 0;
-        virtual void reset() = 0;
-        virtual int getScore() = 0;
-        virtual std::string getGameName() const = 0;
+        // score
+        virtual void setScore(int score, std::string = "") = 0;
+        virtual int getScore() const = 0;
+        virtual void setHighScore(int score, std::string = "") = 0;
+        virtual int getHighScore() const = 0;
+
+        // game status
+        virtual void setGameStatus(GameStatus status) = 0;
+        virtual GameStatus getGameStatus() const = 0;
+        virtual std::vector<std::vector<Tiles>> getMap() = 0;
+
+        // inputs
+        virtual void parseInput(Input key = NONE) = 0;
 };
+
 
 #endif /* !IGAMES_HPP_ */
