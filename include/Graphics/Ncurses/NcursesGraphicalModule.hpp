@@ -23,9 +23,8 @@ class NcursesGraphicalModule : public AGraphicalModule {
         void displayWindow();
         void destroyWindow();
         bool isWindowOpen();
-        void parseKeyboard();
+        Input parseKeyboard();
         void showMap(std::vector<std::vector<Tiles>>& map);
-
 };
 
 extern "C" std::shared_ptr<AGraphicalModule> createLib();

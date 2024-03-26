@@ -8,16 +8,8 @@
 #pragma once
 
 #include "../Libs.hpp"
-#include "../GlobalClasses.hpp"
-
-class Color {
-    public:
-        Color(int r = 255, int g = 255, int b = 255, int a = 255) : r(r), g(g), b(b), a(a) {}
-        int r;
-        int g;
-        int b;
-        int a;
-};
+#include "../Tiles.hpp"
+#include "../Enums.hpp"
 
 class IGraphicalModule {
     public:
@@ -55,7 +47,7 @@ class IGraphicalModule {
         /**
          * @brief Parse keyboard events
         */
-        virtual void parseKeyboard() = 0;
+        virtual Input parseKeyboard() = 0;
 
         /**
          * @brief Display the map passed as parameter onto the window

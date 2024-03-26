@@ -20,7 +20,7 @@ class AGraphicalModule : public IGraphicalModule {
         virtual void displayWindow() = 0;
         virtual void destroyWindow() = 0;
         virtual bool isWindowOpen() = 0;
-        virtual void parseKeyboard() = 0;
+        virtual Input parseKeyboard() = 0;
         virtual void showMap(std::vector<std::vector<Tiles>>& map) = 0;
 
         // Misc methods

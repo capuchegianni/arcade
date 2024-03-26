@@ -23,7 +23,7 @@ class SfmlGraphicalModule : public AGraphicalModule {
         void displayWindow();
         void destroyWindow();
         bool isWindowOpen();
-        void parseKeyboard();
+        Input parseKeyboard();
         void showMap(std::vector<std::vector<Tiles>>& map);
 
     private:

@@ -48,8 +48,8 @@ bool NcursesGraphicalModule::isWindowOpen() {
     return true;
 }
 
-void NcursesGraphicalModule::parseKeyboard() {
-    return;
+Input NcursesGraphicalModule::parseKeyboard() {
+    return NONE;
 }
 
 void NcursesGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {

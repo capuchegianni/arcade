@@ -5,4 +5,4 @@
 ** Tiles
 */
 
-#include "../../include/GlobalClasses.hpp"
+#include "../../include/Tiles.hpp"

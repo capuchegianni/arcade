@@ -46,11 +46,12 @@ bool SfmlGraphicalModule::isWindowOpen() {
     return this->_window.isOpen();
 }
 
-void SfmlGraphicalModule::parseKeyboard() {
+Input SfmlGraphicalModule::parseKeyboard() {
     while (this->_window.pollEvent(this->_event)) {
         if (this->_event.type == sf::Event::Closed || this->_event.key.code == sf::Keyboard::Escape)
             this->destroyWindow();
     }
+    return NONE;
 }
 
 void SfmlGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {

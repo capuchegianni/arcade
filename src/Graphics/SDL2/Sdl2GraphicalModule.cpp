@@ -49,12 +49,13 @@ bool Sdl2GraphicalModule::isWindowOpen() {
     return this->_isOpen;
 }
 
-void Sdl2GraphicalModule::parseKeyboard() {
+Input Sdl2GraphicalModule::parseKeyboard() {
     while (SDL2Wrapper::SDL_PollEvent(&this->_event)) {
         if (this->_event.type == SDL_QUIT || (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE) ||
         this->_event.key.keysym.sym == SDLK_ESCAPE)
             this->destroyWindow();
     }
+    return NONE;
 }
 
 void Sdl2GraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
