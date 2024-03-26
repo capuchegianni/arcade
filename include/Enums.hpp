@@ -19,4 +19,12 @@ enum Input {
     NONE
 };
 
+enum Direction {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+    STOP
+};
+
 #endif /* !ENUMS_HPP_ */
