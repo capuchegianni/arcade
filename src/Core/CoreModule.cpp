@@ -26,10 +26,28 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    if (!this->_gameModule)
-        throw FileError("No game library loaded", 84);
-    
+    // this->initEntities();
+    this->getGraphicalModule()->createWindow("Arcade", {500, 500});
+    std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
+    while (this->getGraphicalModule()->isWindowOpen()) {
+        this->getGraphicalModule()->displayWindow();
+        Input input = this->getGraphicalModule()->parseKeyboard();
+    }
+}
 
+void CoreModule::changeGame(const std::string& path, const std::string& func) {
+    this->closeGameLib();
+    this->loadGameLibrary(path, func);
+}
+
+void CoreModule::changeGraphics(const std::string& path, const std::string& func) {
+    this->closeGraphicalLib();
+    this->loadGraphicalLibrary(path, func);
+}
+
+void CoreModule::initEntities(const std::vector<IEntities>& entities) {
+    (void)entities;
+    return;
 }
 
 
@@ -58,12 +76,6 @@ LdlWrapper& CoreModule::getGraphicalLib() {
     return this->_graphicalLib;
 }
 
-std::shared_ptr<AGraphicalModule>& CoreModule::changeGraphicalLib(const std::string& path, const std::string& func) {
-    this->closeGraphicalLib();
-    this->loadGraphicalLibrary(path, func);
-    return this->_graphicalModule;
-}
-
 
 // Game libraries
 
@@ -86,10 +98,4 @@ std::shared_ptr<AGameModule>& CoreModule::getGameModule() {
 
 LdlWrapper& CoreModule::getGameLib() {
     return this->_gameLib;
-}
-
-std::shared_ptr<AGameModule>& CoreModule::changeGameLib(const std::string& path, const std::string& func) {
-    this->closeGameLib();
-    this->loadGameLibrary(path, func);
-    return this->_gameModule;
 }
