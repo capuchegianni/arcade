@@ -58,7 +58,9 @@ class Sdl2GraphicalModule : public AGraphicalModule {
         void setSpriteRotation(std::any sprite, const float& rotation);
 
     private:
-        SDL_Window *window;
+        SDL_Window *_window;
+        SDL_Renderer *_renderer;
+        SDL_Event _event;
 };
 
 extern "C" std::shared_ptr<AGraphicalModule> createLib();
