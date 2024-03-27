@@ -16,14 +16,36 @@ class AGameModule : public IGameModule {
         AGameModule(const std::string gameName);
         virtual ~AGameModule() = default;
 
-        virtual std::vector<std::vector<Tiles>> tick(Input key = NONE) = 0;
-        virtual void reset() = 0;
-        virtual int getScore() = 0;
+        // score
+        void setScore(int score);
+        int getScore() const;
+        void setHighScore(int score, std::string = "");
+        std::map<std::string, int> getHighScore() const;
+
+        // game status
+        void setGameStatus(GameStatus status);
+        GameStatus getGameStatus() const;
+        std::vector<std::vector<Tiles>> getMap() const;
+
+        // player
+        std::string getPlayerName() const;
+        void setPlayerName(std::string name);
+
+        // game
         std::string getGameName() const;
+        void setGameName(std::string name);
+
+        // inputs
+        virtual void parseInput(Input key = NONE) = 0;
 
     protected:
-        std::vector<std::vector<Tiles>> map;
-        std::string gameName;
+        std::vector<std::vector<Tiles>> _map = {};
+        std::string _playerName = "";
+        GameStatus _gameStatus = GameStatus::RUNNING;
+        std::string _gameName = "";
+        int _score = 0;
+        std::map<std::string, int> _highScores = {};
 };
+
 
 #endif /* !AGAMES_HPP_ */

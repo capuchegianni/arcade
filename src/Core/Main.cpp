@@ -12,16 +12,11 @@ int main(int ac, char **av) {
 
     try {
         if (ac != 2)
-            throw FileError("Invalid number of arguments");
+            throw FileError("Invalid number of arguments\nUSAGE: ./arcade path_to_graphical_library.so");
         core.checkFile(av[1]);
-        core.loadLibrary(av[1], "createLib");
-        core.getModule()->createWindow("Arcade", {500, 500});
-        std::cout << core.getModule()->getLibraryType() << " window created" << std::endl;
-        while (core.getModule()->isWindowOpen()) {
-            core.getModule()->clearWindow();
-            core.getModule()->displayWindow();
-            core.getModule()->parseKeyboard();
-        }
+        core.loadGraphicalLibrary(av[1], "createLib");
+        core.loadGameLibrary("lib/arcade_menu.so", "createGame");
+        core.startGame();
     } catch (const Error& e) {
         std::cerr << e.getType() << ": " << e.what() << std::endl;
         std::cerr << "Exiting with status " << e.getStatus() << std::endl;

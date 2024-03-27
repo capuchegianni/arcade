@@ -8,16 +8,6 @@
 #ifndef ENUMS_HPP_
 #define ENUMS_HPP_
 
-enum TilesType {
-    EMPTY,
-    WALL,
-    PLAYER_HEAD,
-    PLAYER_BODY,
-    ENEMY,
-    PROJECTILE,
-    ITEM
-};
-
 enum Input {
     UP,
     DOWN,
@@ -27,6 +17,22 @@ enum Input {
     ENTER,
     SPACE,
     NONE
+};
+
+enum Direction {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST,
+    STOP
+};
+
+enum GameStatus {
+    OVER,
+    WIN,
+    PAUSE,
+    RESTART,
+    RUNNING
 };
 
 #endif /* !ENUMS_HPP_ */

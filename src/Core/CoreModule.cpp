@@ -8,8 +8,11 @@
 #include "../../include/Core/CoreModule.hpp"
 
 CoreModule::~CoreModule() {
-    this->closeLib();
+    this->closeGraphicalLib();
 }
+
+
+// Misc
 
 void CoreModule::checkFile(const std::string& path) const {
     if (path.empty())
@@ -22,37 +25,78 @@ void CoreModule::checkFile(const std::string& path) const {
         throw FileError("File '" + path + "' not found", 84);
 }
 
-void CoreModule::loadLibrary(const std::string& path, const std::string& func) {
+void CoreModule::startGame() {
+    // this->initEntities();
+    this->getGraphicalModule()->createWindow("Arcade", {500, 500});
+    std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
+    std::cout << this->getGameModule()->getGameName() << " game started" << std::endl;
+    while (this->getGraphicalModule()->isWindowOpen()) {
+        this->getGraphicalModule()->displayWindow();
+        Input input = this->getGraphicalModule()->parseKeyboard();
+    }
+}
+
+void CoreModule::changeGame(const std::string& path, const std::string& func) {
+    this->closeGameLib();
+    this->loadGameLibrary(path, func);
+}
+
+void CoreModule::changeGraphics(const std::string& path, const std::string& func) {
+    this->closeGraphicalLib();
+    this->loadGraphicalLibrary(path, func);
+}
+
+void CoreModule::initEntities(const std::vector<AEntities>& entities) {
+    (void)entities;
+    return;
+}
+
+
+// Graphical libraries
+
+void CoreModule::closeGraphicalLib() {
+    if (this->_graphicalLib.getHandle()) {
+        if (this->_graphicalModule)
+            this->_graphicalModule->destroyWindow();
+        this->_graphicalModule.reset();
+        dlclose(this->_graphicalLib.getHandle());
+        std::cout << "Library closed" << std::endl;
+    }
+}
+
+void CoreModule::loadGraphicalLibrary(const std::string& path, const std::string& func) {
     this->_graphicalLib.openLib(path);
-    this->_handle = this->_graphicalLib.getHandle();
-    this->_module = this->_graphicalLib.createLib(func);
-    this->checkLibrary();
+    this->_graphicalModule = this->_graphicalLib.createLib<std::shared_ptr<AGraphicalModule>>(func);
 }
 
-void CoreModule::checkLibrary() {
-    std::array<std::string, 3> libs = {
-        "Ncurses",
-        "SFML",
-        "SDL2"
-    };
-
-    if (std::find(libs.begin(), libs.end(), this->_module->getLibraryType()) == libs.end())
-        throw FileError("Invalid library type '" + this->_module->getLibraryType() + "'", 84);
+std::shared_ptr<AGraphicalModule>& CoreModule::getGraphicalModule() {
+    return this->_graphicalModule;
 }
 
-std::shared_ptr<AGraphicalModule>& CoreModule::getModule() {
-    return this->_module;
-}
-
-LdlWrapper& CoreModule::getLib() {
+LdlWrapper& CoreModule::getGraphicalLib() {
     return this->_graphicalLib;
 }
 
-void CoreModule::closeLib() {
-    if (this->_handle) {
-        this->_module->destroyWindow();
-        this->_module.reset();
-        dlclose(this->_handle);
-        std::cout << "Library closed" << std::endl;
+
+// Game libraries
+
+void CoreModule::closeGameLib() {
+    if (this->_gameLib.getHandle()) {
+        this->_gameModule.reset();
+        dlclose(this->_gameLib.getHandle());
+        std::cout << "Game library closed" << std::endl;
     }
+}
+
+void CoreModule::loadGameLibrary(const std::string& path, const std::string& func) {
+    this->_gameLib.openLib(path);
+    this->_gameModule = this->_gameLib.createLib<std::shared_ptr<AGameModule>>(func);
+}
+
+std::shared_ptr<AGameModule>& CoreModule::getGameModule() {
+    return this->_gameModule;
+}
+
+LdlWrapper& CoreModule::getGameLib() {
+    return this->_gameLib;
 }

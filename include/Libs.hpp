@@ -17,4 +17,10 @@
 #include <map>
 #include <string>
 #include <any>
-#include "Errors.hpp"
+#include <chrono>
+#include <tuple>
+#include "./GlobalClasses/Errors.hpp"
+#include "./GlobalClasses/Ascii.hpp"
+#include "./GlobalClasses/Color.hpp"
+#include "./GlobalClasses/Enums.hpp"
+#include "./GlobalClasses/Tiles.hpp"
