@@ -18,9 +18,7 @@ class LdlWrapper {
 
         void openLib(const std::string& path);
         template<typename T>
-        T getFunction(const std::string& name);
-        std::shared_ptr<AGraphicalModule> createGraphicalLib(const std::string& func);
-        std::shared_ptr<AGameModule> createGameLib(const std::string& func);
+        T createLib(const std::string& name);
         void *getHandle() const;
 
     private:

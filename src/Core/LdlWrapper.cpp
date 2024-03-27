@@ -21,22 +21,18 @@ void LdlWrapper::openLib(const std::string& path) {
         throw FileError("Failed to open library '" + path + "'\n" + dlerror(), 84);
 }
 
-template<typename T>
-T LdlWrapper::getFunction(const std::string& name) {
-    T func = reinterpret_cast<T>(dlsym(this->_handle, name.c_str()));
+template <typename T>
+T LdlWrapper::createLib(const std::string& name) {
+    typedef T (*func_t)();
+    func_t func = reinterpret_cast<func_t>(dlsym(this->_handle, name.c_str()));
 
     if (!func)
         throw FileError("Failed to load symbol '" + name + "'\n" + dlerror(), 84);
-    return func;
+    return func();
 }
 
-std::shared_ptr<AGraphicalModule> LdlWrapper::createGraphicalLib(const std::string& func) {
-    return this->getFunction<std::shared_ptr<AGraphicalModule> (*)()>(func)();
-}
-
-std::shared_ptr<AGameModule> LdlWrapper::createGameLib(const std::string& func) {
-    return this->getFunction<std::shared_ptr<AGameModule> (*)()>(func)();
-}
+template std::shared_ptr<AGraphicalModule> LdlWrapper::createLib<std::shared_ptr<AGraphicalModule>>(const std::string& name);
+template std::shared_ptr<AGameModule> LdlWrapper::createLib<std::shared_ptr<AGameModule>>(const std::string& name);
 
 void *LdlWrapper::getHandle() const {
     return this->_handle;

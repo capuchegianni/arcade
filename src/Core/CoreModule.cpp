@@ -29,6 +29,7 @@ void CoreModule::startGame() {
     // this->initEntities();
     this->getGraphicalModule()->createWindow("Arcade", {500, 500});
     std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
+    std::cout << this->getGameModule()->getGameName() << " game started" << std::endl;
     while (this->getGraphicalModule()->isWindowOpen()) {
         this->getGraphicalModule()->displayWindow();
         Input input = this->getGraphicalModule()->parseKeyboard();
@@ -65,7 +66,7 @@ void CoreModule::closeGraphicalLib() {
 
 void CoreModule::loadGraphicalLibrary(const std::string& path, const std::string& func) {
     this->_graphicalLib.openLib(path);
-    this->_graphicalModule = this->_graphicalLib.createGraphicalLib(func);
+    this->_graphicalModule = this->_graphicalLib.createLib<std::shared_ptr<AGraphicalModule>>(func);
 }
 
 std::shared_ptr<AGraphicalModule>& CoreModule::getGraphicalModule() {
@@ -89,7 +90,7 @@ void CoreModule::closeGameLib() {
 
 void CoreModule::loadGameLibrary(const std::string& path, const std::string& func) {
     this->_gameLib.openLib(path);
-    this->_gameModule = this->_gameLib.createGameLib(func);
+    this->_gameModule = this->_gameLib.createLib<std::shared_ptr<AGameModule>>(func);
 }
 
 std::shared_ptr<AGameModule>& CoreModule::getGameModule() {

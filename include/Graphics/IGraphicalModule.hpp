@@ -8,8 +8,6 @@
 #pragma once
 
 #include "../Libs.hpp"
-#include "../Tiles.hpp"
-#include "../Enums.hpp"
 
 class IGraphicalModule {
     public:
@@ -22,11 +20,6 @@ class IGraphicalModule {
          * @param size Size of the window (default: 1920x1080)
         */
         virtual void createWindow(const std::string& name, const std::vector<int>& size) = 0;
-
-        /**
-         * @brief Initialize the window and return it
-        */
-        virtual void initWindow(const std::string& name, const std::vector<int>& size) = 0;
 
         /**
          * @brief Display the window
