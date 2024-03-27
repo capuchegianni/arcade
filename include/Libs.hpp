@@ -19,4 +19,8 @@
 #include <any>
 #include <chrono>
 #include <tuple>
-#include "Errors.hpp"
+#include "./GlobalClasses/Errors.hpp"
+#include "./GlobalClasses/Ascii.hpp"
+#include "./GlobalClasses/Color.hpp"
+#include "./GlobalClasses/Enums.hpp"
+#include "./GlobalClasses/Tiles.hpp"
