@@ -6,7 +6,6 @@
   - [Table of Contents](#table-of-contents)
   - [About](#about)
   - [Common Group](#common-group)
-  - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installing](#installing)
   - [Usage](#usage)
@@ -20,7 +19,7 @@ Arcade is the second project of the OOP module at Epitech (Oriented Object Progr
 
 ## Common Group
 
-We decided to work along with the following group:
+We decided to work along with the following groups:
   - [sacha.polerowicz@epitech.eu](https://github.com/Sachaplr)
   - [jules.weishaus@epitech.eu](https://github.com/ImPoulpitos)
   - [isaac.levy-piquet@epitech.eu](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
@@ -28,36 +27,43 @@ We decided to work along with the following group:
   - [robin.caboche@epitech.eu]()
   - [nicolas.nguyen@epitech.eu]()
 
-## Getting Started<a name = "getting_started"></a>
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+To compile the project you will need to have the following libraries installed:
+  - [CMake](https://cmake.org/)
+  - [Make](https://www.gnu.org/software/make/)
 
-```
-Give examples
-```
+To run the project you will need to have at least the following libraries installed:
+  - [SFML](https://www.sfml-dev.org/)
+  - [SDL2](https://www.libsdl.org/)
+  - [NCURSES](https://invisible-island.net/ncurses/)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
+First, you need to clone the repository:
+```bash
+git clone git@github.com:EpitechPromo2027/B-OOP-400-LIL-4-1-arcade-elouan.rigomont.git
 ```
 
-And repeat
-
+Next, you can compile the project by running the following commands:
+```bash
+mkdir build
+cd build
+cmake ..
+make
 ```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
 
 ## Usage<a name = "usage"></a>
 
-Add notes about how to use the system.
+Then, to run the arcade project, you can execute the following command to start a SFML window for example:
+```bash
+./arcade ./lib/arcade_sfml.so
+```
+
+To play a game, the following keybinds are available:
+  - ZQSD: Move the player
+  - R: Restart the game
+  - TAB: Go back to the menu
+  - ARROW RIGHT: Go to the next graphical library
+  - ARROW UP: Go to the next game
+  - ESCAPE: Close the window
