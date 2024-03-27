@@ -8,8 +8,16 @@
 #ifndef NIBBLER_HPP_
 #define NIBBLER_HPP_
 
-class Nibbler {
+#include "../AGameModule.hpp"
+
+class Nibbler : public AGameModule {
     public:
+        Nibbler();
+        ~Nibbler() = default;
+
+        void parseInput(Input key = NONE);
 };
+
+extern "C" std::shared_ptr<AGameModule> createGame();
 
 #endif /* !NIBBLER_HPP_ */
