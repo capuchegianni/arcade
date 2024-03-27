@@ -110,6 +110,10 @@ void CoreModule::handleEvents(const Input& input) {
         this->changeGame(nextGameLib, "createGame");
         break;
 
+    case MENU:
+        this->changeGame("lib/arcade_menu.so", "createGame");
+        break;
+
     case NONE:
     default:
         break;
