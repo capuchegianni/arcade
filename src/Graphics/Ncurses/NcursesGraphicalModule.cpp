@@ -14,12 +14,6 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
     return std::make_shared<NcursesGraphicalModule>();
 }
 
-void NcursesGraphicalModule::initWindow(const std::string& name, const std::vector<int>& size) {
-    (void)name;
-    (void)size;
-    return;
-}
-
 void NcursesGraphicalModule::destroyWindow() {
     return;
 }

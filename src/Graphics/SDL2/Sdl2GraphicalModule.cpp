@@ -14,13 +14,6 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
     return std::make_shared<Sdl2GraphicalModule>();
 }
 
-void Sdl2GraphicalModule::initWindow(const std::string& name, const std::vector<int>& size) {
-    SDL2Wrapper::SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_TIMER);
-    this->_window = SDL2Wrapper::SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size[0], size[1], SDL_WINDOW_SHOWN);
-    this->_renderer = SDL2Wrapper::SDL_CreateRenderer(this->_window, -1, SDL_RENDERER_ACCELERATED);
-    this->_isOpen = true;
-}
-
 void Sdl2GraphicalModule::destroyWindow() {
     SDL2Wrapper::SDL_DestroyWindow(this->_window);
     SDL2Wrapper::SDL_Quit();
@@ -28,7 +21,10 @@ void Sdl2GraphicalModule::destroyWindow() {
 }
 
 void Sdl2GraphicalModule::createWindow(const std::string &name, const std::vector<int> &size) {
-    this->initWindow(name, size);
+    SDL2Wrapper::SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+    this->_window = SDL2Wrapper::SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size[0], size[1], SDL_WINDOW_SHOWN);
+    this->_renderer = SDL2Wrapper::SDL_CreateRenderer(this->_window, -1, SDL_RENDERER_ACCELERATED);
+    this->_isOpen = true;
     this->setWindowTitle(name);
     this->setWindowSize(size);
 }
@@ -51,9 +47,18 @@ bool Sdl2GraphicalModule::isWindowOpen() {
 
 Input Sdl2GraphicalModule::parseKeyboard() {
     while (SDL2Wrapper::SDL_PollEvent(&this->_event)) {
-        if (this->_event.type == SDL_QUIT || (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE) ||
-        this->_event.key.keysym.sym == SDLK_ESCAPE)
-            this->destroyWindow();
+        if (this->_event.type == SDL_QUIT)
+            return ESC;
+        if (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE)
+            return ESC;
+        if (this->_event.type == SDL_KEYDOWN) {
+            if (this->_event.key.keysym.sym == SDLK_ESCAPE)
+                return ESC;
+            if (this->_event.key.keysym.sym == SDLK_UP)
+                return CHANGE_GAME;
+            if (this->_event.key.keysym.sym == SDLK_RIGHT)
+                return CHANGE_LIB;
+        }
     }
     return NONE;
 }
