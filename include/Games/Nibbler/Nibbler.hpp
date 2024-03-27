@@ -12,14 +12,18 @@
 
 class Nibbler : public AGameModule {
     public:
-        std::vector<std::vector<Tiles>> tick(Input key = NONE) override;
-        void setMap() override;
-        void reset() override;
-        void changeDirection(Input key) override;
-        void movePlayer() override;
-        void autoTurn() override;
-        bool checkCollision(Input key) override;
-        bool eatFruit() override;
+        Nibbler();
+        ~Nibbler() = default;
+
+        void parseInput(Input key = NONE);
+        void reset();
+        void changeDirection(Input key);
+        void movePlayer();
+        void autoTurn();
+        bool checkCollision(Input key);
+        bool eatFruit();
 };
+
+extern "C" std::shared_ptr<AGameModule> createGame();
 
 #endif /* !NIBBLER_HPP_ */

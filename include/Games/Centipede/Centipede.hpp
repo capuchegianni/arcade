@@ -12,6 +12,12 @@
 
 class Centipede : public AGameModule {
     public:
+        Centipede();
+        ~Centipede() = default;
+
+        void parseInput(Input key = NONE);
 };
+
+extern "C" std::shared_ptr<AGameModule> createGame();
 
 #endif /* !CENTIPEDE_HPP_ */

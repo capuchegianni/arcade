@@ -18,4 +18,9 @@
 #include <string>
 #include <any>
 #include <chrono>
-#include "Errors.hpp"
+#include <tuple>
+#include "./GlobalClasses/Errors.hpp"
+#include "./GlobalClasses/Ascii.hpp"
+#include "./GlobalClasses/Color.hpp"
+#include "./GlobalClasses/Enums.hpp"
+#include "./GlobalClasses/Tiles.hpp"

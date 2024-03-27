@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../Graphics/AGraphicalModule.hpp"
+#include "../Games/AGameModule.hpp"
 
 class LdlWrapper {
     public:
@@ -17,8 +18,7 @@ class LdlWrapper {
 
         void openLib(const std::string& path);
         template<typename T>
-        T getFunction(const std::string& name);
-        std::shared_ptr<AGraphicalModule> createLib(const std::string& func);
+        T createLib(const std::string& name);
         void *getHandle() const;
 
     private:

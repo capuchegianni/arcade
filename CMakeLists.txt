@@ -20,7 +20,8 @@ include_directories(include)
 
 set(global_src
     src/Errors/Errors.cpp
-    src/globalClasses/Tiles.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/Entities/AEntities.cpp
 )
 
 # Core executable
@@ -75,22 +76,26 @@ set_target_properties(arcade_sfml PROPERTIES PREFIX "")
 # Games libraries
 set(nibbler_src
     ${global_src}
+    src/Games/Nibbler/Nibbler.cpp
     src/Games/AGameModule.cpp
 )
 
 set(centipede_src
     ${global_src}
+    src/Games/Centipede/Centipede.cpp
+    src/Games/AGameModule.cpp
+)
+
+set(menu_src
+    ${global_src}
+    src/Games/Menu/Menu.cpp
     src/Games/AGameModule.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})
 add_library(arcade_centipede SHARED ${centipede_src})
+add_library(arcade_menu SHARED ${menu_src})
 
 set_target_properties(arcade_nibbler PROPERTIES PREFIX "")
 set_target_properties(arcade_centipede PROPERTIES PREFIX "")
-
-target_link_libraries(arcade arcade_ncurses ${NCURSES_FLAGS})
-target_link_libraries(arcade arcade_sdl2 ${SDL_FLAGS})
-target_link_libraries(arcade arcade_sfml ${SFML_FLAGS})
-target_link_libraries(arcade arcade_nibbler)
-target_link_libraries(arcade arcade_centipede)
+set_target_properties(arcade_menu PROPERTIES PREFIX "")
