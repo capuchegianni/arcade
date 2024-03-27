@@ -8,8 +8,8 @@
 #include "../../include/Graphics/AGraphicalModule.hpp"
 
 AGraphicalModule::AGraphicalModule(const std::string type) :
-    _librabryType(type) { }
+    _libraryType(type) { }
 
 std::string AGraphicalModule::getLibraryType() const {
-    return this->_librabryType;
+    return this->_libraryType;
 }

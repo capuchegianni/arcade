@@ -9,31 +9,31 @@
 #define NCURSES_HPP_
 
 #include <ncurses.h>
-#include <memory>
-#include <string>
+#include "../../Libs.hpp"
 
 class NcursesWrapper {
     public:
         NcursesWrapper() = default;
         ~NcursesWrapper() = default;
 
-    std::shared_ptr<WINDOW> n_initscr();
-    int n_refresh();
-    int n_wrefresh(std::shared_ptr<WINDOW> win);
-    int n_endwin();
-    int n_echo();
-    int n_noecho();
-    int n_keypad(std::shared_ptr<WINDOW> win, bool bf);
-    int n_halfdelay(int tenths);
-    int n_clear();
-    int n_wclear(std::shared_ptr<WINDOW> win);
-    int n_wmove(std::shared_ptr<WINDOW> win, int y, int x);
-    void n_getmaxyx(std::shared_ptr<WINDOW> win, int& y, int& x);
-    void n_getyx(std::shared_ptr<WINDOW> win, int& y, int& x);
-    int n_mvprintw(int y, int x, std::string fmt);
-    int n_start_color();
-    int n_init_pair(short pair, short f, short b);
-    int n_init_color(short color, short r, short g, short b);
+    static WINDOW *n_initscr();
+    static int n_refresh();
+    static int n_wrefresh(WINDOW *win);
+    static int n_endwin();
+    static int n_echo();
+    static int n_noecho();
+    static int n_keypad(WINDOW *win, bool bf);
+    static int n_halfdelay(int tenths);
+    static int n_clear();
+    static int n_wclear(WINDOW *win);
+    static int n_wmove(WINDOW *win, int y, int x);
+    static void n_getmaxyx(WINDOW *win, int *y, int *x);
+    static void n_getyx(WINDOW *win, int *y, int *x);
+    static int n_mvprintw(int y, int x, std::string fmt);
+    static int n_start_color();
+    static int n_init_pair(short pair, short f, short b);
+    static int n_init_color(short color, short r, short g, short b);
+    static int n_getch();
 };
 
 #endif /* !NCURSES_HPP_ */

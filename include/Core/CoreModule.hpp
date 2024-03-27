@@ -7,27 +7,35 @@
 
 #pragma once
 
-#include "../Errors.hpp"
 #include "LdlWrapper.hpp"
-#include <iostream>
-#include <memory>
-#include <array>
-#include <algorithm>
-#include <filesystem>
-#include <dlfcn.h>
+#include "ICoreModule.hpp"
 
-#include "../Graphics/Ncurses/NcursesGraphicalModule.hpp"
-#include "../Graphics/SDL2/Sdl2GraphicalModule.hpp"
-#include "../Graphics/SFML/SfmlGraphicalModule.hpp"
-
-class CoreModule {
+class CoreModule : public ICoreModule {
     public:
-        ~CoreModule() = default;
+        ~CoreModule();
 
-        void checkFile(const std::string path) const;
-        void loadLibrary(const std::string path);
-        void checkLibrary();
+        // Graphical libraries
+        void loadGraphicalLibrary(const std::string& path, const std::string& func);
+        std::shared_ptr<AGraphicalModule>& getGraphicalModule();
+        LdlWrapper& getGraphicalLib();
+        void closeGraphicalLib();
+
+        // Game libraries
+        void loadGameLibrary(const std::string& path, const std::string& func);
+        std::shared_ptr<AGameModule>& getGameModule();
+        LdlWrapper& getGameLib();
+        void closeGameLib();
+
+        // Misc
+        void checkFile(const std::string& path) const;
+        void startGame();
+        void initEntities(const std::vector<AEntities>& entities);
+        void changeGame(const std::string& path, const std::string& func);
+        void changeGraphics(const std::string& path, const std::string& func);
 
     private:
-        std::unique_ptr<AGraphicalModule> _module;
+        std::shared_ptr<AGraphicalModule> _graphicalModule = nullptr;
+        std::shared_ptr<AGameModule> _gameModule = nullptr;
+        LdlWrapper _graphicalLib;
+        LdlWrapper _gameLib;
 };

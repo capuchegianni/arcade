@@ -7,23 +7,20 @@
 
 #pragma once
 
-#include <iostream>
-#include <memory>
-#include <dlfcn.h>
-#include "../Errors.hpp"
 #include "../Graphics/AGraphicalModule.hpp"
-
-using DlCloseType = int (*)(void *);
+#include "../Games/AGameModule.hpp"
 
 class LdlWrapper {
     public:
-        LdlWrapper(const std::string filename);
+        LdlWrapper() = default;
+        LdlWrapper(const std::string& path);
         ~LdlWrapper() = default;
 
-        std::unique_ptr<AGraphicalModule> createModule();
+        void openLib(const std::string& path);
         template<typename T>
-        T getFunction(const std::string& name);
+        T createLib(const std::string& name);
+        void *getHandle() const;
 
     private:
-        std::unique_ptr<void, DlCloseType> _handle;
+        void *_handle = nullptr;
 };
