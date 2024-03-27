@@ -37,3 +37,8 @@ template std::shared_ptr<AGameModule> LdlWrapper::createLib<std::shared_ptr<AGam
 void *LdlWrapper::getHandle() const {
     return this->_handle;
 }
+
+void LdlWrapper::closeLib() {
+    if (this->_handle)
+        dlclose(this->_handle);
+}

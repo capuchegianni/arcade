@@ -18,24 +18,28 @@ class CoreModule : public ICoreModule {
         void loadGraphicalLibrary(const std::string& path, const std::string& func);
         std::shared_ptr<AGraphicalModule>& getGraphicalModule();
         LdlWrapper& getGraphicalLib();
+        void changeGraphics(const std::string& path, const std::string& func);
         void closeGraphicalLib();
 
         // Game libraries
         void loadGameLibrary(const std::string& path, const std::string& func);
         std::shared_ptr<AGameModule>& getGameModule();
         LdlWrapper& getGameLib();
+        void changeGame(const std::string& path, const std::string& func);
         void closeGameLib();
 
         // Misc
         void checkFile(const std::string& path) const;
         void startGame();
         void initEntities(const std::vector<AEntities>& entities);
-        void changeGame(const std::string& path, const std::string& func);
-        void changeGraphics(const std::string& path, const std::string& func);
+        void handleEvents(const Input& input);
+        void getLibraries();
 
     private:
         std::shared_ptr<AGraphicalModule> _graphicalModule = nullptr;
         std::shared_ptr<AGameModule> _gameModule = nullptr;
         LdlWrapper _graphicalLib;
         LdlWrapper _gameLib;
+        std::deque<std::string> _gameLibs = {};
+        std::deque<std::string> _graphicalLibs = {};
 };
