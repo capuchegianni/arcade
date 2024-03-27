@@ -53,6 +53,8 @@ Input SfmlGraphicalModule::parseKeyboard() {
                 return CHANGE_GAME;
             if (this->_event.key.code == sf::Keyboard::Right)
                 return CHANGE_LIB;
+            if (this->_event.key.code == sf::Keyboard::Tab)
+                return MENU;
         }
     }
     return NONE;

@@ -58,6 +58,8 @@ Input Sdl2GraphicalModule::parseKeyboard() {
                 return CHANGE_GAME;
             if (this->_event.key.keysym.sym == SDLK_RIGHT)
                 return CHANGE_LIB;
+            if (this->_event.key.keysym.sym == SDLK_TAB)
+                return MENU;
         }
     }
     return NONE;
