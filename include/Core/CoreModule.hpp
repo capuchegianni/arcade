@@ -29,7 +29,7 @@ class CoreModule : public ICoreModule {
         // Misc
         void checkFile(const std::string& path) const;
         void startGame();
-        void initEntities(const std::vector<IEntities>& entities);
+        void initEntities(const std::vector<AEntities>& entities);
         void changeGame(const std::string& path, const std::string& func);
         void changeGraphics(const std::string& path, const std::string& func);
 

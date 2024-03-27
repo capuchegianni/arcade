@@ -45,7 +45,7 @@ void CoreModule::changeGraphics(const std::string& path, const std::string& func
     this->loadGraphicalLibrary(path, func);
 }
 
-void CoreModule::initEntities(const std::vector<IEntities>& entities) {
+void CoreModule::initEntities(const std::vector<AEntities>& entities) {
     (void)entities;
     return;
 }

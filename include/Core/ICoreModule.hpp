@@ -19,7 +19,7 @@ class ICoreModule {
         virtual void closeGraphicalLib() = 0;
         virtual void closeGameLib() = 0;
         virtual void startGame() = 0;
-        virtual void initEntities(const std::vector<IEntities>& entities) = 0;
+        virtual void initEntities(const std::vector<AEntities>& entities) = 0;
         virtual void changeGame(const std::string& path, const std::string& func) = 0;
         virtual void changeGraphics(const std::string& path, const std::string& func) = 0;
 };

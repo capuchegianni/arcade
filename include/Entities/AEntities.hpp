@@ -7,25 +7,21 @@
 
 #pragma once
 
-#include "../Libs.hpp"
 #include "IEntities.hpp"
-#include "../Ascii.hpp"
 
 class AEntities : public IEntities {
     public:
-        virtual ~AEntities() = default;
+        AEntities(double speed = 1, std::pair<int, int> pos = {0, 0}, std::string texturePath = "", ASCII ascii = ASCII(' ', Color(255, 255, 255)));
 
-        float getSpeed() const = 0;
-        void setSpeed(float speed) = 0;
-        std::pair<int, int> getPos() const = 0;
-        void setPos(std::pair<int, int> pos) = 0;
-        std::pair<std::string, ASCII> imageToDisplay() const = 0;
+        double getSpeed() const;
+        void setSpeed(double speed);
+        std::pair<int, int> getPos() const;
+        void setPos(std::pair<int, int> pos);
+        std::pair<std::string, ASCII> imageToDisplay() const;
 
     protected:
-        float _speed = 0;
-        std::pair<int, int> _pos = {0, 0};
-        std::string _texturePath = "";
-        ASCII _ascii = ASCII(' ', Color(255, 255, 255));
-
-    private:
+        double _speed;
+        std::pair<int, int> _pos;
+        std::string _texturePath;
+        ASCII _ascii;
 };

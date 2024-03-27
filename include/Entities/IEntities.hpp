@@ -8,13 +8,12 @@
 #pragma once
 
 #include "../Libs.hpp"
-#include "../Ascii.hpp"
 
 class IEntities {
     public:
         virtual ~IEntities() = default;
 
-        virtual float getSpeed() const = 0;
+        virtual double getSpeed() const = 0;
         virtual void setSpeed(float speed) = 0;
         virtual std::pair<int, int> getPos() const = 0;
         virtual void setPos(std::pair<int, int> pos) = 0;
