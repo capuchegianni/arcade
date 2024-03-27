@@ -16,6 +16,10 @@ enum Input {
     ESC,
     ENTER,
     SPACE,
+    MENU,
+    CHANGE_LIB,
+    CHANGE_GAME,
+    RELOAD,
     NONE
 };
 
