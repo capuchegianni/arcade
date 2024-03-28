@@ -144,7 +144,7 @@ void Centipede::autoTurn()
     // }
 }
 
-void Centipede::parseInput(Input input) {
+void Centipede::catchInput(Input input) {
     return;
 }
 

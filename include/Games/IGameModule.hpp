@@ -35,7 +35,7 @@ class IGameModule {
         virtual std::vector<std::shared_ptr<AEntities>> initAllEntities() const = 0;
 
         // inputs
-        virtual void parseInput(Input key = NONE) = 0;
+        virtual void catchInput(Input key = NONE) = 0;
 };
 
 
