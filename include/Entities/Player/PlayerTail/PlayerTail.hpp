@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2024
 ** Arcade
 ** File description:
-** PlayerBody
+** PlayerTail
 */
 
 #pragma once
 
-#include "../AEntities.hpp"
+#include "../../AEntities.hpp"
 
-class PlayerBody : public AEntities {
+class PlayerTail : public AEntities {
     public:
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;

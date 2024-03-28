@@ -5,7 +5,7 @@
 ** PlayerHead
 */
 
-#include "../../../include/Entities/PlayerHead/PlayerHead.hpp"
+#include "../../../../include/Entities/Player/PlayerHead/PlayerHead.hpp"
 
 EntityType PlayerHead::getType() const
 {

@@ -5,7 +5,7 @@
 ** PlayerBody
 */
 
-#include "../../../include/Entities/PlayerBody/PlayerBody.hpp"
+#include "../../../../include/Entities/Player/PlayerBody/PlayerBody.hpp"
 
 EntityType PlayerBody::getType() const
 {

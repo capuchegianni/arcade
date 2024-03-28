@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../AEntities.hpp"
+#include "../../AEntities.hpp"
 
 class PlayerHead : public AEntities {
     public:
