@@ -148,6 +148,6 @@ void Centipede::parseInput(Input input) {
     return;
 }
 
-std::vector<std::shared_ptr<AEntities>> Centipede::getAllEntities() const {
+std::vector<std::shared_ptr<AEntities>> Centipede::initAllEntities() const {
     return std::vector<std::shared_ptr<AEntities>>();
 }

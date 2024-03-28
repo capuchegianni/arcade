@@ -16,7 +16,7 @@ class Nibbler : public AGameModule {
         ~Nibbler() = default;
 
         void parseInput(Input key = NONE);
-        std::vector<std::shared_ptr<AEntities>> getAllEntities() const;
+        std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();

@@ -18,6 +18,6 @@ void Nibbler::parseInput(Input input) {
     return;
 }
 
-std::vector<std::shared_ptr<AEntities>> Nibbler::getAllEntities() const {
+std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const {
     return std::vector<std::shared_ptr<AEntities>>();
 }

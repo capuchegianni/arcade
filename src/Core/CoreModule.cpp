@@ -75,7 +75,7 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    this->getGraphicalModule()->initAssets(this->getGameModule()->getAllEntities());
+    this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
     this->getGraphicalModule()->createWindow("Arcade", {500, 500});
     while (this->getGraphicalModule()->isWindowOpen()) {
         this->getGraphicalModule()->displayWindow();
