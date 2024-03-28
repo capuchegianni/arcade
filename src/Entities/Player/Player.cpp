@@ -5,7 +5,7 @@
 ** Player
 */
 
-#include "Player.hpp"
+#include "../../../include/Entities/Player/Player.hpp"
 
 Player::Player()
 {
