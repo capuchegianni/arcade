@@ -10,35 +10,42 @@
 SfmlGraphicalModule::SfmlGraphicalModule() :
     AGraphicalModule("SFML") { }
 
-extern "C" std::shared_ptr<AGraphicalModule> createLib() {
+extern "C" std::shared_ptr<AGraphicalModule> createLib()
+{
     return std::make_shared<SfmlGraphicalModule>();
 }
 
-void SfmlGraphicalModule::destroyWindow() {
+void SfmlGraphicalModule::destroyWindow()
+{
     this->_window.close();
     this->_isOpen = false;
 }
 
-void SfmlGraphicalModule::createWindow(const std::string &name, const std::vector<int> &size) {
+void SfmlGraphicalModule::createWindow(const std::string &name, const std::vector<int> &size)
+{
     this->_window.create(sf::VideoMode(size[0], size[1]), name);
     this->_isOpen = true;
     this->setWindowTitle(name);
     this->setWindowSize(size);
 }
 
-void SfmlGraphicalModule::setWindowSize(const std::vector<int> &size) {
+void SfmlGraphicalModule::setWindowSize(const std::vector<int> &size)
+{
     this->_window.setSize(sf::Vector2u(size[0], size[1]));
 }
 
-void SfmlGraphicalModule::setWindowTitle(const std::string &title) {
+void SfmlGraphicalModule::setWindowTitle(const std::string &title)
+{
     this->_window.setTitle(title);
 }
 
-void SfmlGraphicalModule::displayWindow() {
+void SfmlGraphicalModule::displayWindow()
+{
     this->_window.display();
 }
 
-bool SfmlGraphicalModule::isWindowOpen() {
+bool SfmlGraphicalModule::isWindowOpen()
+{
     return this->_window.isOpen();
 }
 
@@ -55,17 +62,31 @@ Input SfmlGraphicalModule::parseKeyboard() {
                 return CHANGE_LIB;
             if (this->_event.key.code == sf::Keyboard::Tab)
                 return MENU;
+            if (this->_event.key.code == sf::Keyboard::Space)
+                return SPACE;
+            if (this->_event.key.code == sf::Keyboard::Z)
+                return UP;
+            if (this->_event.key.code == sf::Keyboard::Q)
+                return LEFT;
+            if (this->_event.key.code == sf::Keyboard::S)
+                return DOWN;
+            if (this->_event.key.code == sf::Keyboard::D)
+                return RIGHT;
+            if (this->_event.key.code == sf::Keyboard::R)
+                return RELOAD;
         }
     }
     return NONE;
 }
 
-void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
+void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
+{
     (void)map;
     return;
 }
 
-void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
+void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities)
+{
     (void)entities;
     return;
 }
