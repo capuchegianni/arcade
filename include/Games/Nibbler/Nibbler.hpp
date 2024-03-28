@@ -15,12 +15,12 @@ class Nibbler : public AGameModule {
         Nibbler();
         ~Nibbler() = default;
 
-        void parseInput(Input key = NONE);
         void reset();
         void changeDirection(Input key);
         void movePlayer();
         void autoTurn();
         bool eatFruit();
+        void catchInput(Input key = NONE);
         std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };
 

@@ -22,10 +22,11 @@ class AGraphicalModule : public IGraphicalModule {
 
         // Misc methods
         virtual Input parseKeyboard() = 0;
-        virtual void showMap(std::vector<std::vector<Tiles>>& map) = 0;
+        virtual void showMap(const std::vector<std::vector<Tiles>>& map) = 0;
         virtual void initAssets(const std::vector<std::shared_ptr<AEntities>>& entities) = 0;
         std::string getLibraryType() const;
     protected:
         std::string _libraryType;
         bool _isOpen = false;
+        std::map<std::string, std::any> _assets;
 };

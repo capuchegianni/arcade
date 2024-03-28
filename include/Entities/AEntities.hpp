@@ -19,8 +19,11 @@ class AEntities : public IEntities {
         void setPos(std::pair<int, int> pos);
         virtual std::pair<std::string, ASCII> imageToDisplay() const = 0;
         virtual EntityType getType() const = 0;
+        std::string getName() const;
+        void setName(std::string name);
 
     protected:
+        std::string _name;
         double _speed;
         std::pair<int, int> _pos;
         std::string _texturePath;

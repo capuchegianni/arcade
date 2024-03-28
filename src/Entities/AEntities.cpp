@@ -28,3 +28,11 @@ std::pair<int, int> AEntities::getPos() const {
 void AEntities::setPos(std::pair<int, int> pos) {
     this->_pos = pos;
 }
+
+std::string AEntities::getName() const {
+    return this->_name;
+}
+
+void AEntities::setName(std::string name) {
+    this->_name = name;
+}

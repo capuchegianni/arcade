@@ -46,7 +46,7 @@ Input NcursesGraphicalModule::parseKeyboard() {
     return NONE;
 }
 
-void NcursesGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
+void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     (void)map;
     return;
 }

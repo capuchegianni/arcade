@@ -78,6 +78,7 @@ void CoreModule::startGame() {
     this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
     this->getGraphicalModule()->createWindow("Arcade", {500, 500});
     while (this->getGraphicalModule()->isWindowOpen()) {
+        this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
         this->getGraphicalModule()->displayWindow();
         this->handleEvents(this->getGraphicalModule()->parseKeyboard());
     }
@@ -123,11 +124,8 @@ void CoreModule::handleEvents(const Input& input) {
         this->changeGame(this->_currentGamePath, "createGame");
         break;
 
-    case NONE:
-        break;
-
     default:
-        this->getGameModule()->parseInput(input);
+        this->getGameModule()->catchInput(input);
         break;
     }
 }

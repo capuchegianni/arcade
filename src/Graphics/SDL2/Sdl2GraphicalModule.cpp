@@ -72,7 +72,7 @@ Input Sdl2GraphicalModule::parseKeyboard() {
     return NONE;
 }
 
-void Sdl2GraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
+void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     (void)map;
     return;
 }

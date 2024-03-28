@@ -20,8 +20,7 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     return std::vector<std::shared_ptr<AEntities>>();
 }
 
-void Nibbler::parseInput(Input input)
-{
+void Nibbler::catchInput(Input input) {
     this->autoTurn();
     this->movePlayer();
     return;

@@ -49,7 +49,7 @@ class IGraphicalModule {
          * @brief Display the map passed as parameter onto the window
          * @param map Map to show
         */
-        virtual void showMap(std::vector<std::vector<Tiles>>& map) = 0;
+        virtual void showMap(const std::vector<std::vector<Tiles>>& map) = 0;
 
         /**
          * @brief Return the library type

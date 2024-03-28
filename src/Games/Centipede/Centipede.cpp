@@ -13,3 +13,7 @@ Centipede::Centipede() :
 extern "C" std::shared_ptr<AGameModule> createGame() {
     return std::make_shared<Centipede>();
 }
+
+std::vector<std::shared_ptr<AEntities>> Centipede::initAllEntities() const {
+    return std::vector<std::shared_ptr<AEntities>>();
+}
