@@ -25,6 +25,7 @@ set(global_src
     src/Entities/Empty/Empty.cpp
     src/Entities/Enemy/Enemy.cpp
     src/Entities/Fruit/Fruit.cpp
+    src/Entities/Player/Player.cpp
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
