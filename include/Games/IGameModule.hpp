@@ -32,6 +32,7 @@ class IGameModule {
         // game
         virtual std::string getGameName() const = 0;
         virtual void setGameName(std::string name) = 0;
+        virtual std::vector<std::shared_ptr<AEntities>> getAllEntities() const = 0;
 
         // inputs
         virtual void parseInput(Input key = NONE) = 0;

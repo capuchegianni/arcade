@@ -147,3 +147,7 @@ void Centipede::autoTurn()
 void Centipede::parseInput(Input input) {
     return;
 }
+
+std::vector<std::shared_ptr<AEntities>> Centipede::getAllEntities() const {
+    return std::vector<std::shared_ptr<AEntities>>();
+}

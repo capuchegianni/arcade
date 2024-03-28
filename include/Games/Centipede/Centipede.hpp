@@ -22,6 +22,7 @@ class Centipede : public AGameModule {
         bool checkCollision(Input key);
         bool eatFruit();
         void parseInput(Input key = NONE);
+        std::vector<std::shared_ptr<AEntities>> getAllEntities() const;
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();

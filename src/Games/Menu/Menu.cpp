@@ -17,3 +17,7 @@ Menu::Menu() :
 void Menu::parseInput(Input input) {
     return;
 }
+
+std::vector<std::shared_ptr<AEntities>> Menu::getAllEntities() const {
+    return std::vector<std::shared_ptr<AEntities>>();
+}
