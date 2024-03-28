@@ -14,12 +14,6 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
     return std::make_shared<NcursesGraphicalModule>();
 }
 
-void NcursesGraphicalModule::initWindow(const std::string& name, const std::vector<int>& size) {
-    (void)name;
-    (void)size;
-    return;
-}
-
 void NcursesGraphicalModule::destroyWindow() {
     return;
 }
@@ -54,5 +48,10 @@ Input NcursesGraphicalModule::parseKeyboard() {
 
 void NcursesGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
     (void)map;
+    return;
+}
+
+void NcursesGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
+    (void)entities;
     return;
 }

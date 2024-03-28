@@ -22,6 +22,7 @@ class Nibbler : public AGameModule {
         void autoTurn();
         bool checkCollision(Input key);
         bool eatFruit();
+        std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();

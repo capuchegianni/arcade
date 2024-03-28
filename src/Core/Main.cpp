@@ -14,6 +14,7 @@ int main(int ac, char **av) {
         if (ac != 2)
             throw FileError("Invalid number of arguments\nUSAGE: ./arcade path_to_graphical_library.so");
         core.checkFile(av[1]);
+        core.getLibraries();
         core.loadGraphicalLibrary(av[1], "createLib");
         core.loadGameLibrary("lib/arcade_menu.so", "createGame");
         core.startGame();

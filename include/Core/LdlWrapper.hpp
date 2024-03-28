@@ -20,6 +20,7 @@ class LdlWrapper {
         template<typename T>
         T createLib(const std::string& name);
         void *getHandle() const;
+        void closeLib();
 
     private:
         void *_handle = nullptr;
