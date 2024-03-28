@@ -42,6 +42,7 @@ enum GameStatus {
 enum EntityType {
     PLAYER_HEAD,
     PLAYER_BODY,
+    PLAYER_TAIL,
     ENEMY,
     PROJECTILE,
     WALL,
