@@ -10,6 +10,7 @@
 
 #include "../Libs.hpp"
 #include "IGameModule.hpp"
+#include "../Entities/Player/Player.hpp"
 
 class AGameModule : public IGameModule {
     public:
@@ -46,7 +47,8 @@ class AGameModule : public IGameModule {
         std::string _gameName = "";
         int _score = 0;
         std::map<std::string, int> _highScores = {};
+        Direction _direction = Direction::EAST;
+        Player _player;
 };
-
 
 #endif /* !AGAMES_HPP_ */
