@@ -60,7 +60,7 @@ Input SfmlGraphicalModule::parseKeyboard() {
     return NONE;
 }
 
-void SfmlGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
+void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     (void)map;
     return;
 }
