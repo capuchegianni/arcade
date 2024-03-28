@@ -42,4 +42,5 @@ class CoreModule : public ICoreModule {
         LdlWrapper _gameLib;
         std::deque<std::string> _gameLibs = {};
         std::deque<std::string> _graphicalLibs = {};
+        std::string _currentGamePath = "";
 };

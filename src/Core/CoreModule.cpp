@@ -124,6 +124,10 @@ void CoreModule::handleEvents(const Input& input) {
         this->changeGame("lib/arcade_menu.so", "createGame");
         break;
 
+    case RELOAD:
+        this->changeGame(this->_currentGamePath, "createGame");
+        break;
+
     case NONE:
         break;
 
@@ -150,6 +154,7 @@ void CoreModule::closeGraphicalLib() {
 void CoreModule::loadGraphicalLibrary(const std::string& path, const std::string& func) {
     this->_graphicalLib.openLib(path);
     this->_graphicalModule = this->_graphicalLib.createLib<std::shared_ptr<AGraphicalModule>>(func);
+    this->_currentGraphicalPath = path;
     std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
 }
 
@@ -181,6 +186,7 @@ void CoreModule::closeGameLib() {
 void CoreModule::loadGameLibrary(const std::string& path, const std::string& func) {
     this->_gameLib.openLib(path);
     this->_gameModule = this->_gameLib.createLib<std::shared_ptr<AGameModule>>(func);
+    this->_currentGamePath = path;
     std::cout << this->getGameModule()->getGameName() << " game started" << std::endl;
 }
 
