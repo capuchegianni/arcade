@@ -88,9 +88,23 @@ void CoreModule::initEntities(const std::vector<AEntities>& entities) {
     return;
 }
 
+static std::string nextGraphLib(std::deque<std::string>& graphLibs) {
+    std::string nextGraphLib = graphLibs.front();
+
+    graphLibs.pop_front();
+    graphLibs.push_back(nextGraphLib);
+    return nextGraphLib;
+}
+
+static std::string nextGameLib(std::deque<std::string>& gameLibs) {
+    std::string nextGameLib = gameLibs.front();
+
+    gameLibs.pop_front();
+    gameLibs.push_back(nextGameLib);
+    return nextGameLib;
+}
+
 void CoreModule::handleEvents(const Input& input) {
-    std::string nextGraphLib = this->_graphicalLibs.front();
-    std::string nextGameLib = this->_gameLibs.front();
 
     switch (input) {
     case ESC:
@@ -98,16 +112,12 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case CHANGE_LIB:
-        this->_graphicalLibs.pop_front();
-        this->_graphicalLibs.push_back(nextGraphLib);
-        this->changeGraphics(nextGraphLib, "createLib");
+        this->changeGraphics(nextGraphLib(this->_graphicalLibs), "createLib");
         this->startGame();
         break;
 
     case CHANGE_GAME:
-        this->_gameLibs.pop_front();
-        this->_gameLibs.push_back(nextGameLib);
-        this->changeGame(nextGameLib, "createGame");
+        this->changeGame(nextGameLib(this->_gameLibs), "createGame");
         break;
 
     case MENU:
@@ -116,6 +126,7 @@ void CoreModule::handleEvents(const Input& input) {
 
     case NONE:
         break;
+
     default:
         this->getGameModule()->parseInput(input);
         break;
