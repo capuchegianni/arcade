@@ -86,6 +86,55 @@ void Nibbler::movePlayer()
     }
 }
 
+void Nibbler::changeDirection(Input key)
+{
+    // std::pair<int, int> headPos = this->playerPos[0];
+    // std::vector<TilesType> radar;
+
+    // switch(this->direction) {
+    //     case NORTH:
+    //         radar = {
+    //             this->map[headPos.first - 1][headPos.second].getType(),
+    //             this->map[headPos.first + 1][headPos.second].getType()
+    //         };
+    //         if (key == LEFT && radar[0] == EMPTY)
+    //             direction = WEST;
+    //         else if (key == RIGHT && radar[1] == EMPTY)
+    //             direction = EAST;
+    //         break;
+    //     case SOUTH:
+    //         radar = {
+    //             this->map[headPos.first - 1][headPos.second].getType(),
+    //             this->map[headPos.first + 1][headPos.second].getType()
+    //         };
+    //         if (key == LEFT && radar[0] == EMPTY)
+    //             direction = WEST;
+    //         else if (key == RIGHT && radar[1] == EMPTY)
+    //             direction = EAST;
+    //         break;
+    //     case EAST:
+    //         radar = {
+    //             this->map[headPos.first][headPos.second - 1].getType(),
+    //             this->map[headPos.first][headPos.second + 1].getType()
+    //         };
+    //         if (key == UP && radar[0] == EMPTY)
+    //             direction = NORTH;
+    //         else if (key == DOWN && radar[1] == EMPTY)
+    //             direction = SOUTH;
+    //         break;
+    //     case WEST:
+    //         radar = {
+    //             this->map[headPos.first][headPos.second - 1].getType(),
+    //             this->map[headPos.first][headPos.second + 1].getType()
+    //         };
+    //         if (key == UP && radar[0] == EMPTY)
+    //             direction = NORTH;
+    //         else if (key == DOWN && radar[1] == EMPTY)
+    //             direction = SOUTH;
+    //         break;
+    // }
+}
+
 void Nibbler::autoTurn()
 {
     // std::pair<int, int> headPos = this->playerPos[0];
