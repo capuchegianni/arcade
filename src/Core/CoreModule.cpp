@@ -154,7 +154,6 @@ void CoreModule::closeGraphicalLib() {
 void CoreModule::loadGraphicalLibrary(const std::string& path, const std::string& func) {
     this->_graphicalLib.openLib(path);
     this->_graphicalModule = this->_graphicalLib.createLib<std::shared_ptr<AGraphicalModule>>(func);
-    this->_currentGraphicalPath = path;
     std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
 }
 
