@@ -22,6 +22,14 @@ set(global_src
     src/Errors/Errors.cpp
     src/GlobalClasses/Tiles.cpp
     src/Entities/AEntities.cpp
+    src/Entities/Empty/Empty.cpp
+    src/Entities/Enemy/Enemy.cpp
+    src/Entities/Fruit/Fruit.cpp
+    src/Entities/Player/PlayerHead/PlayerHead.cpp
+    src/Entities/Player/PlayerBody/PlayerBody.cpp
+    src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Projectile/Projectile.cpp
+    src/Entities/Wall/Wall.cpp
 )
 
 # Core executable
