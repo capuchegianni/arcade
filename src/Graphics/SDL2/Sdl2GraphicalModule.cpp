@@ -15,7 +15,14 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
 }
 
 void Sdl2GraphicalModule::destroyWindow() {
-    SDL2Wrapper::SDL_DestroyWindow(this->_window);
+    if (this->_renderer) {
+        SDL2Wrapper::SDL_DestroyRenderer(this->_renderer);
+        this->_renderer = nullptr;
+    }
+    if (this->_window) {
+        SDL2Wrapper::SDL_DestroyWindow(this->_window);
+        this->_window = nullptr;
+    }
     SDL2Wrapper::SDL_Quit();
     this->_isOpen = false;
 }

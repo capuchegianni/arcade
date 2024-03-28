@@ -26,8 +26,8 @@ class Sdl2GraphicalModule : public AGraphicalModule {
         void showMap(std::vector<std::vector<Tiles>>& map);
 
     private:
-        SDL_Window *_window;
-        SDL_Renderer *_renderer;
+        SDL_Window *_window = nullptr;
+        SDL_Renderer *_renderer = nullptr;
         SDL_Event _event;
 };
 
