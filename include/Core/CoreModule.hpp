@@ -31,7 +31,6 @@ class CoreModule : public ICoreModule {
         // Misc
         void checkFile(const std::string& path) const;
         void startGame();
-        void initEntities(const std::vector<AEntities>& entities);
         void handleEvents(const Input& input);
         void getLibraries();
 

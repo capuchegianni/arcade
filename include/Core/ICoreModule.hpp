@@ -30,6 +30,5 @@ class ICoreModule {
         // Misc
         virtual void checkFile(const std::string& path) const = 0;
         virtual void startGame() = 0;
-        virtual void initEntities(const std::vector<AEntities>& entities) = 0;
         virtual void handleEvents(const Input& input) = 0;
 };

@@ -75,17 +75,12 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    // this->initEntities();
+    this->getGraphicalModule()->initAssets(this->getGameModule()->getAllEntities());
     this->getGraphicalModule()->createWindow("Arcade", {500, 500});
     while (this->getGraphicalModule()->isWindowOpen()) {
         this->getGraphicalModule()->displayWindow();
         this->handleEvents(this->getGraphicalModule()->parseKeyboard());
     }
-}
-
-void CoreModule::initEntities(const std::vector<AEntities>& entities) {
-    (void)entities;
-    return;
 }
 
 static std::string nextGraphLib(std::deque<std::string>& graphLibs) {
