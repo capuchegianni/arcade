@@ -14,6 +14,10 @@ extern "C" std::shared_ptr<AGameModule> createGame() {
 Menu::Menu() :
     AGameModule("Menu") {}
 
-void Menu::parseInput(Input input) {
+void Menu::catchInput(Input input) {
     return;
+}
+
+std::vector<std::shared_ptr<AEntities>> Menu::initAllEntities() const {
+    return std::vector<std::shared_ptr<AEntities>>();
 }

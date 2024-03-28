@@ -18,8 +18,11 @@ class AEntities : public IEntities {
         std::pair<int, int> getPos() const;
         void setPos(std::pair<int, int> pos);
         std::pair<std::string, ASCII> imageToDisplay() const;
+        std::string getName() const;
+        void setName(std::string name);
 
     protected:
+        std::string _name;
         double _speed;
         std::pair<int, int> _pos;
         std::string _texturePath;

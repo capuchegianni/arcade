@@ -34,9 +34,10 @@ class AGameModule : public IGameModule {
         // game
         std::string getGameName() const;
         void setGameName(std::string name);
+        virtual std::vector<std::shared_ptr<AEntities>> initAllEntities() const = 0;
 
         // inputs
-        virtual void parseInput(Input key = NONE) = 0;
+        virtual void catchInput(Input key = NONE) = 0;
 
     protected:
         std::vector<std::vector<Tiles>> _map = {};

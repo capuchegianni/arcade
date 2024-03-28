@@ -14,6 +14,10 @@ extern "C" std::shared_ptr<AGameModule> createGame() {
 Nibbler::Nibbler() :
     AGameModule("Nibbler") {}
 
-void Nibbler::parseInput(Input input) {
+void Nibbler::catchInput(Input input) {
     return;
+}
+
+std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const {
+    return std::vector<std::shared_ptr<AEntities>>();
 }

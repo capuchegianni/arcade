@@ -15,7 +15,8 @@ class Menu : public AGameModule {
         Menu();
         ~Menu() = default;
 
-        void parseInput(Input key = NONE);
+        void catchInput(Input key = NONE);
+        std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();

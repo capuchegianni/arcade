@@ -31,6 +31,9 @@ class IGraphicalModule {
         */
         virtual void destroyWindow() = 0;
 
+
+        // Misc methods
+
         /**
          * @brief Return true if the window is open, false otherwise
          * @return bool
@@ -46,13 +49,17 @@ class IGraphicalModule {
          * @brief Display the map passed as parameter onto the window
          * @param map Map to show
         */
-        virtual void showMap(std::vector<std::vector<Tiles>>& map) = 0;
+        virtual void showMap(const std::vector<std::vector<Tiles>>& map) = 0;
 
-
-        // Misc methods
         /**
          * @brief Return the library type
          * @return std::string
         */
         virtual std::string getLibraryType() const = 0;
+
+        /**
+         * @brief Initialize the assets
+         * @param map Map to initialize
+        */
+        virtual void initAssets(const std::vector<std::shared_ptr<AEntities>>& entities) = 0;
 };

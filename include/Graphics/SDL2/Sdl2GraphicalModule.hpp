@@ -17,18 +17,18 @@ class Sdl2GraphicalModule : public AGraphicalModule {
 
         // Window methods
         void createWindow(const std::string& name, const std::vector<int>& size);
-        void initWindow(const std::string& name, const std::vector<int>& size);
         void setWindowSize(const std::vector<int>& size);
         void setWindowTitle(const std::string& title);
         void displayWindow();
         void destroyWindow();
         bool isWindowOpen();
         Input parseKeyboard();
-        void showMap(std::vector<std::vector<Tiles>>& map);
+        void showMap(const std::vector<std::vector<Tiles>>& map);
+        void initAssets(const std::vector<std::shared_ptr<AEntities>>& entities);
 
     private:
-        SDL_Window *_window;
-        SDL_Renderer *_renderer;
+        SDL_Window *_window = nullptr;
+        SDL_Renderer *_renderer = nullptr;
         SDL_Event _event;
 };
 
