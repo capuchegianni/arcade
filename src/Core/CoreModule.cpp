@@ -141,7 +141,8 @@ void CoreModule::closeGraphicalLib() {
         if (this->_graphicalModule)
             this->_graphicalModule->destroyWindow();
         this->_graphicalModule.reset();
-        dlclose(this->_graphicalLib.getHandle());
+        this->_graphicalModule = nullptr;
+        this->_graphicalLib.closeLib();
         std::cout << "Library closed" << std::endl;
     }
 }
@@ -171,7 +172,8 @@ void CoreModule::changeGraphics(const std::string& path, const std::string& func
 void CoreModule::closeGameLib() {
     if (this->_gameLib.getHandle()) {
         this->_gameModule.reset();
-        dlclose(this->_gameLib.getHandle());
+        this->_gameModule = nullptr;
+        this->_gameLib.closeLib();
         std::cout << "Game library closed" << std::endl;
     }
 }

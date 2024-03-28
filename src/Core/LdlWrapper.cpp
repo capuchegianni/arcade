@@ -41,4 +41,5 @@ void *LdlWrapper::getHandle() const {
 void LdlWrapper::closeLib() {
     if (this->_handle)
         dlclose(this->_handle);
+    this->_handle = nullptr;
 }
