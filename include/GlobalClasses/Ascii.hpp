@@ -11,6 +11,7 @@
 
 class ASCII {
     public:
+        ASCII() = default;
         ASCII(char ascii, Color color) : _ascii(ascii), _color(color) {}
 
     private:
