@@ -76,3 +76,8 @@ void Sdl2GraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
     (void)map;
     return;
 }
+
+void Sdl2GraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
+    (void)entities;
+    return;
+}

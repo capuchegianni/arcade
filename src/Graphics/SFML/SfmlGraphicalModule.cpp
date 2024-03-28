@@ -64,3 +64,8 @@ void SfmlGraphicalModule::showMap(std::vector<std::vector<Tiles>> &map) {
     (void)map;
     return;
 }
+
+void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
+    (void)entities;
+    return;
+}
