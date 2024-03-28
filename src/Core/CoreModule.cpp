@@ -115,7 +115,9 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case NONE:
+        break;
     default:
+        this->getGameModule()->parseInput(input);
         break;
     }
 }
