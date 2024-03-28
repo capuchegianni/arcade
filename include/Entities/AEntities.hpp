@@ -17,7 +17,8 @@ class AEntities : public IEntities {
         void setSpeed(double speed);
         std::pair<int, int> getPos() const;
         void setPos(std::pair<int, int> pos);
-        std::pair<std::string, ASCII> imageToDisplay() const;
+        virtual std::pair<std::string, ASCII> imageToDisplay() const = 0;
+        virtual EntityType getType() const = 0;
 
     protected:
         double _speed;

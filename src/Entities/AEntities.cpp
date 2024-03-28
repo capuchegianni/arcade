@@ -28,7 +28,3 @@ std::pair<int, int> AEntities::getPos() const {
 void AEntities::setPos(std::pair<int, int> pos) {
     this->_pos = pos;
 }
-
-std::pair<std::string, ASCII> AEntities::imageToDisplay() const {
-    return {this->_texturePath, this->_ascii};
-}
