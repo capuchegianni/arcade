@@ -12,8 +12,8 @@ PlayerHead::PlayerHead(std::pair<int, int> pos)
     this->_pos = pos;
 }
 
-PlayerHead::PlayerHead(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii)
-    : AEntities(speed, pos, texturePath, ascii)
+PlayerHead::PlayerHead(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name)
+    : AEntities(speed, pos, texturePath, ascii, name)
 {
 }
 

@@ -11,7 +11,7 @@
 
 class Fruit : public AEntities {
     public:
-        Fruit(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii);
+        Fruit(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
 
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;

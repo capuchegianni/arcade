@@ -7,8 +7,8 @@
 
 #include "../../../include/Entities/Empty/Empty.hpp"
 
-Empty::Empty(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii)
-    : AEntities(speed, pos, texturePath, ascii)
+Empty::Empty(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name)
+    : AEntities(speed, pos, texturePath, ascii, name)
 {
 }
 
