@@ -19,7 +19,6 @@ class Centipede : public AGameModule {
         void changeDirection(Input key);
         void movePlayer();
         void autoTurn();
-        bool checkCollision(Input key);
         bool eatFruit();
         void catchInput(Input key = NONE);
         std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
