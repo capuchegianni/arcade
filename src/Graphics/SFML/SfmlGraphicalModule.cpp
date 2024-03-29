@@ -6,6 +6,7 @@
 */
 
 #include "../../../include/Graphics/SFML/SfmlGraphicalModule.hpp"
+#include "../../../include/Entities/AEntities.hpp"
 
 SfmlGraphicalModule::SfmlGraphicalModule() :
     AGraphicalModule("SFML") { }
@@ -77,12 +78,35 @@ Input SfmlGraphicalModule::parseKeyboard() {
 
 void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
-    (void)map;
-    return;
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            Tiles tile = map[i][j].getEntities();
+
+            sf::Sprite sprite = this->_assets[tile.getEntities()[tile.getEntities().size()]->getName()];
+            sprite.setPosition(j, i);
+
+            this->_window.draw(sprite);
+        }
+    }
 }
 
 void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities)
 {
-    (void)entities;
-    return;
+    for (int i = 0; i < entities.size(); i++) {
+        std::shared_ptr<AEntities> entity = entities[i];
+        sf::Sprite sprite;
+        sf::Texture texture;
+        ASCII color = entity->imageToDisplay().second;
+
+        if (!texture.loadFromFile(entity->imageToDisplay().first)) {
+            std::cerr << "Error loading texture" << std::endl;
+            return;
+        }
+
+        sprite.setTexture(texture);
+        sprite.setColor(sf::Color(color.getAscii(), color.getAscii(), color.getAscii(), color.getAscii()));
+        this->_assets[entity->getName()] = sprite;
+    }
+    // (void)entities;
+    // return;
 }

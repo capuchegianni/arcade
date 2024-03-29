@@ -29,6 +29,7 @@ class SfmlGraphicalModule : public AGraphicalModule {
     private:
         sf::RenderWindow _window;
         sf::Event _event;
+        std::map<std::string, sf::Sprite> _assets;
 };
 
 extern "C" std::shared_ptr<AGraphicalModule> createLib();
