@@ -5,14 +5,19 @@
 ** Empty
 */
 
-#include "../../../include/Entities/Empty/EmptyEntity.hpp"
+#include "../../../include/Entities/Empty/Empty.hpp"
 
-EntityType EmptyEntity::getType() const
+Empty::Empty(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii)
+    : AEntities(speed, pos, texturePath, ascii)
+{
+}
+
+EntityType Empty::getType() const
 {
     return EntityType::EMPTY;
 }
 
-std::pair<std::string, ASCII> EmptyEntity::imageToDisplay() const
+std::pair<std::string, ASCII> Empty::imageToDisplay() const
 {
     return {this->_texturePath, this->_ascii};
 }

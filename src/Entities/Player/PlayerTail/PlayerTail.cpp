@@ -7,6 +7,16 @@
 
 #include "../../../../include/Entities/Player/PlayerTail/PlayerTail.hpp"
 
+PlayerTail::PlayerTail(std::pair<int, int> pos)
+{
+    this->_pos = pos;
+}
+
+PlayerTail::PlayerTail(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii)
+    : AEntities(speed, pos, texturePath, ascii)
+{
+}
+
 EntityType PlayerTail::getType() const
 {
     return EntityType::PLAYER_TAIL;

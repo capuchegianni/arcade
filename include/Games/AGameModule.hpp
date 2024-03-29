@@ -49,6 +49,7 @@ class AGameModule : public IGameModule {
         std::map<std::string, int> _highScores = {};
         Direction _direction = Direction::EAST;
         Player _player;
+        int _mapNb = 1;
 };
 
 #endif /* !AGAMES_HPP_ */
