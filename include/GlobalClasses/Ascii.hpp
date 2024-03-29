@@ -12,7 +12,12 @@
 class ASCII {
     public:
         ASCII() = default;
-        ASCII(char ascii, Color color) : _ascii(ascii), _color(color) {}
+        ASCII(char ascii, Color color);
+
+        char getAscii() const;
+        Color getColor() const;
+        void setAscii(char ascii);
+        void setColor(Color color);
         void setAscii(char ascii);
         void setColor(Color color);
         char getAscii() const;
