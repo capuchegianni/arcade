@@ -14,6 +14,21 @@ Player::Player()
     this->_tail = PlayerTail();
 }
 
+void Player::setHead(PlayerHead head)
+{
+    this->_head = head;
+}
+
+void Player::setBody(PlayerBody body)
+{
+    this->_body.push_back(body);
+}
+
+void Player::setTail(PlayerTail tail)
+{
+    this->_tail = tail;
+}
+
 PlayerHead Player::getHead() const
 {
     return this->_head;

@@ -15,6 +15,9 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib() {
 }
 
 void Sdl2GraphicalModule::destroyWindow() {
+    for (auto &asset : this->_assets) {
+        SDL2Wrapper::SDL_DestroyTexture(asset.second);
+    }
     if (this->_renderer) {
         SDL2Wrapper::SDL_DestroyRenderer(this->_renderer);
         this->_renderer = nullptr;
@@ -28,9 +31,14 @@ void Sdl2GraphicalModule::destroyWindow() {
 }
 
 void Sdl2GraphicalModule::createWindow(const std::string &name, const std::vector<int> &size) {
-    SDL2Wrapper::SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+    if (SDL2Wrapper::SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
+        throw Sdl2Error(SDL2Wrapper::SDL_GetError());
     this->_window = SDL2Wrapper::SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size[0], size[1], SDL_WINDOW_SHOWN);
+    if (!this->_window)
+        throw Sdl2Error(SDL2Wrapper::SDL_GetError());
     this->_renderer = SDL2Wrapper::SDL_CreateRenderer(this->_window, -1, SDL_RENDERER_ACCELERATED);
+    if (!this->_renderer)
+        throw Sdl2Error(SDL2Wrapper::SDL_GetError());
     this->_isOpen = true;
     this->setWindowTitle(name);
     this->setWindowSize(size);
@@ -73,11 +81,35 @@ Input Sdl2GraphicalModule::parseKeyboard() {
 }
 
 void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
-    (void)map;
-    return;
+    SDL2Wrapper::SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
+    SDL2Wrapper::SDL_RenderClear(this->_renderer);
+
+    for (size_t i = 0; i < map.size(); i++) {
+        for (size_t j = 0; j < map[i].size(); j++) {
+            Tiles tile = map[i][j];
+            int size = tile.getSize();
+            SDL_Rect rect = {static_cast<int>(j) * size * 26 + 4, static_cast<int>(i) * size * 26 + 4, size * 25, size * 25};
+
+            for (int k = map[i][j].getEntities().size() - 1; k >= 0; k--) {
+                std::shared_ptr<AEntities> entity = map[i][j].getEntities()[k];
+
+                SDL2Wrapper::SDL_RenderCopy(this->_renderer, this->_assets[entity->getName()], &rect);
+            }
+        }
+    }
 }
 
 void Sdl2GraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
-    (void)entities;
-    return;
+    this->_assets.clear();
+    for (int i = entities.size() - 1; i >= 0; i--) {
+        std::shared_ptr<AEntities> entity = entities[i];
+        Color color = entity->imageToDisplay().second.getColor();
+        SDL_Surface *surface = SDL2Wrapper::SDL_CreateSurfaceWithColor(1, 1, color);
+        SDL_Texture *texture = SDL2Wrapper::SDL_CreateTextureFromSurface(this->_renderer, surface);
+
+        if (!texture)
+            throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+        this->_assets[entity->getName()] = texture;
+        SDL2Wrapper::SDL_FreeSurface(surface);
+    }
 }

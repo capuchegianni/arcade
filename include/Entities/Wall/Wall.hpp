@@ -11,10 +11,8 @@
 
 class Wall : public AEntities {
     public:
+        Wall(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
+
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;
-
-    private:
-        std::string _texturePath;
-        ASCII _ascii;
 };

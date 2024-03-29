@@ -15,6 +15,9 @@ class Player {
     public:
         Player();
 
+        void setHead(PlayerHead head);
+        void setBody(PlayerBody body);
+        void setTail(PlayerTail tail);
         PlayerHead getHead() const;
         std::vector<PlayerBody> getBody() const;
         PlayerTail getTail() const;

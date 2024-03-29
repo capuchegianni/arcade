@@ -30,6 +30,7 @@ class Sdl2GraphicalModule : public AGraphicalModule {
         SDL_Window *_window = nullptr;
         SDL_Renderer *_renderer = nullptr;
         SDL_Event _event;
+        std::map<std::string, SDL_Texture*> _assets = {};
 };
 
 extern "C" std::shared_ptr<AGraphicalModule> createLib();

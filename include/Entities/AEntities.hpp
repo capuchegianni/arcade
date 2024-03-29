@@ -11,7 +11,7 @@
 
 class AEntities : public IEntities {
     public:
-        AEntities(double speed = 1, std::pair<int, int> pos = {0, 0}, std::string texturePath = "", ASCII ascii = ASCII(' ', Color(255, 255, 255)));
+        AEntities(double speed = 1, std::pair<int, int> pos = {0, 0}, std::string texturePath = "", ASCII ascii = ASCII(' ', Color(255, 255, 255)), std::string name = "entity");
 
         double getSpeed() const;
         void setSpeed(double speed);

@@ -101,3 +101,55 @@ void SDL2Wrapper::SDL_DestroyWindow(SDL_Window *window)
 {
     ::SDL_DestroyWindow(window);
 }
+
+const char *SDL2Wrapper::SDL_GetError()
+{
+    return ::SDL_GetError();
+}
+
+SDL_Surface *SDL2Wrapper::SDL_CreateRGBSurface(Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask)
+{
+    return ::SDL_CreateRGBSurface(flags, width, height, depth, Rmask, Gmask, Bmask, Amask);
+}
+
+void SDL2Wrapper::SDL_FreeSurface(SDL_Surface *surface)
+{
+    ::SDL_FreeSurface(surface);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_LoadBMPFile(const char *file)
+{
+    return ::SDL_LoadBMP(file);
+}
+
+void SDL2Wrapper::SDL_FillRect(SDL_Surface *surface, SDL_Rect *rect, Uint32 color)
+{
+    ::SDL_FillRect(surface, rect, color);
+}
+
+Uint32 SDL2Wrapper::SDL_MapRGB(const SDL_PixelFormat *format, Uint8 r, Uint8 g, Uint8 b)
+{
+    return ::SDL_MapRGB(format, r, g, b);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_CreateSurfaceWithColor(int width, int height, Color color)
+{
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, color.r, color.g, color.b));
+    return surface;
+}
+
+SDL_Texture *SDL2Wrapper::SDL_CreateTextureFromSurface(SDL_Renderer *renderer, SDL_Surface *surface)
+{
+    return ::SDL_CreateTextureFromSurface(renderer, surface);
+}
+
+void SDL2Wrapper::SDL_RenderCopy(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect)
+{
+    ::SDL_RenderCopy(renderer, texture, NULL, rect);
+}
+
+void SDL2Wrapper::SDL_DestroyTexture(SDL_Texture *texture)
+{
+    ::SDL_DestroyTexture(texture);
+}

@@ -16,9 +16,9 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib()
     return std::make_shared<SfmlGraphicalModule>();
 }
 
-void SfmlGraphicalModule::destroyWindow()
-{
-    this->_window.close();
+void SfmlGraphicalModule::destroyWindow() {
+    if (this->_isOpen)
+        this->_window.close();
     this->_isOpen = false;
 }
 

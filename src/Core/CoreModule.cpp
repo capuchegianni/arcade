@@ -114,6 +114,7 @@ void CoreModule::handleEvents(const Input& input) {
 
     case CHANGE_GAME:
         this->changeGame(nextGameLib(this->_gameLibs), "createGame");
+        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
         break;
 
     case MENU:
