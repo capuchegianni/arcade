@@ -13,7 +13,7 @@ class PlayerHead : public AEntities {
     public:
         PlayerHead() = default;
         PlayerHead(std::pair<int, int> pos);
-        PlayerHead(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii);
+        PlayerHead(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
 
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;
