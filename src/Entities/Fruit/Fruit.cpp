@@ -7,6 +7,11 @@
 
 #include "../../../include/Entities/Fruit/Fruit.hpp"
 
+Fruit::Fruit(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii)
+    : AEntities(speed, pos, texturePath, ascii)
+{
+}
+
 EntityType Fruit::getType() const
 {
     return EntityType::FRUIT;

@@ -11,10 +11,10 @@
 
 class PlayerTail : public AEntities {
     public:
+        PlayerTail() = default;
+        PlayerTail(std::pair<int, int> pos);
+        PlayerTail(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii);
+
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;
-
-    private:
-        std::string _texturePath;
-        ASCII _ascii;
 };
