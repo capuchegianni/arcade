@@ -49,31 +49,27 @@ bool SfmlGraphicalModule::isWindowOpen()
     return this->_window.isOpen();
 }
 
+std::unordered_map<sf::Keyboard::Key, Input> keymap = {
+    {sf::Keyboard::Escape, ESC},
+    {sf::Keyboard::Up, CHANGE_GAME},
+    {sf::Keyboard::Right, CHANGE_LIB},
+    {sf::Keyboard::Tab, MENU},
+    {sf::Keyboard::Space, SPACE},
+    {sf::Keyboard::Z, UP},
+    {sf::Keyboard::Q, LEFT},
+    {sf::Keyboard::S, DOWN},
+    {sf::Keyboard::D, RIGHT},
+    {sf::Keyboard::R, RELOAD}
+};
+
 Input SfmlGraphicalModule::parseKeyboard() {
     while (this->_window.pollEvent(this->_event)) {
         if (this->_event.type == sf::Event::Closed)
             return ESC;
         if (this->_event.type == sf::Event::KeyPressed) {
-            if (this->_event.key.code == sf::Keyboard::Escape)
-                return ESC;
-            if (this->_event.key.code == sf::Keyboard::Up)
-                return CHANGE_GAME;
-            if (this->_event.key.code == sf::Keyboard::Right)
-                return CHANGE_LIB;
-            if (this->_event.key.code == sf::Keyboard::Tab)
-                return MENU;
-            if (this->_event.key.code == sf::Keyboard::Space)
-                return SPACE;
-            if (this->_event.key.code == sf::Keyboard::Z)
-                return UP;
-            if (this->_event.key.code == sf::Keyboard::Q)
-                return LEFT;
-            if (this->_event.key.code == sf::Keyboard::S)
-                return DOWN;
-            if (this->_event.key.code == sf::Keyboard::D)
-                return RIGHT;
-            if (this->_event.key.code == sf::Keyboard::R)
-                return RELOAD;
+            auto it = keymap.find(this->_event.key.code);
+            if (it != keymap.end())
+                return it->second;
         }
     }
     return NONE;
