@@ -104,7 +104,7 @@ void SDL2Wrapper::SDL_DestroyWindow(SDL_Window *window)
 
 const char *SDL2Wrapper::SDL_GetError()
 {
-    ::SDL_GetError();
+    return ::SDL_GetError();
 }
 
 SDL_Surface *SDL2Wrapper::SDL_CreateRGBSurface(Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask)
