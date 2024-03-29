@@ -99,8 +99,7 @@ void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities
         ASCII color = entity->imageToDisplay().second;
 
         if (!texture.loadFromFile(entity->imageToDisplay().first)) {
-            std::cerr << "Error loading texture" << std::endl;
-            return;
+            throw SfmlError("Error loading texture");
         }
 
         sprite.setTexture(texture);
