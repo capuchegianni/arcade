@@ -13,6 +13,10 @@ class ASCII {
     public:
         ASCII() = default;
         ASCII(char ascii, Color color) : _ascii(ascii), _color(color) {}
+        void setAscii(char ascii);
+        void setColor(Color color);
+        char getAscii() const;
+        Color getColor() const;
 
     private:
         char _ascii = 0;
