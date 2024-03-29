@@ -21,6 +21,7 @@ include_directories(include)
 set(global_src
     src/Errors/Errors.cpp
     src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Entities/AEntities.cpp
     src/Entities/Empty/Empty.cpp
     src/Entities/Enemy/Enemy.cpp
