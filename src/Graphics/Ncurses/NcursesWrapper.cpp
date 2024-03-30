@@ -96,3 +96,8 @@ int NcursesWrapper::n_getch()
 {
     return ::getch();
 }
+
+int NcursesWrapper::n_nodelay(WINDOW *win, bool bf)
+{
+    return ::nodelay(win, bf);
+}
