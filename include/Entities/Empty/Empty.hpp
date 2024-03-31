@@ -15,8 +15,4 @@ class Empty : public AEntities {
 
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;
-
-    private:
-        std::string _texturePath;
-        ASCII _ascii;
 };
