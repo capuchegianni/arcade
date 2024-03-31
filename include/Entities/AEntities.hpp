@@ -23,9 +23,9 @@ class AEntities : public IEntities {
         void setName(std::string name);
 
     protected:
-        std::string _name;
         double _speed;
         std::pair<int, int> _pos;
         std::string _texturePath;
         ASCII _ascii;
+        std::string _name;
 };
