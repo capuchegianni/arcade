@@ -18,10 +18,6 @@ class ASCII {
         Color getColor() const;
         void setAscii(char ascii);
         void setColor(Color color);
-        void setAscii(char ascii);
-        void setColor(Color color);
-        char getAscii() const;
-        Color getColor() const;
 
     private:
         char _ascii = 0;

@@ -7,36 +7,6 @@
 
 #include "../../include/GlobalClasses/Ascii.hpp"
 
-ASCII::ASCII(char ascii, Color color) : _ascii(ascii), _color(color) {}
-
-void ASCII::setAscii(char ascii) 
-{
-    _ascii = ascii;
-}
-
-void ASCII::setColor(Color color) 
-{
-    _color = color;
-}
-
-char ASCII::getAscii() const 
-{
-    return _ascii;
-}
-
-Color ASCII::getColor() const 
-{
-    return _color;
-}
-/*
-** EPITECH PROJECT, 2024
-** arcade
-** File description:
-** Ascii
-*/
-
-#include "../../include/GlobalClasses/Ascii.hpp"
-
 ASCII::ASCII(char ascii, Color color) {
     this->_ascii = ascii;
     this->_color = color;
