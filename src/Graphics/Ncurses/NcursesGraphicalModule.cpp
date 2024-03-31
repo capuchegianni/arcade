@@ -56,39 +56,30 @@ Input NcursesGraphicalModule::parseKeyboard() {
     switch (key) {
         case 27:
             return ESC;
-            break;
 
         case KEY_UP:
             return CHANGE_GAME;
-            break;
 
         case KEY_RIGHT:
             return CHANGE_LIB;
-            break;
 
         case 114:
             return RELOAD;
-            break;
 
         case 9:
             return MENU;
-            break;
 
         case 122:
             return UP;
-            break;
 
         case 113:
             return LEFT;
-            break;
 
         case 115:
             return DOWN;
-            break;
 
         case 100:
             return RIGHT;
-            break;
     }
     return NONE;
 }
