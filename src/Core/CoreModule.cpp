@@ -75,8 +75,8 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
     this->getGraphicalModule()->createWindow("Arcade", {500, 500});
+    this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
     while (this->getGraphicalModule()->isWindowOpen()) {
         this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
         this->getGraphicalModule()->displayWindow();
@@ -119,10 +119,12 @@ void CoreModule::handleEvents(const Input& input) {
 
     case MENU:
         this->changeGame("lib/arcade_menu.so", "createGame");
+        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
         break;
 
     case RELOAD:
         this->changeGame(this->_currentGamePath, "createGame");
+        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
         break;
 
     default:
