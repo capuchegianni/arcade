@@ -93,41 +93,12 @@ void Nibbler::loadMap()
     }
 }
 
-void printMap(std::vector<std::vector<Tiles>> map)
-{
-    for (int y = 0; y < map.size(); y++) {
-        for (int x = 0; x < map[y].size(); x++) {
-            switch (map[y][x].getEntities()[0]->getType()) {
-                case WALL:
-                    std::cout << "@";
-                    break;
-                case EMPTY:
-                    std::cout << " ";
-                    break;
-                case FRUIT:
-                    std::cout << ".";
-                    break;
-                case PLAYER_HEAD:
-                    std::cout << "H";
-                    break;
-                case PLAYER_BODY:
-                    std::cout << "B";
-                    break;
-                case PLAYER_TAIL:
-                    std::cout << "T";
-                    break;
-            }
-        }
-        std::cout << std::endl;
-    }
-}
-
 void Nibbler::catchInput(Input input)
 {
     this->playerWin();
     this->loadMap();
-    // this->autoTurn();
-    // this->movePlayer();
+    this->autoTurn();
+    this->movePlayer();
     sleep(1);
     return;
 }
@@ -151,27 +122,40 @@ void Nibbler::movePlayer()
             case NORTH:
                 printf("Moving player north\n");
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second - 1));
-                // for (int i = 1; i < this->_player.getBody().size(); i++)
-                //     this->_player.getBody()[i].setPos(playerPos[i]);
-                // this->_player.getTail().setPos(playerPos[0]);
+                for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
+                    this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setPos(playerPos[0]);
                 break;
             case SOUTH:
                 printf("Moving player south\n");
+                this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second + 1));
+                for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
+                    this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setPos(playerPos[0]);
                 break;
             case EAST:
                 printf("Moving player east\n");
+                this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first + 1, this->_player.getHead().getPos().second));
+                for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
+                    this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setPos(playerPos[0]);
                 break;
             case WEST:
                 printf("Moving player west\n");
+                this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first - 1, this->_player.getHead().getPos().second));
+                for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
+                    this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setPos(playerPos[0]);
                 break;
             case STOP:
                 break;
         }
-        printf("Head pos: %d, %d\n", this->_player.getHead().getPos().first, this->_player.getHead().getPos().second);
-        // for (int i = 0; i < this->_player.getBody().size(); i++) {
+        // printf("---\nHead pos: %d, %d\n", this->_player.getHead().getPos().first, this->_player.getHead().getPos().second);
+        // for (int i = this->_player.getBody().size() - 1; i >= 0; i--) {
         //     printf("Body pos: %d, %d\n", this->_player.getBody()[i].getPos().first, this->_player.getBody()[i].getPos().second);
         // }
-        // printf("Tail pos: %d, %d\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
+        // printf("Tail pos: %d, %d\n---\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
+        // printf("Direction: %d\n---\n", this->_direction);
         next_time = current_time + std::chrono::milliseconds(200);
     }
 }
@@ -237,11 +221,11 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == EMPTY)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = STOP;
-            else if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == WALL)
+            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = WEST;
-            else if (radar[0] == WALL && radar[1] == WALL && radar[2] == EMPTY)
+            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = EAST;
             break;
         case SOUTH:
@@ -250,11 +234,11 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == EMPTY)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = STOP;
-            else if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == WALL)
+            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = WEST;
-            else if (radar[0] == WALL && radar[1] == WALL && radar[2] == EMPTY)
+            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = EAST;
             break;
         case EAST:
@@ -263,11 +247,11 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == EMPTY)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = STOP;
-            else if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == WALL)
+            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = NORTH;
-            else if (radar[0] == WALL && radar[1] == WALL && radar[2] == EMPTY)
+            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = SOUTH;
             break;
         case WEST:
@@ -276,11 +260,11 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == EMPTY)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = STOP;
-            else if (radar[0] == EMPTY && radar[1] == WALL && radar[2] == WALL)
+            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = NORTH;
-            else if (radar[0] == WALL && radar[1] == WALL && radar[2] == EMPTY)
+            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
                 this->_direction = SOUTH;
             break;
     }
