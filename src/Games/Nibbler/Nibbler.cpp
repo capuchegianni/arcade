@@ -15,7 +15,7 @@ extern "C" std::shared_ptr<AGameModule> createGame()
 Nibbler::Nibbler() : AGameModule("Nibbler")
 {
     this->_mapNb = 0;
-    this->_direction = NORTH;
+    this->_direction = EAST;
     this->_score = 0;
     this->_map.resize(20);
     this->_gameStatus = GameStatus::WIN;
@@ -34,6 +34,18 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     std::cout << "Nibbler entities initialized" << std::endl;
     std::cout << "There are " << entities.size() << " entities" << std::endl;
     return entities;
+}
+
+void Nibbler::catchInput(Input input)
+{
+    this->playerWin();
+    this->loadMap();
+    this->changeDirection(input);
+    this->autoTurn();
+    this->clearPlayer();
+    this->movePlayer();
+    this->placePlayer();
+    return;
 }
 
 void Nibbler::playerWin()
@@ -103,19 +115,26 @@ void Nibbler::loadMap()
     }
 }
 
-void Nibbler::catchInput(Input input)
-{
-    this->playerWin();
-    this->loadMap();
-    this->autoTurn();
-    this->movePlayer();
-    sleep(1);
-    return;
-}
-
 void Nibbler::reset()
 {
     this->_score = 0;
+}
+
+void Nibbler::clearPlayer()
+{
+    this->_map[this->_player.getHead().getPos().second][this->_player.getHead().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getHead().getPos(), "", ASCII(' ', Color()), "Empty")});
+    for (int i = 0; i < this->_player.getBody().size(); i++)
+        this->_map[this->_player.getBody()[i].getPos().second][this->_player.getBody()[i].getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getBody()[i].getPos(), "", ASCII(' ', Color()), "Empty")});
+    this->_map[this->_player.getTail().getPos().second][this->_player.getTail().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getTail().getPos(), "", ASCII(' ', Color()), "Empty")});
+}
+
+
+void Nibbler::placePlayer()
+{
+    this->_map[this->_player.getHead().getPos().second][this->_player.getHead().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerHead>(1, this->_player.getHead().getPos(), "", ASCII('H', Color()), "PlayerHead")});
+    for (int i = 0; i < this->_player.getBody().size(); i++)
+        this->_map[this->_player.getBody()[i].getPos().second][this->_player.getBody()[i].getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerBody>(1, this->_player.getBody()[i].getPos(), "", ASCII('B', Color()), "PlayerBody")});
+    this->_map[this->_player.getTail().getPos().second][this->_player.getTail().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerTail>(1, this->_player.getTail().getPos(), "", ASCII('T', Color()), "PlayerTail")});
 }
 
 void Nibbler::movePlayer()
@@ -156,12 +175,6 @@ void Nibbler::movePlayer()
             case STOP:
                 break;
         }
-        printf("---\nHead pos: %d, %d\n", this->_player.getHead().getPos().first, this->_player.getHead().getPos().second);
-        for (int i = this->_player.getBody().size() - 1; i >= 0; i--) {
-            printf("Body pos: %d, %d\n", this->_player.getBody()[i].getPos().first, this->_player.getBody()[i].getPos().second);
-        }
-        printf("Tail pos: %d, %d\n---\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
-        printf("Direction: %d\n---\n", this->_direction);
         next_time = current_time + std::chrono::milliseconds(200);
     }
 }
@@ -169,48 +182,28 @@ void Nibbler::movePlayer()
 void Nibbler::changeDirection(Input key)
 {
     std::pair<int, int> headPos = this->_player.getHead().getPos();
-    std::vector<EntityType> radar;
+    EntityType radar;
 
-    switch(this->_direction) {
-        case NORTH:
-            radar = {
-                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
-                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType()
-            };
-            if (key == LEFT && radar[0] == EMPTY)
-                this->_direction = WEST;
-            else if (key == RIGHT && radar[1] == EMPTY)
-                this->_direction = EAST;
-            break;
-        case SOUTH:
-            radar = {
-                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
-                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
-            };
-            if (key == LEFT && radar[0] == EMPTY)
-                this->_direction = WEST;
-            else if (key == RIGHT && radar[1] == EMPTY)
-                this->_direction = EAST;
-            break;
-        case EAST:
-            radar = {
-                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
-                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
-            };
-            if (key == UP && radar[0] == EMPTY)
+    switch (key) {
+        case UP:
+            radar = this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType();
+            if (radar == EMPTY || radar == FRUIT)
                 this->_direction = NORTH;
-            else if (key == DOWN && radar[1] == EMPTY)
+            break;
+        case DOWN:
+            radar = this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType();
+            if (radar == EMPTY || radar == FRUIT)
                 this->_direction = SOUTH;
             break;
-        case WEST:
-            radar = {
-                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
-                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
-            };
-            if (key == UP && radar[0] == EMPTY)
-                this->_direction = NORTH;
-            else if (key == DOWN && radar[1] == EMPTY)
-                this->_direction = SOUTH;
+        case LEFT:
+            radar = this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType();
+            if (radar == EMPTY || radar == FRUIT)
+                this->_direction = WEST;
+            break;
+        case RIGHT:
+            radar = this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType();
+            if (radar == EMPTY || radar == FRUIT)
+                this->_direction = EAST;
             break;
     }
 }
@@ -223,11 +216,11 @@ void Nibbler::autoTurn()
     switch(this->_direction) {
         case NORTH:
             radar = {
-                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
-                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
+                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
+                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == NORTH)
                 this->_direction = STOP;
             else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = WEST;
@@ -236,11 +229,11 @@ void Nibbler::autoTurn()
             break;
         case SOUTH:
             radar = {
-                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
-                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
+                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
+                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == SOUTH)
                 this->_direction = STOP;
             else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = WEST;
@@ -249,11 +242,11 @@ void Nibbler::autoTurn()
             break;
         case EAST:
             radar = {
-                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
-                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
+                this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
+                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == EAST)
                 this->_direction = STOP;
             else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = NORTH;
@@ -262,11 +255,11 @@ void Nibbler::autoTurn()
             break;
         case WEST:
             radar = {
-                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
                 this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
-                this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
+                this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
+                this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == WEST)
                 this->_direction = STOP;
             else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
                 this->_direction = NORTH;
