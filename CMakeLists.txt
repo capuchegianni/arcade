@@ -3,7 +3,7 @@ project(arcade)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(WARNING_FLAGS -Wall -Wextra -W -g -g3 -ggdb -std=c++20 -fno-gnu-unique)
+set(WARNING_FLAGS -Wall -W -g -g3 -std=c++20 -fno-gnu-unique)
 set(LDL_FLAGS -ldl)
 set(NCURSES_FLAGS -lncurses)
 set(SFML_FLAGS -lsfml-graphics -lsfml-window -lsfml-system)
