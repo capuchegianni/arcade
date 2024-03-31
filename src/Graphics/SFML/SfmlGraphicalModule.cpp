@@ -24,7 +24,7 @@ void SfmlGraphicalModule::destroyWindow() {
 
 void SfmlGraphicalModule::createWindow(const std::string &name, const std::vector<int> &size)
 {
-    this->_window.create(sf::VideoMode(size[0], size[1]), name);
+    this->_window.create(sf::VideoMode(size[0], size[1]), name, sf::Style::Close);
     this->_isOpen = true;
     this->setWindowTitle(name);
     this->setWindowSize(size);
@@ -78,14 +78,26 @@ Input SfmlGraphicalModule::parseKeyboard() {
 
 void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
-    for (size_t i = 0; i < map.size(); i++) {
-        for (size_t j = 0; j < map[i].size(); j++) {
-            Tiles tile = map[i][j].getEntities();
+    if (map.empty())
+        return;
+    for (int i = map.size() - 1; i >= 0; i--) {
+        if (map[i].empty())
+            continue;
+        for (int j = map[i].size() - 1; j >= 0; j--) {
+            Tiles tile = map[i][j];
 
-            sf::Sprite sprite = this->_assets[tile.getEntities()[tile.getEntities().size()]->getName()];
-            sprite.setPosition(j, i);
+            if (tile.getEntities().empty())
+                continue;
+            for (int k = tile.getEntities().size() - 1; k >= 0; k--) {
+                std::shared_ptr<AEntities> entity = tile.getEntities()[k];
+                sf::Sprite sprite = this->_assets[entity->getName()].first;
+                sf::Texture texture = this->_assets[entity->getName()].second;
 
-            this->_window.draw(sprite);
+                sprite.setTexture(texture);
+                sprite.setPosition(j * 26, i * 26);
+                sprite.setScale(0.1, 0.1);
+                this->_window.draw(sprite);
+            }
         }
     }
 }
@@ -96,14 +108,11 @@ void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities
         std::shared_ptr<AEntities> entity = entities[i];
         sf::Sprite sprite;
         sf::Texture texture;
-        ASCII color = entity->imageToDisplay().second;
+        Color color = entity->imageToDisplay().second.getColor();
 
-        if (!texture.loadFromFile(entity->imageToDisplay().first)) {
-            throw SfmlError("Error loading texture");
-        }
-
-        sprite.setTexture(texture);
-        sprite.setColor(sf::Color(color.getAscii(), color.getAscii(), color.getAscii(), color.getAscii()));
-        this->_assets[entity->getName()] = sprite;
+        if (!texture.loadFromFile(entity->imageToDisplay().first))
+            throw SfmlError("Error loading image path");
+        sprite.setColor(sf::Color(color.r, color.g, color.b, color.a));
+        this->_assets[entity->getName()] = {sprite, texture};
     }
 }
