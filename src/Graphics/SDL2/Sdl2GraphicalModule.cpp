@@ -75,6 +75,12 @@ Input Sdl2GraphicalModule::parseKeyboard() {
                 return CHANGE_LIB;
             if (this->_event.key.keysym.sym == SDLK_TAB)
                 return MENU;
+            if (this->_event.key.keysym.sym == SDLK_r)
+                return RELOAD;
+            if (this->_event.key.keysym.sym == SDLK_RETURN)
+                return ENTER;
+            if (this->_event.key.keysym.sym == SDLK_SPACE)
+                return SPACE;
         }
     }
     return NONE;
