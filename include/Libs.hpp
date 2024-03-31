@@ -20,6 +20,9 @@
 #include <chrono>
 #include <tuple>
 #include <deque>
+#include <unordered_map>
+#include <fstream>
+#include <unistd.h>
 #include "./GlobalClasses/Errors.hpp"
 #include "./GlobalClasses/Ascii.hpp"
 #include "./GlobalClasses/Color.hpp"

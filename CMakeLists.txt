@@ -3,7 +3,7 @@ project(arcade)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(WARNING_FLAGS -Wall -Wextra -W -g -g3 -ggdb -std=c++20 -fno-gnu-unique)
+set(WARNING_FLAGS -Wall -W -g -g3 -std=c++20 -fno-gnu-unique)
 set(LDL_FLAGS -ldl)
 set(NCURSES_FLAGS -lncurses)
 set(SFML_FLAGS -lsfml-graphics -lsfml-window -lsfml-system)
@@ -21,16 +21,7 @@ include_directories(include)
 set(global_src
     src/Errors/Errors.cpp
     src/GlobalClasses/Tiles.cpp
-    src/Entities/AEntities.cpp
-    src/Entities/Empty/Empty.cpp
-    src/Entities/Enemy/Enemy.cpp
-    src/Entities/Fruit/Fruit.cpp
-    src/Entities/Player/Player.cpp
-    src/Entities/Player/PlayerHead/PlayerHead.cpp
-    src/Entities/Player/PlayerBody/PlayerBody.cpp
-    src/Entities/Player/PlayerTail/PlayerTail.cpp
-    src/Entities/Projectile/Projectile.cpp
-    src/Entities/Wall/Wall.cpp
+    src/GlobalClasses/Ascii.cpp
 )
 
 # Core executable
@@ -51,6 +42,7 @@ set(ncurses_src
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/Ncurses/NcursesWrapper.cpp
     src/Graphics/Ncurses/NcursesGraphicalModule.cpp
+    src/Entities/AEntities.cpp
 )
 
 set(sdl2_src
@@ -58,21 +50,23 @@ set(sdl2_src
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SDL2/SDL2Wrapper.cpp
     src/Graphics/SDL2/Sdl2GraphicalModule.cpp
+    src/Entities/AEntities.cpp
 )
 
 set(sfml_src
     ${global_src}
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SFML/SfmlGraphicalModule.cpp
+    src/Entities/AEntities.cpp
 )
 
 add_library(arcade_ncurses SHARED ${ncurses_src})
 add_library(arcade_sdl2 SHARED ${sdl2_src})
 add_library(arcade_sfml SHARED ${sfml_src})
 
-target_compile_options(arcade_ncurses PUBLIC ${WARNING_FLAGS})
-target_compile_options(arcade_sdl2 PUBLIC ${WARNING_FLAGS})
-target_compile_options(arcade_sfml PUBLIC ${WARNING_FLAGS})
+target_compile_options(arcade_ncurses PRIVATE ${WARNING_FLAGS})
+target_compile_options(arcade_sdl2 PRIVATE ${WARNING_FLAGS})
+target_compile_options(arcade_sfml PRIVATE ${WARNING_FLAGS})
 
 target_link_libraries(arcade_ncurses ${NCURSES_FLAGS})
 target_link_libraries(arcade_sdl2 ${SDL_FLAGS})
@@ -87,18 +81,38 @@ set(nibbler_src
     ${global_src}
     src/Games/Nibbler/Nibbler.cpp
     src/Games/AGameModule.cpp
+    src/Entities/AEntities.cpp
+    src/Entities/Empty/Empty.cpp
+    src/Entities/Enemy/Enemy.cpp
+    src/Entities/Fruit/Fruit.cpp
+    src/Entities/Player/Player.cpp
+    src/Entities/Player/PlayerHead/PlayerHead.cpp
+    src/Entities/Player/PlayerBody/PlayerBody.cpp
+    src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Projectile/Projectile.cpp
+    src/Entities/Wall/Wall.cpp
 )
 
 set(centipede_src
     ${global_src}
     src/Games/Centipede/Centipede.cpp
     src/Games/AGameModule.cpp
+    src/Entities/AEntities.cpp
+    src/Entities/Player/Player.cpp
+    src/Entities/Player/PlayerHead/PlayerHead.cpp
+    src/Entities/Player/PlayerBody/PlayerBody.cpp
+    src/Entities/Player/PlayerTail/PlayerTail.cpp
 )
 
 set(menu_src
     ${global_src}
     src/Games/Menu/Menu.cpp
     src/Games/AGameModule.cpp
+    src/Entities/AEntities.cpp
+    src/Entities/Player/Player.cpp
+    src/Entities/Player/PlayerHead/PlayerHead.cpp
+    src/Entities/Player/PlayerBody/PlayerBody.cpp
+    src/Entities/Player/PlayerTail/PlayerTail.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})

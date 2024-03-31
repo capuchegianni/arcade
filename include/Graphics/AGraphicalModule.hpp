@@ -28,5 +28,4 @@ class AGraphicalModule : public IGraphicalModule {
     protected:
         std::string _libraryType;
         bool _isOpen = false;
-        std::map<std::string, std::any> _assets;
 };

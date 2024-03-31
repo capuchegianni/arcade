@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../Libs.hpp"
+#include "../Entities/AEntities.hpp"
 
 class IGraphicalModule {
     public:
