@@ -35,6 +35,7 @@ class NcursesWrapper {
     static int n_init_color(short color, short r, short g, short b);
     static int n_getch();
     static int n_nodelay(WINDOW *win, bool bf);
+    static int n_curs_set(int visibility);
 };
 
 #endif /* !NCURSES_HPP_ */

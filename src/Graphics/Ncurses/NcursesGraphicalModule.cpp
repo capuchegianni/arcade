@@ -28,6 +28,7 @@ void NcursesGraphicalModule::createWindow(const std::string &name, const std::ve
     NcursesWrapper::n_noecho();
     NcursesWrapper::n_keypad(stdscr, TRUE);
     NcursesWrapper::n_nodelay(stdscr, TRUE);
+    NcursesWrapper::n_curs_set(0);
     return;
 }
 
@@ -93,6 +94,7 @@ Input NcursesGraphicalModule::parseKeyboard() {
 }
 
 void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
+    NcursesWrapper::n_clear();
     if (map.empty())
         return;
     for (size_t i = map.size() - 1; i > 0; i--) {
