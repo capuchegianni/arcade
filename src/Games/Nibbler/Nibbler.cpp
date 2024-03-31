@@ -28,6 +28,8 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     entities.push_back(std::make_shared<Wall>(1, std::make_pair(0, 0), "assets/images/wall.png", ASCII('#', Color(105, 105, 105)), "Wall"));
     entities.push_back(std::make_shared<Empty>(1, std::make_pair(0, 0), "assets/images/empty.png", ASCII(' ', Color(255, 255, 255)), "Empty"));
     entities.push_back(std::make_shared<Fruit>(1, std::make_pair(0, 0), "assets/images/fruit.png", ASCII('@', Color(255, 0, 0)), "Fruit"));
+    entities.push_back(std::make_shared<Enemy>(1, std::make_pair(0, 0), "assets/images/enemy.png", ASCII('E', Color(255, 0, 0)), "Enemy"));
+    entities.push_back(std::make_shared<Projectile>(1, std::make_pair(0, 0), "assets/images/projectile.png", ASCII('P', Color(255, 0, 0)), "Projectile"));
     entities.push_back(std::make_shared<PlayerHead>(1, std::make_pair(0, 0), "assets/images/head.png", ASCII('H', Color(77, 0, 255)), "PlayerHead"));
     entities.push_back(std::make_shared<PlayerBody>(1, std::make_pair(0, 0), "assets/images/body.png", ASCII('B', Color(119, 65, 245)), "PlayerBody"));
     entities.push_back(std::make_shared<PlayerTail>(1, std::make_pair(0, 0), "assets/images/tail.png", ASCII('T', Color(144, 104, 239)), "PlayerTail"));
