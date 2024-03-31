@@ -130,28 +130,24 @@ void Nibbler::movePlayer()
     if (current_time >= next_time) {
         switch (this->_direction) {
             case NORTH:
-                printf("Moving player north\n");
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second - 1));
                 for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case SOUTH:
-                printf("Moving player south\n");
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second + 1));
                 for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case EAST:
-                printf("Moving player east\n");
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first + 1, this->_player.getHead().getPos().second));
                 for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case WEST:
-                printf("Moving player west\n");
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first - 1, this->_player.getHead().getPos().second));
                 for (int i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
@@ -160,12 +156,12 @@ void Nibbler::movePlayer()
             case STOP:
                 break;
         }
-        // printf("---\nHead pos: %d, %d\n", this->_player.getHead().getPos().first, this->_player.getHead().getPos().second);
-        // for (int i = this->_player.getBody().size() - 1; i >= 0; i--) {
-        //     printf("Body pos: %d, %d\n", this->_player.getBody()[i].getPos().first, this->_player.getBody()[i].getPos().second);
-        // }
-        // printf("Tail pos: %d, %d\n---\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
-        // printf("Direction: %d\n---\n", this->_direction);
+        printf("---\nHead pos: %d, %d\n", this->_player.getHead().getPos().first, this->_player.getHead().getPos().second);
+        for (int i = this->_player.getBody().size() - 1; i >= 0; i--) {
+            printf("Body pos: %d, %d\n", this->_player.getBody()[i].getPos().first, this->_player.getBody()[i].getPos().second);
+        }
+        printf("Tail pos: %d, %d\n---\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
+        printf("Direction: %d\n---\n", this->_direction);
         next_time = current_time + std::chrono::milliseconds(200);
     }
 }
