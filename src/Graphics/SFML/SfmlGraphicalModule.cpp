@@ -112,7 +112,6 @@ void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities
 
         if (!texture.loadFromFile(entity->imageToDisplay().first))
             throw SfmlError("Error loading image path");
-        sprite.setColor(sf::Color(color.r, color.g, color.b, color.a));
         this->_assets[entity->getName()] = {sprite, texture};
     }
 }
