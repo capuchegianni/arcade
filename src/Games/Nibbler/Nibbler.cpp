@@ -179,24 +179,28 @@ void Nibbler::movePlayer()
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second - 1));
                 for (size_t i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setLastPos(this->_player.getTail().getPos());
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case SOUTH:
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first, this->_player.getHead().getPos().second + 1));
                 for (size_t i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setLastPos(this->_player.getTail().getPos());
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case EAST:
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first + 1, this->_player.getHead().getPos().second));
                 for (size_t i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setLastPos(this->_player.getTail().getPos());
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case WEST:
                 this->_player.getHead().setPos(std::make_pair(this->_player.getHead().getPos().first - 1, this->_player.getHead().getPos().second));
                 for (size_t i = 1, z = 0; z < this->_player.getBody().size(); i++, z++)
                     this->_player.getBody()[z].setPos(playerPos[i]);
+                this->_player.getTail().setLastPos(this->_player.getTail().getPos());
                 this->_player.getTail().setPos(playerPos[0]);
                 break;
             case STOP:
@@ -204,6 +208,8 @@ void Nibbler::movePlayer()
         }
         next_time = current_time + std::chrono::milliseconds(200);
     }
+    // printf("tail pos: %d %d\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
+    // printf("tail last pos: %d %d\n", this->_player.getTail().getLastPos().first, this->_player.getTail().getLastPos().second);
 }
 
 void Nibbler::changeDirection(Input key)
@@ -308,5 +314,8 @@ void Nibbler::eatFruit()
         this->_score += 10;
         this->_fruitNb--;
         this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second), "", ASCII(' ', Color()), "Empty")});
+        // this->_player.setBody(PlayerBody(this->_player.getTail().getPos()));
+        // this->_player.setTail(PlayerTail(this->_player.getTail().getLastPos()));
+        // this->_player.getTail().setLastPos(this->_player.getTail().getPos());
     }
 }

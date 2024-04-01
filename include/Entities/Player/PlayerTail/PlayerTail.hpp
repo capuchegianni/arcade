@@ -17,4 +17,9 @@ class PlayerTail : public AEntities {
 
         EntityType getType() const override;
         std::pair<std::string, ASCII> imageToDisplay() const;
+        void setLastPos(std::pair<int, int> pos);
+        std::pair<int, int> getLastPos() const;
+
+    private:
+        std::pair<int, int> _lastPos;
 };

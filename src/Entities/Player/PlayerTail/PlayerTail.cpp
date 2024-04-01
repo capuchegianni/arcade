@@ -26,3 +26,13 @@ std::pair<std::string, ASCII> PlayerTail::imageToDisplay() const
 {
     return std::make_pair(_texturePath, _ascii);
 }
+
+void PlayerTail::setLastPos(std::pair<int, int> pos)
+{
+    this->_lastPos = pos;
+}
+
+std::pair<int, int> PlayerTail::getLastPos() const
+{
+    return this->_lastPos;
+}
