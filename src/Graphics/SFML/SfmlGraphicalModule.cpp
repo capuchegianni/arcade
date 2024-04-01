@@ -7,6 +7,7 @@
 
 #include "../../../include/Graphics/SFML/SfmlGraphicalModule.hpp"
 #include "../../../include/Entities/AEntities.hpp"
+#include "../../../include/Entities/AEntities.hpp"
 
 SfmlGraphicalModule::SfmlGraphicalModule() :
     AGraphicalModule("SFML") { }
@@ -17,6 +18,8 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib()
 }
 
 void SfmlGraphicalModule::destroyWindow() {
+    if (this->_isOpen)
+        this->_window.close();
     if (this->_isOpen)
         this->_window.close();
     this->_isOpen = false;

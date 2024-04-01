@@ -22,6 +22,29 @@ Nibbler::Nibbler() : AGameModule("Nibbler")
     this->_fruitNb = 28;
 }
 
+void printMap(std::vector<std::vector<Tiles>> map)
+{
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            std::cout << map[i][j].getEntities()[map[i][j].getEntities().size() - 1]->imageToDisplay().second.getAscii();
+        }
+        std::cout << std::endl;
+    }
+}
+
+void Nibbler::catchInput(Input input)
+{
+    this->playerWin();
+    this->loadMap();
+    this->changeDirection(input);
+    this->autoTurn();
+    this->clearPlayer();
+    this->movePlayer();
+    this->eatFruit();
+    this->placePlayer();
+    return;
+}
+
 std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
 {
     std::vector<std::shared_ptr<AEntities>> entities;
@@ -37,30 +60,6 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     std::cout << "Nibbler entities initialized" << std::endl;
     std::cout << "There are " << entities.size() << " entities" << std::endl;
     return entities;
-}
-
-void printMap(std::vector<std::vector<Tiles>> map)
-{
-    for (int i = 0; i < map.size(); i++) {
-        for (int j = 0; j < map[i].size(); j++) {
-            std::cout << map[i][j].getEntities()[map[i][j].getEntities().size() - 1]->imageToDisplay().second.getAscii();
-        }
-        std::cout << std::endl;
-    }
-}
-
-void Nibbler::catchInput(Input input)
-{
-    printMap(this->_map);
-    this->playerWin();
-    this->loadMap();
-    this->changeDirection(input);
-    this->autoTurn();
-    this->clearPlayer();
-    this->movePlayer();
-    this->eatFruit();
-    this->placePlayer();
-    return;
 }
 
 void Nibbler::playerWin()
@@ -97,13 +96,16 @@ void Nibbler::loadMap()
             switch (c) {
                 case '#':
                     this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Wall>(1, std::make_pair(x, y), "", ASCII('#', Color()), "Wall")}));
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Wall>(1, std::make_pair(x, y), "", ASCII('#', Color()), "Wall")}));
                     x++;
                     break;
                 case ' ':
                     this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(x, y), "", ASCII(' ', Color()), "Empty")}));
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(x, y), "", ASCII(' ', Color()), "Empty")}));
                     x++;
                     break;
                 case 'F':
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Fruit>(1, std::make_pair(x, y), "", ASCII('@', Color()), "Fruit")}));
                     this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Fruit>(1, std::make_pair(x, y), "", ASCII('@', Color()), "Fruit")}));
                     x++;
                     break;
