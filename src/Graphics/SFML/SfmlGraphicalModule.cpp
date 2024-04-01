@@ -93,10 +93,13 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
                 std::shared_ptr<AEntities> entity = tile.getEntities()[k];
                 sf::Sprite sprite = this->_assets[entity->getName()].first;
                 sf::Texture texture = this->_assets[entity->getName()].second;
+                float scaleFactorX = 25.0f / texture.getSize().x;
+                float scaleFactorY = 25.0f / texture.getSize().y;
 
                 sprite.setTexture(texture);
-                sprite.setPosition(j * 26, i * 26);
-                sprite.setScale(0.1, 0.1);
+                sprite.setPosition(j * 26 + 4, i * 26 + 4);
+
+                sprite.setScale(scaleFactorX, scaleFactorY);
                 this->_window.draw(sprite);
             }
         }
