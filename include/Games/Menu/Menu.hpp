@@ -17,8 +17,17 @@ class Menu : public AGameModule {
 
         void catchInput(Input key = NONE);
         std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
+        void initMap();
+        void updateMap();
+
+    private:
+        int _selectedGame = 0;
+        std::map<int, std::string> _graphicsLibs = {};
+        std::map<int, std::string> _gameLibs = {};
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();
+
+class AGraphicalModule;
 
 #endif /* !MENU_HPP_ */
