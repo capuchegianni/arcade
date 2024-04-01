@@ -33,7 +33,7 @@ class Nibbler : public AGameModule {
         void playerWin();
         void clearPlayer();
         void placePlayer();
-        bool eatFruit();
+        void eatFruit();
         void catchInput(Input key = NONE);
         std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };

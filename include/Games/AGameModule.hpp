@@ -50,6 +50,7 @@ class AGameModule : public IGameModule {
         Direction _direction = Direction::EAST;
         Player _player;
         int _mapNb = 1;
+        int _fruitNb = 0;
 };
 
 #endif /* !AGAMES_HPP_ */

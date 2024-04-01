@@ -19,6 +19,7 @@ Nibbler::Nibbler() : AGameModule("Nibbler")
     this->_score = 0;
     this->_map.resize(20);
     this->_gameStatus = GameStatus::WIN;
+    this->_fruitNb = 28;
 }
 
 std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
@@ -38,6 +39,16 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     return entities;
 }
 
+void printMap(std::vector<std::vector<Tiles>> map)
+{
+    for (int i = 0; i < map.size(); i++) {
+        for (int j = 0; j < map[i].size(); j++) {
+            std::cout << map[i][j].getEntities()[map[i][j].getEntities().size() - 1]->imageToDisplay().second.getAscii();
+        }
+        std::cout << std::endl;
+    }
+}
+
 void Nibbler::catchInput(Input input)
 {
     this->playerWin();
@@ -46,6 +57,7 @@ void Nibbler::catchInput(Input input)
     this->autoTurn();
     this->clearPlayer();
     this->movePlayer();
+    this->eatFruit();
     this->placePlayer();
     return;
 }
@@ -90,17 +102,17 @@ void Nibbler::loadMap()
                     break;
                 case 'H':
                     this->_player.setHead(PlayerHead(std::make_pair(x, y)));
-                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerHead>(1, std::make_pair(x, y), "", ASCII('H', Color()), "PlayerHead")}));
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(x, y), "", ASCII(' ', Color()), "Empty"), std::make_shared<PlayerHead>(1, std::make_pair(x, y), "", ASCII('H', Color()), "PlayerHead")}));
                     x++;
                     break;
                 case 'B':
                     this->_player.setBody(PlayerBody(std::make_pair(x, y)));
-                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerBody>(1, std::make_pair(x, y), "", ASCII('B', Color()), "PlayerBody")}));
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(x, y), "", ASCII(' ', Color()), "Empty"), std::make_shared<PlayerBody>(1, std::make_pair(x, y), "", ASCII('B', Color()), "PlayerBody")}));
                     x++;
                     break;
                 case 'T':
                     this->_player.setTail(PlayerTail(std::make_pair(x, y)));
-                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerTail>(1, std::make_pair(x, y), "", ASCII('T', Color()), "PlayerTail")}));
+                    this->_map[y].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(x, y), "", ASCII(' ', Color()), "Empty"), std::make_shared<PlayerTail>(1, std::make_pair(x, y), "", ASCII('T', Color()), "PlayerTail")}));
                     x++;
                     break;
                 case '\n':
@@ -124,19 +136,30 @@ void Nibbler::reset()
 
 void Nibbler::clearPlayer()
 {
-    this->_map[this->_player.getHead().getPos().second][this->_player.getHead().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getHead().getPos(), "", ASCII(' ', Color()), "Empty")});
-    for (int i = 0; i < this->_player.getBody().size(); i++)
-        this->_map[this->_player.getBody()[i].getPos().second][this->_player.getBody()[i].getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getBody()[i].getPos(), "", ASCII(' ', Color()), "Empty")});
-    this->_map[this->_player.getTail().getPos().second][this->_player.getTail().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, this->_player.getTail().getPos(), "", ASCII(' ', Color()), "Empty")});
-}
+    std::pair<int, int> headPos = this->_player.getHead().getPos();
+    std::pair<int, int> bodyPos;
+    std::pair<int, int> tailPos = this->_player.getTail().getPos();
 
+    this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0]});
+    for (int i = 0; i < this->_player.getBody().size(); i++) {
+        bodyPos = this->_player.getBody()[i].getPos();
+        this->_map[bodyPos.second][bodyPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[bodyPos.second][bodyPos.first].getEntities()[0]});
+    }
+    this->_map[tailPos.second][tailPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[tailPos.second][tailPos.first].getEntities()[0]});
+}
 
 void Nibbler::placePlayer()
 {
-    this->_map[this->_player.getHead().getPos().second][this->_player.getHead().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerHead>(1, this->_player.getHead().getPos(), "", ASCII('H', Color()), "PlayerHead")});
-    for (int i = 0; i < this->_player.getBody().size(); i++)
-        this->_map[this->_player.getBody()[i].getPos().second][this->_player.getBody()[i].getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerBody>(1, this->_player.getBody()[i].getPos(), "", ASCII('B', Color()), "PlayerBody")});
-    this->_map[this->_player.getTail().getPos().second][this->_player.getTail().getPos().first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<PlayerTail>(1, this->_player.getTail().getPos(), "", ASCII('T', Color()), "PlayerTail")});
+    std::pair<int, int> headPos = this->_player.getHead().getPos();
+    std::pair<int, int> bodyPos;
+    std::pair<int, int> tailPos = this->_player.getTail().getPos();
+
+    this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHead>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHead")});
+    for (int i = 0; i < this->_player.getBody().size(); i++) {
+        bodyPos = this->_player.getBody()[i].getPos();
+        this->_map[bodyPos.second][bodyPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[bodyPos.second][bodyPos.first].getEntities()[0], std::make_shared<PlayerBody>(1, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII('B', Color()), "PlayerBody")});
+    }
+    this->_map[tailPos.second][tailPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[tailPos.second][tailPos.first].getEntities()[0], std::make_shared<PlayerTail>(1, std::make_pair(tailPos.first, tailPos.second), "", ASCII('T', Color()), "PlayerTail")});
 }
 
 void Nibbler::movePlayer()
@@ -269,4 +292,46 @@ void Nibbler::autoTurn()
                 this->_direction = SOUTH;
             break;
     }
+}
+
+void Nibbler::eatFruit()
+{
+    // EntityType radar;
+    // std::pair<int, int> headPos = this->_player.getHead().getPos();
+
+    // switch (this->_direction) {
+    //     case NORTH:
+    //         radar = this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType();
+    //         if (radar == FRUIT) {
+    //             this->_fruitNb--;
+    //             this->_score += 10;
+    //             //this->_map[headPos.second - 1][headPos.first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second - 1), "", ASCII(' ', Color()), "Empty")});;
+    //         }
+    //         break;
+    //     case SOUTH:
+    //         radar = this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType();
+    //         if (radar == FRUIT) {
+    //             this->_fruitNb--;
+    //             this->_score += 10;
+    //             //this->_map[headPos.second + 1][headPos.first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second + 1), "", ASCII(' ', Color()), "Empty")});;
+    //         }
+    //         break;
+    //     case EAST:
+    //         radar = this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType();
+    //         if (radar == FRUIT) {
+    //             this->_fruitNb--;
+    //             this->_score += 10;
+    //             //this->_map[headPos.second][headPos.first + 1] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first + 1, headPos.second), "", ASCII(' ', Color()), "Empty")});;
+    //         }
+    //         break;
+    //     case WEST:
+    //         radar = this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType();
+    //         if (radar == FRUIT) {
+    //             this->_fruitNb--;
+    //             this->_score += 10;
+    //             //this->_map[headPos.second][headPos.first - 1] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first - 1, headPos.second), "", ASCII(' ', Color()), "Empty")});;
+    //         }
+    //         break;
+    // }
+    // printf("Fruit left: %d\n", this->_fruitNb);
 }
