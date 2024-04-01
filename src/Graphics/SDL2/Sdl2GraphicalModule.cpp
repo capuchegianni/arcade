@@ -104,7 +104,7 @@ void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
             int size = tile.getSize();
             SDL_Rect rect = {static_cast<int>(j) * size * 26 + 4, static_cast<int>(i) * size * 26 + 4, size * 25, size * 25};
 
-            for (int k = map[i][j].getEntities().size() - 1; k >= 0; k--) {
+            for (size_t k = 0; k < map[i][j].getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = map[i][j].getEntities()[k];
 
                 SDL2Wrapper::SDL_RenderCopy(this->_renderer, this->_assets[entity->getName()], &rect);

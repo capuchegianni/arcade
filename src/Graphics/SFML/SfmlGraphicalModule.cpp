@@ -91,7 +91,7 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 
             if (tile.getEntities().empty())
                 continue;
-            for (int k = tile.getEntities().size() - 1; k >= 0; k--) {
+            for (size_t k = 0; k < tile.getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = tile.getEntities()[k];
                 sf::Sprite sprite = this->_assets[entity->getName()].first;
                 sf::Texture texture = this->_assets[entity->getName()].second;
