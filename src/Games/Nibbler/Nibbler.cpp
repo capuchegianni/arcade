@@ -65,8 +65,14 @@ void Nibbler::catchInput(Input input)
 
 void Nibbler::playerWin()
 {
+    if (this->_fruitNb == 0)
+        this->_gameStatus = GameStatus::WIN;
     if (this->_gameStatus == GameStatus::WIN) {
         this->_mapNb == 3 ? this->_mapNb = 1 : this->_mapNb++;
+        this->_player.getBody().clear();
+        this->_map.clear();
+        this->_map.resize(20);
+        this->_fruitNb = 28;
     }
 }
 
@@ -208,22 +214,22 @@ void Nibbler::changeDirection(Input key)
     switch (key) {
         case UP:
             radar = this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType();
-            if (radar == EMPTY || radar == FRUIT)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second - 1][headPos.first].getEntities().size() == 1)
                 this->_direction = NORTH;
             break;
         case DOWN:
             radar = this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType();
-            if (radar == EMPTY || radar == FRUIT)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second + 1][headPos.first].getEntities().size() == 1)
                 this->_direction = SOUTH;
             break;
         case LEFT:
             radar = this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType();
-            if (radar == EMPTY || radar == FRUIT)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first - 1].getEntities().size() == 1)
                 this->_direction = WEST;
             break;
         case RIGHT:
             radar = this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType();
-            if (radar == EMPTY || radar == FRUIT)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first + 1].getEntities().size() == 1)
                 this->_direction = EAST;
             break;
     }
