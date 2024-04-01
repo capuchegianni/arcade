@@ -51,6 +51,7 @@ void printMap(std::vector<std::vector<Tiles>> map)
 
 void Nibbler::catchInput(Input input)
 {
+    printMap(this->_map);
     this->playerWin();
     this->loadMap();
     this->changeDirection(input);
@@ -127,11 +128,6 @@ void Nibbler::loadMap()
     } else {
         throw Error("could not open file");
     }
-}
-
-void Nibbler::reset()
-{
-    this->_score = 0;
 }
 
 void Nibbler::clearPlayer()
@@ -296,42 +292,11 @@ void Nibbler::autoTurn()
 
 void Nibbler::eatFruit()
 {
-    // EntityType radar;
-    // std::pair<int, int> headPos = this->_player.getHead().getPos();
+    std::pair<int, int> headPos = this->_player.getHead().getPos();
 
-    // switch (this->_direction) {
-    //     case NORTH:
-    //         radar = this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType();
-    //         if (radar == FRUIT) {
-    //             this->_fruitNb--;
-    //             this->_score += 10;
-    //             //this->_map[headPos.second - 1][headPos.first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second - 1), "", ASCII(' ', Color()), "Empty")});;
-    //         }
-    //         break;
-    //     case SOUTH:
-    //         radar = this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType();
-    //         if (radar == FRUIT) {
-    //             this->_fruitNb--;
-    //             this->_score += 10;
-    //             //this->_map[headPos.second + 1][headPos.first] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second + 1), "", ASCII(' ', Color()), "Empty")});;
-    //         }
-    //         break;
-    //     case EAST:
-    //         radar = this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType();
-    //         if (radar == FRUIT) {
-    //             this->_fruitNb--;
-    //             this->_score += 10;
-    //             //this->_map[headPos.second][headPos.first + 1] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first + 1, headPos.second), "", ASCII(' ', Color()), "Empty")});;
-    //         }
-    //         break;
-    //     case WEST:
-    //         radar = this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType();
-    //         if (radar == FRUIT) {
-    //             this->_fruitNb--;
-    //             this->_score += 10;
-    //             //this->_map[headPos.second][headPos.first - 1] = Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first - 1, headPos.second), "", ASCII(' ', Color()), "Empty")});;
-    //         }
-    //         break;
-    // }
-    // printf("Fruit left: %d\n", this->_fruitNb);
+    if (this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == FRUIT) {
+        this->_score += 10;
+        this->_fruitNb--;
+        this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second), "", ASCII(' ', Color()), "Empty")});
+    }
 }

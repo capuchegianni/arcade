@@ -26,7 +26,6 @@ class Nibbler : public AGameModule {
         ~Nibbler() = default;
 
         void loadMap();
-        void reset();
         void changeDirection(Input key);
         void movePlayer();
         void autoTurn();
