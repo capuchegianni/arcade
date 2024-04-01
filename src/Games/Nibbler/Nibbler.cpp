@@ -14,11 +14,11 @@ extern "C" std::shared_ptr<AGameModule> createGame()
 
 Nibbler::Nibbler() : AGameModule("Nibbler")
 {
-    this->_mapNb = 0;
+    this->_mapNb = 1;
     this->_direction = EAST;
     this->_score = 0;
     this->_map.resize(20);
-    this->_gameStatus = GameStatus::WIN;
+    this->_gameStatus = GameStatus::RUNNING;
     this->_fruitNb = 28;
 }
 
@@ -65,20 +65,20 @@ void Nibbler::catchInput(Input input)
 
 void Nibbler::playerWin()
 {
-    if (this->_fruitNb == 0)
-        this->_gameStatus = GameStatus::WIN;
-    if (this->_gameStatus == GameStatus::WIN) {
+    if (this->_fruitNb == 0) {
+        this->_score += 100;
         this->_mapNb == 3 ? this->_mapNb = 1 : this->_mapNb++;
         this->_player.getBody().clear();
         this->_map.clear();
         this->_map.resize(20);
         this->_fruitNb = 28;
+        this->_loadingMap = true;
     }
 }
 
 void Nibbler::loadMap()
 {
-    if (this->_gameStatus != GameStatus::WIN)
+    if (this->_loadingMap != true)
         return;
 
     std::vector<std::string> mapPath = {
@@ -128,6 +128,7 @@ void Nibbler::loadMap()
                     break;
                 case '|':
                     file.close();
+                    this->_loadingMap = false;
                     return;
             }
         }

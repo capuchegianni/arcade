@@ -51,6 +51,7 @@ class AGameModule : public IGameModule {
         Player _player;
         int _mapNb = 1;
         int _fruitNb = 0;
+        bool _loadingMap = true;
 };
 
 #endif /* !AGAMES_HPP_ */
