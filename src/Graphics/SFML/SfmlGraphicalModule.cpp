@@ -78,6 +78,7 @@ Input SfmlGraphicalModule::parseKeyboard() {
 
 void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
+    this->_window.clear(sf::Color::Black);
     if (map.empty())
         return;
     for (int i = map.size() - 1; i >= 0; i--) {
@@ -104,6 +105,7 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 
 void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities)
 {
+    this->_assets.clear();
     for (int i = entities.size() - 1; i >= 0; i--) {
         std::shared_ptr<AEntities> entity = entities[i];
         sf::Sprite sprite;
