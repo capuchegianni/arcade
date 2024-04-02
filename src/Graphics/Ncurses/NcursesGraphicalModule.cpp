@@ -80,6 +80,9 @@ Input NcursesGraphicalModule::parseKeyboard() {
 
         case 100:
             return RIGHT;
+
+        case 32:
+            return SPACE;
     }
     return NONE;
 }
