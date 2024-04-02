@@ -91,10 +91,10 @@ void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
     for (int i = map.size() - 1; i >= 0; i--) {
         if (map[i].empty())
             continue;
-        for (int j = map[i].size() - 1; j >= 0; j--) {
+        for (size_t j = 0; j < map[i].size(); j++) {
             if (map[i][j].getEntities().empty())
                 continue;
-            std::shared_ptr<AEntities> entity = map[i][j].getEntities()[0];
+            std::shared_ptr<AEntities> entity = map[i][j].getEntities()[map[i][j].getEntities().size() - 1];
 
             NcursesWrapper::n_mvprintw(i, j, std::string (1, entity->imageToDisplay().second.getAscii()));
         }
