@@ -49,7 +49,8 @@ class SDL2Wrapper {
         static SDL_Texture* SDL_CreateTextureFromSurface(SDL_Renderer* renderer, SDL_Surface* surface);
         static void SDL_RenderCopy(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* rect);
         static void SDL_DestroyTexture(SDL_Texture* texture);
-        static void SDL_RenderTexture(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect* rect);
+        static SDL_Surface *SDL_Img_Load(const char *file);
+        static const char *SDL_Img_GetError();
 };
 
 #endif /* !SDL2WRAPPER_HPP_ */
