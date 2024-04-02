@@ -64,7 +64,7 @@ void Nibbler::playerWin()
         this->_score += 100;
         this->_chronoRefresh -= 10;
         this->_lastChronoRefresh = this->_chronoRefresh;
-        this->_mapNb == 3 ? this->_mapNb = 1 : this->_mapNb++;
+        this->_mapNb == 10 ? this->_mapNb = 1 : this->_mapNb++;
         this->_player.getBody().clear();
         this->_map.clear();
         this->_map.resize(20);
@@ -122,6 +122,13 @@ void Nibbler::loadMap()
         "./src/Games/Nibbler/maps/map1.txt",
         "./src/Games/Nibbler/maps/map2.txt",
         "./src/Games/Nibbler/maps/map3.txt",
+        "./src/Games/Nibbler/maps/map4.txt",
+        "./src/Games/Nibbler/maps/map5.txt",
+        "./src/Games/Nibbler/maps/map6.txt",
+        "./src/Games/Nibbler/maps/map7.txt",
+        "./src/Games/Nibbler/maps/map8.txt",
+        "./src/Games/Nibbler/maps/map9.txt",
+        "./src/Games/Nibbler/maps/map10.txt"
     };
     std::ifstream file(mapPath[this->_mapNb - 1]);
     char c;
