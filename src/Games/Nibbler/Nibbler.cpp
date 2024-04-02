@@ -31,10 +31,10 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     entities.push_back(std::make_shared<Fruit>(1, std::make_pair(0, 0), "assets/images/fruit.png", ASCII('@', Color(255, 0, 0)), "Fruit"));
     entities.push_back(std::make_shared<Enemy>(1, std::make_pair(0, 0), "assets/images/enemy.png", ASCII('E', Color(255, 0, 0)), "Enemy"));
     entities.push_back(std::make_shared<Projectile>(1, std::make_pair(0, 0), "assets/images/projectile.png", ASCII('P', Color(255, 0, 0)), "Projectile"));
-    entities.push_back(std::make_shared<PlayerHeadNorth>(1, std::make_pair(0, 0), "assets/images/head.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadNorth"));
-    entities.push_back(std::make_shared<PlayerHeadSouth>(1, std::make_pair(0, 0), "assets/images/head.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadSouth"));
-    entities.push_back(std::make_shared<PlayerHeadEast>(1, std::make_pair(0, 0), "assets/images/head.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadEast"));
-    entities.push_back(std::make_shared<PlayerHeadWest>(1, std::make_pair(0, 0), "assets/images/head.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadWest"));
+    entities.push_back(std::make_shared<PlayerHeadNorth>(1, std::make_pair(0, 0), "assets/images/head_snake_north.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadNorth"));
+    entities.push_back(std::make_shared<PlayerHeadSouth>(1, std::make_pair(0, 0), "assets/images/head_snake_south.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadSouth"));
+    entities.push_back(std::make_shared<PlayerHeadEast>(1, std::make_pair(0, 0), "assets/images/head_snake_east.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadEast"));
+    entities.push_back(std::make_shared<PlayerHeadWest>(1, std::make_pair(0, 0), "assets/images/head_snake_west.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadWest"));
     entities.push_back(std::make_shared<PlayerBody>(1, std::make_pair(0, 0), "assets/images/body.png", ASCII('B', Color(119, 65, 245)), "PlayerBody"));
     entities.push_back(std::make_shared<PlayerTail>(1, std::make_pair(0, 0), "assets/images/tail.png", ASCII('T', Color(144, 104, 239)), "PlayerTail"));
     std::cout << "Nibbler entities initialized" << std::endl;
@@ -203,8 +203,9 @@ void Nibbler::placePlayer()
         case WEST:
             this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadWest>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadWest")});
             break;
+        default:
+            break;
     }
-    //this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHead>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHead")});
     for (size_t i = 0; i < this->_player.getBody().size(); i++) {
         bodyPos = this->_player.getBody()[i].getPos();
         this->_map[bodyPos.second][bodyPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[bodyPos.second][bodyPos.first].getEntities()[0], std::make_shared<PlayerBody>(1, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII('B', Color()), "PlayerBody")});
