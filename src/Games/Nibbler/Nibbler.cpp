@@ -34,8 +34,8 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     entities.push_back(std::make_shared<PlayerHeadSouth>(1, std::make_pair(0, 0), "assets/images/head_snake_south.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadSouth"));
     entities.push_back(std::make_shared<PlayerHeadEast>(1, std::make_pair(0, 0), "assets/images/head_snake_east.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadEast"));
     entities.push_back(std::make_shared<PlayerHeadWest>(1, std::make_pair(0, 0), "assets/images/head_snake_west.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadWest"));
-    entities.push_back(std::make_shared<PlayerBody>(1, std::make_pair(0, 0), "assets/images/body.png", ASCII('B', Color(119, 65, 245)), "PlayerBody"));
-    entities.push_back(std::make_shared<PlayerTail>(1, std::make_pair(0, 0), "assets/images/tail.png", ASCII('T', Color(144, 104, 239)), "PlayerTail"));
+    entities.push_back(std::make_shared<PlayerBody>(1, std::make_pair(0, 0), "assets/images/body_snake.png", ASCII('B', Color(119, 65, 245)), "PlayerBody"));
+    entities.push_back(std::make_shared<PlayerTail>(1, std::make_pair(0, 0), "assets/images/tail_snake.png", ASCII('T', Color(144, 104, 239)), "PlayerTail"));
     std::cout << "Nibbler entities initialized" << std::endl;
     std::cout << "There are " << entities.size() << " entities" << std::endl;
     return entities;
@@ -98,7 +98,6 @@ void Nibbler::playerLose()
             break;
     }
     if (this->_gameStatus == GameStatus::OVER) {
-        printf("Game Over\n");
         this->_direction = STOP;
         this->_lastDirection = EAST;
         this->_chronoRefresh = 200;
