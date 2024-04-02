@@ -61,10 +61,12 @@ static std::map<int, std::string> getGameList() {
 std::vector<std::shared_ptr<AEntities>> Menu::initAllEntities() const {
     std::vector<std::shared_ptr<AEntities>> entities;
 
-    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_lib.jpg", ASCII(' ', Color()), "Button1"));
-    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_game.jpg", ASCII(' ', Color()), "Button2"));
+    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_lib.jpg", ASCII(' ', Color(0, 162, 255)), "Button1"));
+    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_game.jpg", ASCII(' ', Color(239, 255, 0)), "Button2"));
     entities.push_back(std::make_shared<Background>(0, std::make_pair(0, 0), "assets/images/dinosaure.png", ASCII(' ', Color()), "Background"));
-    entities.push_back(std::make_shared<Empty>(0, std::make_pair(0, 0), "assets/images/arrow_left.png", ASCII('<', Color()), "Arrow"));
+    entities.push_back(std::make_shared<Empty>(0, std::make_pair(0, 0), "assets/images/arrow_left.png", ASCII('<', Color(0, 0, 0)), "Arrow"));
+    std::cout << "Menu entities initialized" << std::endl;
+    std::cout << "There are " << entities.size() << " entities" << std::endl;
     return entities;
 }
 
