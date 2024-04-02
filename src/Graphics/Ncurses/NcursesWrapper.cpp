@@ -106,3 +106,13 @@ int NcursesWrapper::n_curs_set(int visibility)
 {
     return ::curs_set(visibility);
 }
+
+int NcursesWrapper::n_attron(int attrs)
+{
+    return ::attron(attrs);
+}
+
+int NcursesWrapper::n_attroff(int attrs)
+{
+    return ::attroff(attrs);
+}
