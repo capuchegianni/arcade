@@ -57,9 +57,9 @@ int NcursesWrapper::n_wclear(WINDOW *win)
     return ::wclear(win);
 }
 
-int NcursesWrapper::n_wmove(WINDOW *win, int y, int x)
+int NcursesWrapper::n_move(int y, int x)
 {
-    return ::wmove(win, y, x);
+    return ::move(y, x);
 }
 
 void NcursesWrapper::n_getmaxyx(WINDOW *win, int *y, int *x)
@@ -105,4 +105,19 @@ int NcursesWrapper::n_nodelay(WINDOW *win, bool bf)
 int NcursesWrapper::n_curs_set(int visibility)
 {
     return ::curs_set(visibility);
+}
+
+int NcursesWrapper::n_attron(int attrs)
+{
+    return ::attron(attrs);
+}
+
+int NcursesWrapper::n_attroff(int attrs)
+{
+    return ::attroff(attrs);
+}
+
+int NcursesWrapper::n_clrtoeol()
+{
+    return ::clrtoeol();
 }

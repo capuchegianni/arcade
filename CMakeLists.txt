@@ -113,6 +113,10 @@ set(menu_src
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Button/Button.cpp
+    src/Entities/Empty/Empty.cpp
+    src/Entities/Background/Background.cpp
+    src/Core/LdlWrapper.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})

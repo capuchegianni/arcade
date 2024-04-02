@@ -17,3 +17,7 @@ extern "C" std::shared_ptr<AGameModule> createGame() {
 std::vector<std::shared_ptr<AEntities>> Centipede::initAllEntities() const {
     return std::vector<std::shared_ptr<AEntities>>();
 }
+
+void Centipede::catchInput(Input key) {
+    (void)key;
+}

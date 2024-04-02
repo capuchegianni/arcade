@@ -153,3 +153,13 @@ void SDL2Wrapper::SDL_DestroyTexture(SDL_Texture *texture)
 {
     ::SDL_DestroyTexture(texture);
 }
+
+SDL_Surface *SDL2Wrapper::SDL_Img_Load(const char *file)
+{
+    return ::IMG_Load(file);
+}
+
+const char *SDL2Wrapper::SDL_Img_GetError()
+{
+    return ::IMG_GetError();
+}
