@@ -62,6 +62,7 @@ void Nibbler::playerWin()
 {
     if (this->_fruitNb == 0) {
         this->_score += 100;
+        this->_chronoRefresh = this->_lastChronoRefresh;
         this->_chronoRefresh -= 10;
         this->_lastChronoRefresh = this->_chronoRefresh;
         this->_mapNb == 10 ? this->_mapNb = 1 : this->_mapNb++;
@@ -421,7 +422,7 @@ void Nibbler::eatFruit()
 void Nibbler::speedBoost(Input key)
 {
     if (key == SPACE && this->_speedBoost == false) {
-        this->_chronoRefresh = 100;
+        this->_chronoRefresh -= 100;
         this->_speedBoost = true;
     } else if (key == SPACE && this->_speedBoost == true) {
         this->_chronoRefresh = this->_lastChronoRefresh;
