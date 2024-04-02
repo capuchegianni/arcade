@@ -208,8 +208,6 @@ void Nibbler::movePlayer()
         }
         next_time = current_time + std::chrono::milliseconds(200);
     }
-    // printf("tail pos: %d %d\n", this->_player.getTail().getPos().first, this->_player.getTail().getPos().second);
-    // printf("tail last pos: %d %d\n", this->_player.getTail().getLastPos().first, this->_player.getTail().getLastPos().second);
 }
 
 void Nibbler::changeDirection(Input key)
@@ -309,13 +307,21 @@ void Nibbler::autoTurn()
 void Nibbler::eatFruit()
 {
     std::pair<int, int> headPos = this->_player.getHead().getPos();
+    std::vector<PlayerBody> bodyPos = this->_player.getBody();
 
     if (this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == FRUIT) {
         this->_score += 10;
         this->_fruitNb--;
         this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second), "", ASCII(' ', Color()), "Empty")});
-        // this->_player.setBody(PlayerBody(this->_player.getTail().getPos()));
-        // this->_player.setTail(PlayerTail(this->_player.getTail().getLastPos()));
-        // this->_player.getTail().setLastPos(this->_player.getTail().getPos());
+        this->_player.getBody().clear();
+        for (size_t i = 0; i < bodyPos.size() + 1; i++) {
+            if (i == 0) {
+                this->_player.setBody(this->_player.getTail().getPos());
+                continue;
+            }
+            this->_player.setBody(bodyPos[i - 1].getPos());
+        }
+        this->_player.getTail().setPos(this->_player.getTail().getLastPos());
+        this->_player.getTail().setLastPos(this->_player.getTail().getPos());
     }
 }
