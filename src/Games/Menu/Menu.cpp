@@ -73,7 +73,7 @@ std::vector<std::shared_ptr<AEntities>> Menu::initAllEntities() const {
 void Menu::catchInput(Input input) {
     this->initMap();
     if (input == UP || input == RIGHT)
-        this->_selectedGame == this->_gameLibs.size() - 1 ? this->_selectedGame = 0 : this->_selectedGame + 1;
+        this->_selectedGame == static_cast<int>(this->_gameLibs.size() - 1) ? this->_selectedGame = 0 : this->_selectedGame + 1;
     if (input == DOWN || input == LEFT)
         this->_selectedGame == 0 ? this->_selectedGame = this->_gameLibs.size() - 1 : this->_selectedGame - 1;
     if (input == ENTER) {
@@ -85,8 +85,8 @@ void Menu::catchInput(Input input) {
 
 void Menu::updateMap() {
     this->_map[2].clear();
-    for (int i = 0; i < this->_gameLibs.size(); i++) {
-        if (i == this->_selectedGame)
+    for (size_t i = 0; i < this->_gameLibs.size(); i++) {
+        if (static_cast<int>(i) == this->_selectedGame)
             this->_map[2].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, std::make_pair(450, 20 + i * 60), "<", ASCII('<', Color(0, 0, 0)), "Arrow")}));
         else
             this->_map[2].push_back(Tiles({}));
@@ -104,11 +104,11 @@ void Menu::initMap() {
     this->_gameLibs = getGameList();
     this->_map.clear();
     this->_map.resize(3);
-    for (int i = 0; i < this->_graphicsLibs.size(); i++) {
+    for (size_t i = 0; i < this->_graphicsLibs.size(); i++) {
         this->_map[0].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, graphicButtonPos, this->_graphicsLibs[i], ASCII(' ', Color(0, 162, 255)), "Button1")}));
         graphicButtonPos.second += 60;
     }
-    for (int i = 0; i < this->_gameLibs.size(); i++) {
+    for (size_t i = 0; i < this->_gameLibs.size(); i++) {
         this->_map[1].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, gameButtonPos, this->_gameLibs[i], ASCII(' ', Color(239, 255, 0)), "Button2")}));
         gameButtonPos.second += 60;
     }
