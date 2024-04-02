@@ -105,11 +105,11 @@ void Menu::initMap() {
     this->_map.clear();
     this->_map.resize(3);
     for (int i = 0; i < this->_graphicsLibs.size(); i++) {
-        this->_map[0].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, graphicButtonPos, this->_graphicsLibs[i], ASCII(' ', Color(0, 0, 0)), "Button1")}));
+        this->_map[0].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, graphicButtonPos, this->_graphicsLibs[i], ASCII(' ', Color(0, 162, 255)), "Button1")}));
         graphicButtonPos.second += 60;
     }
     for (int i = 0; i < this->_gameLibs.size(); i++) {
-        this->_map[1].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, gameButtonPos, this->_gameLibs[i], ASCII(' ', Color(0, 0, 0)), "Button2")}));
+        this->_map[1].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, gameButtonPos, this->_gameLibs[i], ASCII(' ', Color(239, 255, 0)), "Button2")}));
         gameButtonPos.second += 60;
     }
     this->_gameStatus = GameStatus::RUNNING;

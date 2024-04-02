@@ -97,6 +97,7 @@ Input Sdl2GraphicalModule::parseKeyboard() {
 static void displayBackground(const std::map<std::string, SDL_Texture*> &assets, SDL_Renderer *renderer) {
     if (assets.find("Background") == assets.end())
         return;
+
     SDL_Texture *texture = assets.at("Background");
     SDL_Rect rect = {0, 0, 500, 500};
 
@@ -104,6 +105,9 @@ static void displayBackground(const std::map<std::string, SDL_Texture*> &assets,
 }
 
 static void displayButton(const std::shared_ptr<AEntities>& entity, const std::map<std::string, SDL_Texture*>& assets, SDL_Renderer *renderer) {
+    if (assets.empty())
+        return;
+
     SDL_Texture* texture = assets.at(entity->getName());
     SDL_Rect rect = {0, 0, 32, 150};
 

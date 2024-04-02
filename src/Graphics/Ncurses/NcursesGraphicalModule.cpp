@@ -29,6 +29,7 @@ void NcursesGraphicalModule::createWindow(const std::string &name, const std::ve
     NcursesWrapper::n_keypad(stdscr, TRUE);
     NcursesWrapper::n_nodelay(stdscr, TRUE);
     NcursesWrapper::n_curs_set(0);
+    NcursesWrapper::n_start_color();
     return;
 }
 
@@ -87,6 +88,21 @@ Input NcursesGraphicalModule::parseKeyboard() {
     return NONE;
 }
 
+static void displayText(const std::string &text, const std::pair<int, int> &pos, const Color& color) {
+    std::pair<int, int> newPos = std::make_pair((int)pos.first / 100, (int)pos.second);
+
+    if (color.r == 0 && color.g == 162 && color.b == 255) {
+        NcursesWrapper::n_attron(COLOR_PAIR(1));
+        NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+        NcursesWrapper::n_attroff(COLOR_PAIR(1));
+    }
+    if (color.r == 239 && color.g == 255 && color.b == 0) {
+        NcursesWrapper::n_attron(COLOR_PAIR(2));
+        NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+        NcursesWrapper::n_attroff(COLOR_PAIR(2));
+    }
+}
+
 void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     NcursesWrapper::n_clear();
     if (map.empty())
@@ -97,14 +113,20 @@ void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
         for (int j = map[i].size() - 1; j >= 0; j--) {
             if (map[i][j].getEntities().empty())
                 continue;
+
             std::shared_ptr<AEntities> entity = map[i][j].getEntities()[0];
 
-            NcursesWrapper::n_mvprintw(i, j, std::string (1, entity->imageToDisplay().second.getAscii()));
+            if (entity->getType() == BUTTON)
+                displayText(entity->imageToDisplay().first, entity->getPos(), entity->imageToDisplay().second.getColor());
+            else
+                NcursesWrapper::n_mvprintw(i, j, std::string (1, entity->imageToDisplay().second.getAscii()));
         }
     }
 }
 
 void NcursesGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {
     (void)entities;
+    NcursesWrapper::n_init_pair(1, COLOR_BLACK, COLOR_BLUE);
+    NcursesWrapper::n_init_pair(2, COLOR_BLACK, COLOR_YELLOW);
     return;
 }
