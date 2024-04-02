@@ -16,6 +16,7 @@ Nibbler::Nibbler() : AGameModule("Nibbler")
 {
     this->_mapNb = 1;
     this->_direction = EAST;
+    this->_lastDirection = EAST;
     this->_score = 0;
     this->_map.resize(20);
     this->_gameStatus = GameStatus::RUNNING;
@@ -98,6 +99,7 @@ void Nibbler::playerLose()
     if (this->_gameStatus == GameStatus::OVER) {
         printf("Game Over\n");
         this->_direction = STOP;
+        this->_lastDirection = STOP;
         this->_score = 0;
         this->_mapNb = 1;
         this->clearPlayer();
@@ -203,7 +205,15 @@ void Nibbler::placePlayer()
         case WEST:
             this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadWest>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadWest")});
             break;
-        default:
+        case STOP:
+            if (this->_lastDirection == NORTH)
+                this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadNorth>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadNorth")});
+            else if (this->_lastDirection == SOUTH)
+                this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadSouth>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadSouth")});
+            else if (this->_lastDirection == EAST)
+                this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadEast>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadEast")});
+            else if (this->_lastDirection == WEST)
+                this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[headPos.second][headPos.first].getEntities()[0], std::make_shared<PlayerHeadWest>(1, std::make_pair(headPos.first, headPos.second), "", ASCII('H', Color()), "PlayerHeadWest")});
             break;
     }
     for (size_t i = 0; i < this->_player.getBody().size(); i++) {
@@ -267,23 +277,31 @@ void Nibbler::changeDirection(Input key)
     switch (key) {
         case UP:
             radar = this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType();
-            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second - 1][headPos.first].getEntities().size() == 1)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second - 1][headPos.first].getEntities().size() == 1) {
+                this->_lastDirection = this->_direction;
                 this->_direction = NORTH;
+            }
             break;
         case DOWN:
             radar = this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType();
-            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second + 1][headPos.first].getEntities().size() == 1)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second + 1][headPos.first].getEntities().size() == 1) {
+                this->_lastDirection = this->_direction;
                 this->_direction = SOUTH;
+            }
             break;
         case LEFT:
             radar = this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType();
-            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first - 1].getEntities().size() == 1)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first - 1].getEntities().size() == 1) {
+                this->_lastDirection = this->_direction;
                 this->_direction = WEST;
+            }
             break;
         case RIGHT:
             radar = this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType();
-            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first + 1].getEntities().size() == 1)
+            if ((radar == EMPTY || radar == FRUIT) && this->_map[headPos.second][headPos.first + 1].getEntities().size() == 1) {
+                this->_lastDirection = this->_direction;
                 this->_direction = EAST;
+            }
             break;
         default:
             break;
@@ -302,12 +320,16 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == NORTH)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == NORTH) {
+                this->_lastDirection = this->_direction;
                 this->_direction = STOP;
-            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
+            } else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL) {
+                this->_lastDirection = this->_direction;
                 this->_direction = WEST;
-            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            } else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT)) {
+                this->_lastDirection = this->_direction;
                 this->_direction = EAST;
+            }
             break;
         case SOUTH:
             radar = {
@@ -315,12 +337,16 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == SOUTH)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == SOUTH) {
+                this->_lastDirection = this->_direction;
                 this->_direction = STOP;
-            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
+            } else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL) {
+                this->_lastDirection = this->_direction;
                 this->_direction = WEST;
-            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            } else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT)) {
+                this->_lastDirection = this->_direction;
                 this->_direction = EAST;
+            }
             break;
         case EAST:
             radar = {
@@ -328,12 +354,16 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType(),
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == EAST)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == EAST) {
+                this->_lastDirection = this->_direction;
                 this->_direction = STOP;
-            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
+            } else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL) {
+                this->_lastDirection = this->_direction;
                 this->_direction = NORTH;
-            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            } else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT)) {
+                this->_lastDirection = this->_direction;
                 this->_direction = SOUTH;
+            }
             break;
         case WEST:
             radar = {
@@ -341,12 +371,16 @@ void Nibbler::autoTurn()
                 this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType(),
                 this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType(),
             };
-            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == WEST)
+            if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT) && this->_direction == WEST) {
+                this->_lastDirection = this->_direction;
                 this->_direction = STOP;
-            else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL)
+            } else if ((radar[0] == EMPTY || radar[0] == FRUIT) && radar[1] == WALL && radar[2] == WALL) {
+                this->_lastDirection = this->_direction;
                 this->_direction = NORTH;
-            else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT))
+            } else if (radar[0] == WALL && radar[1] == WALL && (radar[2] == EMPTY || radar[2] == FRUIT)) {
+                this->_lastDirection = this->_direction;
                 this->_direction = SOUTH;
+            }
             break;
         default:
             break;
