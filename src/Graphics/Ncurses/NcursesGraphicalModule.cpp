@@ -30,6 +30,7 @@ void NcursesGraphicalModule::createWindow(const std::string &name, const std::ve
     NcursesWrapper::n_nodelay(stdscr, TRUE);
     NcursesWrapper::n_curs_set(0);
     NcursesWrapper::n_start_color();
+    this->_tick = 0;
     return;
 }
 
@@ -101,10 +102,15 @@ static void displayText(const std::string &text, const std::pair<int, int> &pos,
         NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
         NcursesWrapper::n_attroff(COLOR_PAIR(2));
     }
+    if (color.r == 0 && color.g == 0 && color.b == 0) {
+        NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+    }
 }
 
 void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
-    NcursesWrapper::n_clear();
+    if (this->_tick % 5 == 0) {
+        NcursesWrapper::n_clear();
+    }
     if (map.empty())
         return;
     for (int i = map.size() - 1; i >= 0; i--) {
@@ -122,6 +128,7 @@ void NcursesGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
                 NcursesWrapper::n_mvprintw(i, j, std::string (1, entity->imageToDisplay().second.getAscii()));
         }
     }
+    this->_tick++;
 }
 
 void NcursesGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities) {

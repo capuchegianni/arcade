@@ -25,6 +25,9 @@ class NcursesGraphicalModule : public AGraphicalModule {
         Input parseKeyboard();
         void showMap(const std::vector<std::vector<Tiles>>& map);
         void initAssets(const std::vector<std::shared_ptr<AEntities>>& entities);
+
+    private:
+        int _tick = 0;
 };
 
 extern "C" std::shared_ptr<AGraphicalModule> createLib();
