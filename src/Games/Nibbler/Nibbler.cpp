@@ -63,6 +63,7 @@ void Nibbler::playerWin()
 {
     if (this->_fruitNb == 0) {
         this->_score += 100;
+        this->_chronoRefresh -= 10;
         this->_mapNb == 3 ? this->_mapNb = 1 : this->_mapNb++;
         this->_player.getBody().clear();
         this->_map.clear();
@@ -99,7 +100,8 @@ void Nibbler::playerLose()
     if (this->_gameStatus == GameStatus::OVER) {
         printf("Game Over\n");
         this->_direction = STOP;
-        this->_lastDirection = STOP;
+        this->_lastDirection = EAST;
+        this->_chronoRefresh = 200;
         this->_score = 0;
         this->_mapNb = 1;
         this->clearPlayer();
@@ -265,7 +267,7 @@ void Nibbler::movePlayer()
             case STOP:
                 break;
         }
-        next_time = current_time + std::chrono::milliseconds(200);
+        next_time = current_time + std::chrono::milliseconds(this->_chronoRefresh);
     }
 }
 
