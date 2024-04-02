@@ -95,7 +95,6 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWi
     sf::Sprite sprite = assets.at(entity->getName()).first;
     sf::Texture texture = assets.at(entity->getName()).second;
     std::string text = entity->imageToDisplay().first;
-    Color color = entity->imageToDisplay().second.getColor();
     sf::Text textToDisplay;
     sf::Font font;
 
@@ -104,7 +103,7 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWi
     textToDisplay.setFont(font);
     textToDisplay.setString(text);
     textToDisplay.setCharacterSize(15);
-    textToDisplay.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
+    textToDisplay.setFillColor(sf::Color::Black);
     textToDisplay.setPosition(entity->getPos().first + 15, entity->getPos().second + 8);
 
     sprite.setTexture(texture);
