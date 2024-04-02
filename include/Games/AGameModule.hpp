@@ -53,7 +53,9 @@ class AGameModule : public IGameModule {
         int _mapNb = 1;
         int _fruitNb = 0;
         bool _loadingMap = true;
-        int _chronoRefresh = 200;
+        unsigned int _chronoRefresh = 200;
+        unsigned int _lastChronoRefresh = 200;
+        bool _speedBoost = false;
 };
 
 #endif /* !AGAMES_HPP_ */

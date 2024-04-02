@@ -30,8 +30,6 @@ std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
     entities.push_back(std::make_shared<Wall>(1, std::make_pair(0, 0), "assets/images/wall.png", ASCII('#', Color(105, 105, 105)), "Wall"));
     entities.push_back(std::make_shared<Empty>(1, std::make_pair(0, 0), "assets/images/empty.png", ASCII(' ', Color(255, 255, 255)), "Empty"));
     entities.push_back(std::make_shared<Fruit>(1, std::make_pair(0, 0), "assets/images/fruit.png", ASCII('@', Color(255, 0, 0)), "Fruit"));
-    entities.push_back(std::make_shared<Enemy>(1, std::make_pair(0, 0), "assets/images/enemy.png", ASCII('E', Color(255, 0, 0)), "Enemy"));
-    entities.push_back(std::make_shared<Projectile>(1, std::make_pair(0, 0), "assets/images/projectile.png", ASCII('P', Color(255, 0, 0)), "Projectile"));
     entities.push_back(std::make_shared<PlayerHeadNorth>(1, std::make_pair(0, 0), "assets/images/head_snake_north.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadNorth"));
     entities.push_back(std::make_shared<PlayerHeadSouth>(1, std::make_pair(0, 0), "assets/images/head_snake_south.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadSouth"));
     entities.push_back(std::make_shared<PlayerHeadEast>(1, std::make_pair(0, 0), "assets/images/head_snake_east.png", ASCII('H', Color(77, 0, 255)), "PlayerHeadEast"));
@@ -47,6 +45,7 @@ void Nibbler::catchInput(Input input)
 {
     this->playerWin();
     this->loadMap();
+    this->speedBoost(input);
     this->changeDirection(input);
     this->autoTurn();
     this->playerLose();
@@ -64,6 +63,7 @@ void Nibbler::playerWin()
     if (this->_fruitNb == 0) {
         this->_score += 100;
         this->_chronoRefresh -= 10;
+        this->_lastChronoRefresh = this->_chronoRefresh;
         this->_mapNb == 3 ? this->_mapNb = 1 : this->_mapNb++;
         this->_player.getBody().clear();
         this->_map.clear();
@@ -102,6 +102,7 @@ void Nibbler::playerLose()
         this->_direction = STOP;
         this->_lastDirection = EAST;
         this->_chronoRefresh = 200;
+        this->_lastChronoRefresh = 200;
         this->_score = 0;
         this->_mapNb = 1;
         this->clearPlayer();
@@ -408,5 +409,16 @@ void Nibbler::eatFruit()
         }
         this->_player.getTail().setPos(this->_player.getTail().getLastPos());
         this->_player.getTail().setLastPos(this->_player.getTail().getPos());
+    }
+}
+
+void Nibbler::speedBoost(Input key)
+{
+    if (key == SPACE && this->_speedBoost == false) {
+        this->_chronoRefresh = 100;
+        this->_speedBoost = true;
+    } else if (key == SPACE && this->_speedBoost == true) {
+        this->_chronoRefresh = this->_lastChronoRefresh;
+        this->_speedBoost = false;
     }
 }
