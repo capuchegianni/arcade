@@ -30,6 +30,7 @@ class Nibbler : public AGameModule {
         void movePlayer();
         void autoTurn();
         void playerWin();
+        void playerLose();
         void clearPlayer();
         void placePlayer();
         void eatFruit();
