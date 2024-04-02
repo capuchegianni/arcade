@@ -18,6 +18,7 @@ void Sdl2GraphicalModule::destroyWindow() {
     for (auto &asset : this->_assets) {
         SDL2Wrapper::SDL_DestroyTexture(asset.second);
     }
+    this->_assets.clear();
     if (this->_renderer) {
         SDL2Wrapper::SDL_DestroyRenderer(this->_renderer);
         this->_renderer = nullptr;
