@@ -120,6 +120,7 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
     if (map.empty())
         return;
+    this->_window.clear();
     displayBackground(this->_assets, this->_window);
     for (int i = map.size() - 1; i >= 0; i--) {
         if (map[i].empty())
@@ -151,6 +152,7 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 
 void SfmlGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities>> &entities)
 {
+    this->_assets.clear();
     for (int i = entities.size() - 1; i >= 0; i--) {
         std::shared_ptr<AEntities> entity = entities[i];
         sf::Sprite sprite;
