@@ -64,7 +64,7 @@ std::vector<std::shared_ptr<AEntities>> Menu::initAllEntities() const {
     entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_lib.jpg", ASCII(' ', Color(239, 255, 0)), "Button1"));
     entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/button_game.jpg", ASCII(' ', Color(0, 162, 255)), "Button2"));
     entities.push_back(std::make_shared<Background>(0, std::make_pair(0, 0), "assets/images/dinosaure.png", ASCII(' ', Color()), "Background"));
-    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/arrow_left.png", ASCII('<', Color(0, 0, 0)), "Arrow"));
+    entities.push_back(std::make_shared<Button>(0, std::make_pair(0, 0), "assets/images/arrow_left.png", ASCII(' ', Color(0, 0, 0)), "Arrow"));
     std::cout << "Menu entities initialized" << std::endl;
     std::cout << "There are " << entities.size() << " entities" << std::endl;
     return entities;
@@ -87,7 +87,7 @@ void Menu::updateMap() {
     this->_map[2].clear();
     for (size_t i = 0; i < this->_gameLibs.size(); i++) {
         if (static_cast<int>(i) == this->_selectedGame)
-            this->_map[2].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, std::make_pair(450, 20 + i * 60), "<", ASCII('<', Color(0, 0, 0)), "Arrow")}));
+            this->_map[2].push_back(Tiles(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Button>(0, std::make_pair(450, 20 + i * 60), "^", ASCII('^', Color(0, 0, 0)), "Arrow")}));
         else
             this->_map[2].push_back(Tiles({}));
     }
