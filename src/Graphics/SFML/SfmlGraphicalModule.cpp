@@ -63,7 +63,8 @@ std::unordered_map<sf::Keyboard::Key, Input> keymap = {
     {sf::Keyboard::Q, LEFT},
     {sf::Keyboard::S, DOWN},
     {sf::Keyboard::D, RIGHT},
-    {sf::Keyboard::R, RELOAD}
+    {sf::Keyboard::R, RELOAD},
+    {sf::Keyboard::Enter, ENTER},
 };
 
 Input SfmlGraphicalModule::parseKeyboard() {
@@ -95,6 +96,8 @@ static void displayBackground(const std::map<std::string, std::pair<sf::Sprite, 
 }
 
 static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWindow& window, const std::map<std::string, std::pair<sf::Sprite, sf::Texture>>& assets) {
+    if (assets.empty() || assets.find(entity->getName()) == assets.end())
+        return;
     sf::Sprite sprite = assets.at(entity->getName()).first;
     sf::Texture texture = assets.at(entity->getName()).second;
     std::string text = entity->imageToDisplay().first;
@@ -118,7 +121,7 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWi
 
 void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
-    if (map.empty())
+    if (map.empty() || this->_assets.empty())
         return;
     this->_window.clear();
     displayBackground(this->_assets, this->_window);

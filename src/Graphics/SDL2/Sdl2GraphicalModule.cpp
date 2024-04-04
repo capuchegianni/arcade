@@ -28,6 +28,7 @@ void Sdl2GraphicalModule::destroyWindow() {
         this->_window = nullptr;
     }
     SDL2Wrapper::SDL_Quit();
+    SDL2Wrapper::SDL_TTF_Quit();
     this->_isOpen = false;
 }
 
@@ -39,6 +40,8 @@ void Sdl2GraphicalModule::createWindow(const std::string &name, const std::vecto
         throw Sdl2Error(SDL2Wrapper::SDL_GetError());
     this->_renderer = SDL2Wrapper::SDL_CreateRenderer(this->_window, -1, SDL_RENDERER_ACCELERATED);
     if (!this->_renderer)
+        throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+    if (SDL2Wrapper::SDL_TTF_Init() < 0)
         throw Sdl2Error(SDL2Wrapper::SDL_GetError());
     this->_isOpen = true;
     this->setWindowTitle(name);
@@ -96,7 +99,7 @@ Input Sdl2GraphicalModule::parseKeyboard() {
 }
 
 static void displayBackground(const std::map<std::string, SDL_Texture*> &assets, SDL_Renderer *renderer) {
-    if (assets.find("Background") == assets.end())
+    if (assets.empty() || assets.find("Background") == assets.end())
         return;
 
     SDL_Texture *texture = assets.at("Background");
@@ -106,7 +109,7 @@ static void displayBackground(const std::map<std::string, SDL_Texture*> &assets,
 }
 
 static void displayButton(const std::shared_ptr<AEntities>& entity, const std::map<std::string, SDL_Texture*>& assets, SDL_Renderer *renderer) {
-    if (assets.empty())
+    if (assets.empty() || assets.find(entity->getName()) == assets.end())
         return;
 
     SDL_Texture* texture = assets.at(entity->getName());
@@ -115,9 +118,22 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, const std::m
 
         SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
     } else {
+        TTF_Font *font = SDL2Wrapper::SDL_TTF_OpenFont("assets/fonts/arial/arial_bold.ttf", 12);
+        if (!font)
+            throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+        SDL_Surface *surface = SDL2Wrapper::SDL_TTF_RenderText_Solid(font, entity->imageToDisplay().first.c_str(), Color(0, 0, 0));
+        if (!surface)
+            throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+        SDL_Texture *textTexture = SDL2Wrapper::SDL_CreateTextureFromSurface(renderer, surface);
+        if (!textTexture)
+            throw Sdl2Error(SDL2Wrapper::SDL_GetError());
         SDL_Rect rect = {entity->getPos().first + 15, entity->getPos().second + 8, 150, 32};
 
         SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
+        SDL2Wrapper::SDL_RenderCopy(renderer, textTexture, &rect);
+        SDL2Wrapper::SDL_FreeSurface(surface);
+        SDL2Wrapper::SDL_TTF_CloseFont(font);
+        SDL2Wrapper::SDL_DestroyTexture(textTexture);
     }
 }
 
@@ -127,9 +143,7 @@ void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     displayBackground(this->_assets, this->_renderer);
     for (size_t i = 0; i < map.size(); i++) {
         for (size_t j = 0; j < map[i].size(); j++) {
-            Tiles tile = map[i][j];
-            int size = tile.getSize();
-            SDL_Rect rect = {static_cast<int>(j) * size * 26 + 4, static_cast<int>(i) * size * 26 + 4, size * 25, size * 25};
+            SDL_Rect rect = {static_cast<int>(j) * 26 + 4, static_cast<int>(i) * 26 + 4, 25, 25};
 
             for (size_t k = 0; k < map[i][j].getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = map[i][j].getEntities()[k];

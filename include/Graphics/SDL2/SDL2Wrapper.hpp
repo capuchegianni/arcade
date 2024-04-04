@@ -51,6 +51,11 @@ class SDL2Wrapper {
         static void SDL_DestroyTexture(SDL_Texture* texture);
         static SDL_Surface *SDL_Img_Load(const char *file);
         static const char *SDL_Img_GetError();
+        static TTF_Font *SDL_TTF_OpenFont(const char *file, int size);
+        static void SDL_TTF_CloseFont(TTF_Font *font);
+        static SDL_Surface *SDL_TTF_RenderText_Solid(TTF_Font *font, const char *text, Color color);
+        static int SDL_TTF_Init();
+        static void SDL_TTF_Quit();
 };
 
 #endif /* !SDL2WRAPPER_HPP_ */

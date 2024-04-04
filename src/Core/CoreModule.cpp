@@ -7,6 +7,13 @@
 
 #include "../../include/Core/CoreModule.hpp"
 
+CoreModule::CoreModule() {
+    this->getGraphicsList();
+    this->getGameList();
+    this->_menu.setGraphicsLibs(this->_graphicalLibs);
+    this->_menu.setGameLibs(this->_gameLibs);
+}
+
 CoreModule::~CoreModule() {
     this->closeGraphicalLib();
     this->closeGameLib();
@@ -15,28 +22,8 @@ CoreModule::~CoreModule() {
 
 // Misc
 
-static std::deque<std::string> getGraphicsList() {
-    std::deque<std::string> graphicsLibs;
-
-    std::cout << "Loading graphical libraries..." << std::endl;
-    for (const auto& file : std::filesystem::directory_iterator("lib")) {
-        if (file.path().string().rfind(".so") != file.path().string().size() - 3)
-            continue;
-        try {
-            LdlWrapper lib;
-            lib.openLib(file.path().string());
-            lib.createLib<std::shared_ptr<AGraphicalModule>>("createLib");
-            graphicsLibs.push_back(file.path().string());
-            std::cout << "Library '" << file.path().string() << "' loaded" << std::endl;
-        } catch (...) {
-            continue;
-        }
-    }
-    return graphicsLibs;
-}
-
-static std::deque<std::string> getGameList() {
-    std::deque<std::string> gameLibs;
+void CoreModule::getGraphicsList() {
+    int i = 0;
 
     std::cout << "Loading game libraries..." << std::endl;
     for (const auto& file : std::filesystem::directory_iterator("lib")) {
@@ -47,20 +34,49 @@ static std::deque<std::string> getGameList() {
         try {
             LdlWrapper lib;
             lib.openLib(file.path().string());
-            lib.createLib<std::shared_ptr<AGameModule>>("createGame");
-            gameLibs.push_back(file.path().string());
+            lib.createLib<std::shared_ptr<AGraphicalModule>>("createLib");
+            this->_graphicalLibs[i] = file.path().string();
             std::cout << "Library '" << file.path().string() << "' loaded" << std::endl;
             lib.closeLib();
+            i++;
         } catch (...) {
             continue;
         }
     }
-    return gameLibs;
+    if (this->_graphicalLibs.empty())
+        throw FileError("No graphical libraries found", 84);
 }
 
-void CoreModule::getLibraries() {
-    this->_graphicalLibs = getGraphicsList();
-    this->_gameLibs = getGameList();
+void CoreModule::getGameList() {
+    int i = 0;
+
+    std::cout << "Loading game libraries..." << std::endl;
+    for (const auto& file : std::filesystem::directory_iterator("lib")) {
+        if (file.path().string().rfind(".so") != file.path().string().size() - 3)
+            continue;
+        if (file.path().string() == "lib/arcade_menu.so") {
+            this->_menuIsGame = true;
+            this->_currentGame = {i, file.path().string()};
+        }
+        try {
+            LdlWrapper lib;
+            lib.openLib(file.path().string());
+            lib.createLib<std::shared_ptr<AGameModule>>("createGame");
+            this->_gameLibs[i] = file.path().string();
+            std::cout << "Library '" << file.path().string() << "' loaded" << std::endl;
+            lib.closeLib();
+            i++;
+        } catch (...) {
+            continue;
+        }
+    }
+    if (this->_gameLibs.empty())
+        throw FileError("No game libraries found", 84);
+    if (!this->_menuIsGame) {
+        std::cout << "No menu library found, creating default menu" << std::endl;
+        this->_gameLibs[i] = "defaultMenu";
+        this->_currentGame = {this->_gameLibs.size() - 1, this->_gameLibs[this->_gameLibs.size() - 1]};
+    }
 }
 
 void CoreModule::checkFile(const std::string& path) const {
@@ -75,32 +91,54 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    this->getGraphicalModule()->createWindow("Arcade", {500, 500});
-    this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
-    while (this->getGraphicalModule()->isWindowOpen()) {
-        this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
-        this->getGraphicalModule()->displayWindow();
-        this->handleEvents(this->getGraphicalModule()->parseKeyboard());
+    if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+        this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
+    while(this->getGraphicalModule()->isWindowOpen()) {
+        if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu") {
+            this->getGraphicalModule()->showMap(this->_menu.getMap());
+            this->getGraphicalModule()->displayWindow();
+            this->handleEvents(this->getGraphicalModule()->parseKeyboard());
+        } else {
+            this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
+            this->getGraphicalModule()->displayWindow();
+            this->handleEvents(this->getGraphicalModule()->parseKeyboard());
+        }
     }
 }
 
-static std::string nextGraphLib(std::deque<std::string>& graphLibs) {
-    std::string nextGraphLib = graphLibs.front();
-
-    graphLibs.pop_front();
-    graphLibs.push_back(nextGraphLib);
-    return nextGraphLib;
+void CoreModule::startWindow() {
+    this->getGraphicalModule()->createWindow("Arcade", {500, 500});
 }
 
-static std::string nextGameLib(std::deque<std::string>& gameLibs) {
-    std::string nextGameLib = gameLibs.front();
+void CoreModule::startMenu() {
+    if (this->_menuIsGame) {
+        for (auto& game : this->_gameLibs) {
+            if (game.second == "lib/arcade_menu.so")
+                this->_currentGame = {game.first, game.second};
+        }
+        this->changeGame("createGame");
+    } else {
+        this->closeGameLib();
+        this->_currentGame = {this->_gameLibs.size() - 1, this->_gameLibs[this->_gameLibs.size() - 1]};
+        this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
+    }
+}
 
-    gameLibs.pop_front();
-    gameLibs.push_back(nextGameLib);
-    return nextGameLib;
+void CoreModule::reloadGame(bool isChanging) {
+    if (isChanging) {
+        if (this->_currentGame.first == static_cast<int>(this->_gameLibs.size() - 1))
+            this->_currentGame = {0, this->_gameLibs[0]};
+        else
+            this->_currentGame = {this->_currentGame.first + 1, this->_gameLibs[this->_currentGame.first + 1]};
+    }
+    if (this->_currentGame.second == "defaultMenu")
+        this->startMenu();
+    else
+        this->changeGame("createGame");
 }
 
 void CoreModule::handleEvents(const Input& input) {
+    int newGame = -1;
 
     switch (input) {
     case ESC:
@@ -108,29 +146,38 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case CHANGE_LIB:
-        this->changeGraphics(nextGraphLib(this->_graphicalLibs), "createLib");
-        this->startGame();
+        this->changeGraphics("createLib");
+        this->startWindow();
+        if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+            this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
+        else
+            this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
         break;
 
     case CHANGE_GAME:
-        this->changeGame(nextGameLib(this->_gameLibs), "createGame");
-        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
+        this->reloadGame(true);
         break;
 
     case MENU:
-        this->changeGame("lib/arcade_menu.so", "createGame");
-        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
+        this->startMenu();
         break;
 
     case RELOAD:
-        this->changeGame(this->_currentGamePath, "createGame");
-        this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
+        this->reloadGame(false);
         break;
 
     default:
-        this->getGameModule()->catchInput(input);
+        if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+            newGame = this->_menu.catchInput(input);
+        else
+            this->getGameModule()->catchInput(input);
         break;
     }
+    if (newGame != -1) {
+        this->_currentGame = {newGame, this->_gameLibs[newGame]};
+        this->reloadGame(false);
+    }
+    newGame = -1;
 }
 
 
@@ -148,6 +195,12 @@ void CoreModule::closeGraphicalLib() {
 }
 
 void CoreModule::loadGraphicalLibrary(const std::string& path, const std::string& func) {
+    if (this->_currentGraphic.second == "") {
+        for (const auto& lib : this->_graphicalLibs) {
+            if (path.substr(path.find_first_of('/') + 1) == lib.second)
+                this->_currentGraphic = {lib.first, lib.second};
+        }
+    }
     this->_graphicalLib.openLib(path);
     this->_graphicalModule = this->_graphicalLib.createLib<std::shared_ptr<AGraphicalModule>>(func);
     std::cout << this->getGraphicalModule()->getLibraryType() << " window created" << std::endl;
@@ -161,9 +214,13 @@ LdlWrapper& CoreModule::getGraphicalLib() {
     return this->_graphicalLib;
 }
 
-void CoreModule::changeGraphics(const std::string& path, const std::string& func) {
+void CoreModule::changeGraphics(const std::string& func) {
+    if (this->_currentGraphic.first == static_cast<int>(this->_graphicalLibs.size() - 1))
+        this->_currentGraphic = {0, this->_graphicalLibs[0]};
+    else
+        this->_currentGraphic = {this->_currentGraphic.first + 1, this->_graphicalLibs[this->_currentGraphic.first + 1]};
     this->closeGraphicalLib();
-    this->loadGraphicalLibrary(path, func);
+    this->loadGraphicalLibrary(this->_currentGraphic.second, func);
 }
 
 
@@ -181,7 +238,6 @@ void CoreModule::closeGameLib() {
 void CoreModule::loadGameLibrary(const std::string& path, const std::string& func) {
     this->_gameLib.openLib(path);
     this->_gameModule = this->_gameLib.createLib<std::shared_ptr<AGameModule>>(func);
-    this->_currentGamePath = path;
     std::cout << this->getGameModule()->getGameName() << " game started" << std::endl;
 }
 
@@ -193,7 +249,8 @@ LdlWrapper& CoreModule::getGameLib() {
     return this->_gameLib;
 }
 
-void CoreModule::changeGame(const std::string& path, const std::string& func) {
+void CoreModule::changeGame(const std::string& func) {
     this->closeGameLib();
-    this->loadGameLibrary(path, func);
+    this->loadGameLibrary(this->_currentGame.second, func);
+    this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
 }

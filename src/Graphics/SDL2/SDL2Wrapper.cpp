@@ -163,3 +163,29 @@ const char *SDL2Wrapper::SDL_Img_GetError()
 {
     return ::IMG_GetError();
 }
+
+TTF_Font *SDL2Wrapper::SDL_TTF_OpenFont(const char *file, int size) {
+    return ::TTF_OpenFont(file, size);
+}
+
+void SDL2Wrapper::SDL_TTF_CloseFont(TTF_Font *font) {
+    ::TTF_CloseFont(font);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_TTF_RenderText_Solid(TTF_Font *font, const char *text, Color color) {
+    SDL_Color sdl_color;
+
+    sdl_color.r = (color.r >= 0 && color.r <= 255) ? color.r : 255;
+    sdl_color.g = (color.g >= 0 && color.g <= 255) ? color.g : 255;
+    sdl_color.b = (color.b >= 0 && color.b <= 255) ? color.b : 255;
+    sdl_color.a = (color.a >= 0 && color.a <= 255) ? color.a : 255;
+    return ::TTF_RenderText_Solid(font, text, sdl_color);
+}
+
+void SDL2Wrapper::SDL_TTF_Quit() {
+    return ::TTF_Quit();
+}
+
+int SDL2Wrapper::SDL_TTF_Init() {
+    return ::TTF_Init();
+}
