@@ -11,13 +11,11 @@
 #include "../AGameModule.hpp"
 #include "../../GlobalClasses/Errors.hpp"
 #include "../../Entities/Empty/Empty.hpp"
-#include "../../Entities/Enemy/Enemy.hpp"
 #include "../../Entities/Fruit/Fruit.hpp"
 #include "../../Entities/Player/Player.hpp"
 #include "../../Entities/Player/PlayerHead/PlayerHead.hpp"
 #include "../../Entities/Player/PlayerBody/PlayerBody.hpp"
 #include "../../Entities/Player/PlayerTail/PlayerTail.hpp"
-#include "../../Entities/Projectile/Projectile.hpp"
 #include "../../Entities/Wall/Wall.hpp"
 
 class Nibbler : public AGameModule {
