@@ -124,7 +124,7 @@ add_library(arcade_snake SHARED ${snake_src})
 add_library(arcade_menu SHARED ${menu_src})
 
 target_compile_options(arcade_nibbler PRIVATE ${WARNING_FLAGS})
-target_compile_options(arcade_centipede PRIVATE ${WARNING_FLAGS})
+target_compile_options(arcade_snake PRIVATE ${WARNING_FLAGS})
 target_compile_options(arcade_menu PRIVATE ${WARNING_FLAGS})
 
 set_target_properties(arcade_nibbler PROPERTIES PREFIX "")
