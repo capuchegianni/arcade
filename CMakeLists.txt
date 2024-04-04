@@ -93,9 +93,9 @@ set(nibbler_src
     src/Entities/Wall/Wall.cpp
 )
 
-set(centipede_src
+set(snake_src
     ${global_src}
-    src/Games/Centipede/Centipede.cpp
+    src/Games/Snake/Snake.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
     src/Entities/Player/Player.cpp
@@ -120,7 +120,7 @@ set(menu_src
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})
-add_library(arcade_centipede SHARED ${centipede_src})
+add_library(arcade_snake SHARED ${snake_src})
 add_library(arcade_menu SHARED ${menu_src})
 
 target_compile_options(arcade_nibbler PRIVATE ${WARNING_FLAGS})
@@ -128,5 +128,5 @@ target_compile_options(arcade_centipede PRIVATE ${WARNING_FLAGS})
 target_compile_options(arcade_menu PRIVATE ${WARNING_FLAGS})
 
 set_target_properties(arcade_nibbler PROPERTIES PREFIX "")
-set_target_properties(arcade_centipede PROPERTIES PREFIX "")
+set_target_properties(arcade_snake PROPERTIES PREFIX "")
 set_target_properties(arcade_menu PROPERTIES PREFIX "")
