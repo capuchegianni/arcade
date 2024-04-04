@@ -15,7 +15,7 @@ extern "C" std::shared_ptr<AGameModule> createGame()
 Nibbler::Nibbler() : AGameModule("Nibbler")
 {
     this->_mapNb = 1;
-    this->_direction = EAST;
+    this->_direction = STOP;
     this->_lastDirection = EAST;
     this->_score = 0;
     this->_map.resize(20);
@@ -55,7 +55,6 @@ void Nibbler::catchInput(Input input)
     this->movePlayer();
     this->eatFruit();
     this->placePlayer();
-    return;
 }
 
 void Nibbler::playerWin()

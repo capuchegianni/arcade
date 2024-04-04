@@ -83,13 +83,11 @@ set(nibbler_src
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
     src/Entities/Empty/Empty.cpp
-    src/Entities/Enemy/Enemy.cpp
     src/Entities/Fruit/Fruit.cpp
     src/Entities/Player/Player.cpp
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
-    src/Entities/Projectile/Projectile.cpp
     src/Entities/Wall/Wall.cpp
 )
 
@@ -98,10 +96,13 @@ set(snake_src
     src/Games/Snake/Snake.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
+    src/Entities/Empty/Empty.cpp
+    src/Entities/Fruit/Fruit.cpp
     src/Entities/Player/Player.cpp
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Wall/Wall.cpp
 )
 
 set(menu_src
