@@ -48,8 +48,14 @@ class AGameModule : public IGameModule {
         int _score = 0;
         std::map<std::string, int> _highScores = {};
         Direction _direction = Direction::EAST;
+        Direction _lastDirection = Direction::EAST;
         Player _player;
         int _mapNb = 1;
+        int _fruitNb = 0;
+        bool _loadingMap = true;
+        unsigned int _chronoRefresh = 200;
+        unsigned int _lastChronoRefresh = 200;
+        bool _speedBoost = false;
 };
 
 #endif /* !AGAMES_HPP_ */

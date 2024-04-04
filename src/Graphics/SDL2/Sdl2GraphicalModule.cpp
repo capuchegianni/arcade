@@ -18,6 +18,7 @@ void Sdl2GraphicalModule::destroyWindow() {
     for (auto &asset : this->_assets) {
         SDL2Wrapper::SDL_DestroyTexture(asset.second);
     }
+    this->_assets.clear();
     if (this->_renderer) {
         SDL2Wrapper::SDL_DestroyRenderer(this->_renderer);
         this->_renderer = nullptr;
@@ -94,20 +95,49 @@ Input Sdl2GraphicalModule::parseKeyboard() {
     return NONE;
 }
 
+static void displayBackground(const std::map<std::string, SDL_Texture*> &assets, SDL_Renderer *renderer) {
+    if (assets.find("Background") == assets.end())
+        return;
+
+    SDL_Texture *texture = assets.at("Background");
+    SDL_Rect rect = {0, 0, 500, 500};
+
+    SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
+}
+
+static void displayButton(const std::shared_ptr<AEntities>& entity, const std::map<std::string, SDL_Texture*>& assets, SDL_Renderer *renderer) {
+    if (assets.empty())
+        return;
+
+    SDL_Texture* texture = assets.at(entity->getName());
+    if (entity->getName() == "Arrow") {
+        SDL_Rect rect = {entity->getPos().first + 15, entity->getPos().second + 8, 25, 25};
+
+        SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
+    } else {
+        SDL_Rect rect = {entity->getPos().first + 15, entity->getPos().second + 8, 150, 32};
+
+        SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
+    }
+}
+
 void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
     SDL2Wrapper::SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
     SDL2Wrapper::SDL_RenderClear(this->_renderer);
-
+    displayBackground(this->_assets, this->_renderer);
     for (size_t i = 0; i < map.size(); i++) {
         for (size_t j = 0; j < map[i].size(); j++) {
             Tiles tile = map[i][j];
             int size = tile.getSize();
             SDL_Rect rect = {static_cast<int>(j) * size * 26 + 4, static_cast<int>(i) * size * 26 + 4, size * 25, size * 25};
 
-            for (int k = map[i][j].getEntities().size() - 1; k >= 0; k--) {
+            for (size_t k = 0; k < map[i][j].getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = map[i][j].getEntities()[k];
 
-                SDL2Wrapper::SDL_RenderCopy(this->_renderer, this->_assets[entity->getName()], &rect);
+                if (entity->getType() == BUTTON)
+                    displayButton(entity, this->_assets, this->_renderer);
+                else
+                    SDL2Wrapper::SDL_RenderCopy(this->_renderer, this->_assets[entity->getName()], &rect);
             }
         }
     }
@@ -117,13 +147,27 @@ void Sdl2GraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntities
     this->_assets.clear();
     for (int i = entities.size() - 1; i >= 0; i--) {
         std::shared_ptr<AEntities> entity = entities[i];
-        Color color = entity->imageToDisplay().second.getColor();
-        SDL_Surface *surface = SDL2Wrapper::SDL_CreateSurfaceWithColor(1, 1, color);
-        SDL_Texture *texture = SDL2Wrapper::SDL_CreateTextureFromSurface(this->_renderer, surface);
 
-        if (!texture)
-            throw Sdl2Error(SDL2Wrapper::SDL_GetError());
-        this->_assets[entity->getName()] = texture;
-        SDL2Wrapper::SDL_FreeSurface(surface);
+        if (entity->getType() == BUTTON || entity->getType() == BACKGROUND) {
+            SDL_Surface *surface = SDL2Wrapper::SDL_Img_Load(entity->imageToDisplay().first.c_str());
+
+            if (!surface)
+                throw Sdl2Error(SDL2Wrapper::SDL_Img_GetError());
+            SDL_Texture *texture = SDL2Wrapper::SDL_CreateTextureFromSurface(this->_renderer, surface);
+
+            if (!texture)
+                throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+            this->_assets[entity->getName()] = texture;
+            SDL2Wrapper::SDL_FreeSurface(surface);
+        } else {
+            Color color = entity->imageToDisplay().second.getColor();
+            SDL_Surface *surface = SDL2Wrapper::SDL_CreateSurfaceWithColor(1, 1, color);
+            SDL_Texture *texture = SDL2Wrapper::SDL_CreateTextureFromSurface(this->_renderer, surface);
+
+            if (!texture)
+                throw Sdl2Error(SDL2Wrapper::SDL_GetError());
+            this->_assets[entity->getName()] = texture;
+            SDL2Wrapper::SDL_FreeSurface(surface);
+        }
     }
 }

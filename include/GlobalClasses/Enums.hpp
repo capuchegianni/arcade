@@ -47,7 +47,9 @@ enum EntityType {
     PROJECTILE,
     WALL,
     FRUIT,
-    EMPTY
+    EMPTY,
+    BUTTON,
+    BACKGROUND
 };
 
 #endif /* !ENUMS_HPP_ */

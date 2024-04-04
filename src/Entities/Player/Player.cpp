@@ -29,17 +29,17 @@ void Player::setTail(PlayerTail tail)
     this->_tail = tail;
 }
 
-PlayerHead Player::getHead() const
+PlayerHead &Player::getHead()
 {
     return this->_head;
 }
 
-std::vector<PlayerBody> Player::getBody() const
+std::vector<PlayerBody> &Player::getBody()
 {
     return this->_body;
 }
 
-PlayerTail Player::getTail() const
+PlayerTail &Player::getTail()
 {
     return this->_tail;
 }

@@ -7,6 +7,7 @@
 
 #include "../../../include/Graphics/SFML/SfmlGraphicalModule.hpp"
 #include "../../../include/Entities/AEntities.hpp"
+#include "../../../include/Entities/AEntities.hpp"
 
 SfmlGraphicalModule::SfmlGraphicalModule() :
     AGraphicalModule("SFML") { }
@@ -17,6 +18,8 @@ extern "C" std::shared_ptr<AGraphicalModule> createLib()
 }
 
 void SfmlGraphicalModule::destroyWindow() {
+    if (this->_isOpen)
+        this->_window.close();
     if (this->_isOpen)
         this->_window.close();
     this->_isOpen = false;
@@ -76,11 +79,49 @@ Input SfmlGraphicalModule::parseKeyboard() {
     return NONE;
 }
 
+static void displayBackground(const std::map<std::string, std::pair<sf::Sprite, sf::Texture>> &assets, sf::RenderWindow &window)
+{
+    if (assets.find("Background") == assets.end())
+        return;
+    sf::Sprite sprite = assets.at("Background").first;
+    sf::Texture texture = assets.at("Background").second;
+    float scaleFactorX = 500.0f / texture.getSize().x;
+    float scaleFactorY = 500.0f / texture.getSize().y;
+
+    sprite.setTexture(texture);
+    sprite.setPosition(0, 0);
+    sprite.setScale(scaleFactorX, scaleFactorY);
+    window.draw(sprite);
+}
+
+static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWindow& window, const std::map<std::string, std::pair<sf::Sprite, sf::Texture>>& assets) {
+    sf::Sprite sprite = assets.at(entity->getName()).first;
+    sf::Texture texture = assets.at(entity->getName()).second;
+    std::string text = entity->imageToDisplay().first;
+    sf::Text textToDisplay;
+    sf::Font font;
+
+    if (!font.loadFromFile("assets/fonts/arial/arial.ttf"))
+        throw SfmlError("Error loading font path");
+    textToDisplay.setFont(font);
+    textToDisplay.setString(text);
+    textToDisplay.setCharacterSize(15);
+    textToDisplay.setFillColor(sf::Color::Black);
+    textToDisplay.setPosition(entity->getPos().first + 15, entity->getPos().second + 8);
+
+    sprite.setTexture(texture);
+    sprite.setPosition(entity->getPos().first, entity->getPos().second);
+    sprite.setScale(1.2, 1.2);
+    window.draw(sprite);
+    window.draw(textToDisplay);
+}
+
 void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 {
-    this->_window.clear(sf::Color::Black);
     if (map.empty())
         return;
+    this->_window.clear();
+    displayBackground(this->_assets, this->_window);
     for (int i = map.size() - 1; i >= 0; i--) {
         if (map[i].empty())
             continue;
@@ -89,8 +130,12 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 
             if (tile.getEntities().empty())
                 continue;
-            for (int k = tile.getEntities().size() - 1; k >= 0; k--) {
+            for (size_t k = 0; k < tile.getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = tile.getEntities()[k];
+                if (entity->getType() == BUTTON) {
+                    displayButton(entity, this->_window, this->_assets);
+                    continue;
+                }
                 sf::Sprite sprite = this->_assets[entity->getName()].first;
                 sf::Texture texture = this->_assets[entity->getName()].second;
                 float scaleFactorX = 25.0f / texture.getSize().x;
@@ -98,7 +143,6 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
 
                 sprite.setTexture(texture);
                 sprite.setPosition(j * 26 + 4, i * 26 + 4);
-
                 sprite.setScale(scaleFactorX, scaleFactorY);
                 this->_window.draw(sprite);
             }
