@@ -13,7 +13,3 @@ Background::Background(double speed, std::pair<int, int> pos, std::string textur
 EntityType Background::getType() const {
     return EntityType::BACKGROUND;
 }
-
-std::pair<std::string, ASCII> Background::imageToDisplay() const {
-    return {this->_texturePath, this->_ascii};
-}

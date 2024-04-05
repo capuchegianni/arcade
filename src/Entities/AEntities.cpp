@@ -37,3 +37,7 @@ std::string AEntities::getName() const {
 void AEntities::setName(std::string name) {
     this->_name = name;
 }
+
+std::pair<std::string, ASCII> AEntities::imageToDisplay() const {
+    return {this->_texturePath, this->_ascii};
+}

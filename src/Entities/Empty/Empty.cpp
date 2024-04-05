@@ -16,8 +16,3 @@ EntityType Empty::getType() const
 {
     return EntityType::EMPTY;
 }
-
-std::pair<std::string, ASCII> Empty::imageToDisplay() const
-{
-    return {this->_texturePath, this->_ascii};
-}

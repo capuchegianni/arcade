@@ -14,10 +14,5 @@ Wall::Wall(double speed, std::pair<int, int> pos, std::string texturePath, ASCII
 
 EntityType Wall::getType() const
 {
-    return EntityType::WALL;
-}
-
-std::pair<std::string, ASCII> Wall::imageToDisplay() const
-{
-    return {this->_texturePath, this->_ascii};
+    return EntityType::BLOCK;
 }

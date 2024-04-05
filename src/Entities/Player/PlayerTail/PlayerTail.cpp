@@ -19,12 +19,7 @@ PlayerTail::PlayerTail(double speed, std::pair<int, int> pos, std::string textur
 
 EntityType PlayerTail::getType() const
 {
-    return EntityType::PLAYER_TAIL;
-}
-
-std::pair<std::string, ASCII> PlayerTail::imageToDisplay() const
-{
-    return std::make_pair(_texturePath, _ascii);
+    return EntityType::PLAYER;
 }
 
 void PlayerTail::setLastPos(std::pair<int, int> pos)

@@ -19,10 +19,5 @@ PlayerBody::PlayerBody(double speed, std::pair<int, int> pos, std::string textur
 
 EntityType PlayerBody::getType() const
 {
-    return EntityType::PLAYER_BODY;
-}
-
-std::pair<std::string, ASCII> PlayerBody::imageToDisplay() const
-{
-    return {this->_texturePath, this->_ascii};
+    return EntityType::PLAYER;
 }

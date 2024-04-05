@@ -39,17 +39,4 @@ enum GameStatus {
     RUNNING
 };
 
-enum EntityType {
-    PLAYER_HEAD,
-    PLAYER_BODY,
-    PLAYER_TAIL,
-    ENEMY,
-    PROJECTILE,
-    WALL,
-    FRUIT,
-    EMPTY,
-    BUTTON,
-    BACKGROUND
-};
-
 #endif /* !ENUMS_HPP_ */

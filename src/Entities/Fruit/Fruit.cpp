@@ -14,10 +14,5 @@ Fruit::Fruit(double speed, std::pair<int, int> pos, std::string texturePath, ASC
 
 EntityType Fruit::getType() const
 {
-    return EntityType::FRUIT;
-}
-
-std::pair<std::string, ASCII> Fruit::imageToDisplay() const
-{
-    return {this->_texturePath, this->_ascii};
+    return EntityType::ITEM;
 }

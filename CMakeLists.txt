@@ -18,15 +18,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 include_directories(include)
 
-set(global_src
-    src/Errors/Errors.cpp
-    src/GlobalClasses/Tiles.cpp
-    src/GlobalClasses/Ascii.cpp
-)
 
 # Core executable
 set(core_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Core/Main.cpp
     src/Core/CoreModule.cpp
     src/Core/LdlWrapper.cpp
@@ -43,7 +40,9 @@ target_link_libraries(arcade ${LDL_FLAGS})
 
 # Graphical libraries
 set(ncurses_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/Ncurses/NcursesWrapper.cpp
     src/Graphics/Ncurses/NcursesGraphicalModule.cpp
@@ -51,7 +50,9 @@ set(ncurses_src
 )
 
 set(sdl2_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SDL2/SDL2Wrapper.cpp
     src/Graphics/SDL2/Sdl2GraphicalModule.cpp
@@ -59,7 +60,9 @@ set(sdl2_src
 )
 
 set(sfml_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Graphics/AGraphicalModule.cpp
     src/Graphics/SFML/SfmlGraphicalModule.cpp
     src/Entities/AEntities.cpp
@@ -83,7 +86,9 @@ set_target_properties(arcade_sfml PROPERTIES PREFIX "")
 
 # Games libraries
 set(nibbler_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Games/Nibbler/Nibbler.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
@@ -97,7 +102,9 @@ set(nibbler_src
 )
 
 set(snake_src
-    ${global_src}
+    src/Errors/Errors.cpp
+    src/GlobalClasses/Tiles.cpp
+    src/GlobalClasses/Ascii.cpp
     src/Games/Snake/Snake.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp

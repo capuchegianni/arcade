@@ -13,7 +13,3 @@ Button::Button(double speed, std::pair<int, int> pos, std::string texturePath, A
 EntityType Button::getType() const {
     return EntityType::BUTTON;
 }
-
-std::pair<std::string, ASCII> Button::imageToDisplay() const {
-    return {this->_texturePath, this->_ascii};
-}
