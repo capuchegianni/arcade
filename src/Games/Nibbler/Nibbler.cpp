@@ -18,7 +18,7 @@ Nibbler::Nibbler() : AGameModule("Nibbler")
     this->_direction = STOP;
     this->_lastDirection = EAST;
     this->_score = 0;
-    this->_map.resize(20);
+    this->_map.resize(19);
     this->_gameStatus = GameStatus::RUNNING;
     this->_fruitNb = 28;
 }
