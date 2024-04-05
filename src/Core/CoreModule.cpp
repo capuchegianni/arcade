@@ -93,6 +93,8 @@ void CoreModule::checkFile(const std::string& path) const {
 void CoreModule::startGame() {
     if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
         this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
+    else
+        this->changeGame("createGame");
     while(this->getGraphicalModule()->isWindowOpen()) {
         if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu") {
             this->getGraphicalModule()->showMap(this->_menu.getMap());
