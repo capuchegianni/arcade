@@ -86,8 +86,8 @@ static void displayBackground(const std::map<std::string, std::pair<sf::Sprite, 
         return;
     sf::Sprite sprite = assets.at("Background").first;
     sf::Texture texture = assets.at("Background").second;
-    float scaleFactorX = 500.0f / texture.getSize().x;
-    float scaleFactorY = 500.0f / texture.getSize().y;
+    float scaleFactorX = static_cast<float>(window.getSize().x) / texture.getSize().x;
+    float scaleFactorY = static_cast<float>(window.getSize().y) / texture.getSize().y;
 
     sprite.setTexture(texture);
     sprite.setPosition(0, 0);
@@ -141,11 +141,11 @@ void SfmlGraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map)
                 }
                 sf::Sprite sprite = this->_assets[entity->getName()].first;
                 sf::Texture texture = this->_assets[entity->getName()].second;
-                float scaleFactorX = 25.0f / texture.getSize().x;
-                float scaleFactorY = 25.0f / texture.getSize().y;
+                float scaleFactorX = static_cast<float>(this->_window.getSize().x) / (texture.getSize().x * map[0].size());
+                float scaleFactorY = static_cast<float>(this->_window.getSize().y) / (texture.getSize().y * map.size());
 
                 sprite.setTexture(texture);
-                sprite.setPosition(j * 26 + 4, i * 26 + 4);
+                sprite.setPosition(j * texture.getSize().x * scaleFactorX, i * texture.getSize().y * scaleFactorY);
                 sprite.setScale(scaleFactorX, scaleFactorY);
                 this->_window.draw(sprite);
             }
