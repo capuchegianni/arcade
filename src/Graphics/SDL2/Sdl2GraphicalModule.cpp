@@ -98,13 +98,16 @@ Input Sdl2GraphicalModule::parseKeyboard() {
     return NONE;
 }
 
-static void displayBackground(const std::map<std::string, SDL_Texture*> &assets, SDL_Renderer *renderer) {
+static void displayBackground(SDL_Window *win, const std::map<std::string, SDL_Texture*> &assets, SDL_Renderer *renderer) {
     if (assets.empty() || assets.find("Background") == assets.end())
         return;
 
     SDL_Texture *texture = assets.at("Background");
-    SDL_Rect rect = {0, 0, 500, 500};
+    int windowX = 0;
+    int windowY = 0;
 
+    SDL2Wrapper::SDL_GetWindowSize(win, &windowX, &windowY);
+    SDL_Rect rect = {0, 0, windowX, windowY};
     SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
 }
 
@@ -138,12 +141,21 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, const std::m
 }
 
 void Sdl2GraphicalModule::showMap(const std::vector<std::vector<Tiles>> &map) {
+    int windowX = 0;
+    int windowY = 0;
+
+    SDL2Wrapper::SDL_GetWindowSize(this->_window, &windowX, &windowY);
     SDL2Wrapper::SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 255);
     SDL2Wrapper::SDL_RenderClear(this->_renderer);
-    displayBackground(this->_assets, this->_renderer);
+    displayBackground(this->_window, this->_assets, this->_renderer);
     for (size_t i = 0; i < map.size(); i++) {
         for (size_t j = 0; j < map[i].size(); j++) {
-            SDL_Rect rect = {static_cast<int>(j) * 26 + 4, static_cast<int>(i) * 26 + 4, 25, 25};
+            SDL_Rect rect = {
+                static_cast<int>(j * (windowX / map[0].size())),
+                static_cast<int>(i * (windowY / map.size())),
+                static_cast<int>(windowX / map[0].size()),
+                static_cast<int>(windowY / map.size())
+            };
 
             for (size_t k = 0; k < map[i][j].getEntities().size(); k++) {
                 std::shared_ptr<AEntities> entity = map[i][j].getEntities()[k];
