@@ -7,11 +7,12 @@
 
 #include "../../include/Entities/AEntities.hpp"
 
-AEntities::AEntities(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii) :
+AEntities::AEntities(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name) :
     _speed(speed),
     _pos(pos),
     _texturePath(texturePath),
-    _ascii(ascii) {}
+    _ascii(ascii),
+    _name(name) {}
 
 double AEntities::getSpeed() const {
     return this->_speed;
@@ -27,6 +28,14 @@ std::pair<int, int> AEntities::getPos() const {
 
 void AEntities::setPos(std::pair<int, int> pos) {
     this->_pos = pos;
+}
+
+std::string AEntities::getName() const {
+    return this->_name;
+}
+
+void AEntities::setName(std::string name) {
+    this->_name = name;
 }
 
 std::pair<std::string, ASCII> AEntities::imageToDisplay() const {

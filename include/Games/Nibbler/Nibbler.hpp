@@ -9,13 +9,32 @@
 #define NIBBLER_HPP_
 
 #include "../AGameModule.hpp"
+#include "../../GlobalClasses/Errors.hpp"
+#include "../../Entities/Empty/Empty.hpp"
+#include "../../Entities/Fruit/Fruit.hpp"
+#include "../../Entities/Player/Player.hpp"
+#include "../../Entities/Player/PlayerHead/PlayerHead.hpp"
+#include "../../Entities/Player/PlayerBody/PlayerBody.hpp"
+#include "../../Entities/Player/PlayerTail/PlayerTail.hpp"
+#include "../../Entities/Wall/Wall.hpp"
 
 class Nibbler : public AGameModule {
     public:
         Nibbler();
         ~Nibbler() = default;
 
-        void parseInput(Input key = NONE);
+        void loadMap();
+        void changeDirection(Input key);
+        void movePlayer();
+        void autoTurn();
+        void playerWin();
+        void playerLose();
+        void clearPlayer();
+        void placePlayer();
+        void eatFruit();
+        void speedBoost(Input key = NONE);
+        void catchInput(Input key = NONE);
+        std::vector<std::shared_ptr<AEntities>> initAllEntities() const;
 };
 
 extern "C" std::shared_ptr<AGameModule> createGame();

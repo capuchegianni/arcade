@@ -26,7 +26,7 @@ class NcursesWrapper {
     static int n_halfdelay(int tenths);
     static int n_clear();
     static int n_wclear(WINDOW *win);
-    static int n_wmove(WINDOW *win, int y, int x);
+    static int n_move(int y, int x);
     static void n_getmaxyx(WINDOW *win, int *y, int *x);
     static void n_getyx(WINDOW *win, int *y, int *x);
     static int n_mvprintw(int y, int x, std::string fmt);
@@ -34,6 +34,11 @@ class NcursesWrapper {
     static int n_init_pair(short pair, short f, short b);
     static int n_init_color(short color, short r, short g, short b);
     static int n_getch();
+    static int n_nodelay(WINDOW *win, bool bf);
+    static int n_curs_set(int visibility);
+    static int n_attron(int attrs);
+    static int n_attroff(int attrs);
+    static int n_clrtoeol();
 };
 
 #endif /* !NCURSES_HPP_ */

@@ -101,3 +101,91 @@ void SDL2Wrapper::SDL_DestroyWindow(SDL_Window *window)
 {
     ::SDL_DestroyWindow(window);
 }
+
+const char *SDL2Wrapper::SDL_GetError()
+{
+    return ::SDL_GetError();
+}
+
+SDL_Surface *SDL2Wrapper::SDL_CreateRGBSurface(Uint32 flags, int width, int height, int depth, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask)
+{
+    return ::SDL_CreateRGBSurface(flags, width, height, depth, Rmask, Gmask, Bmask, Amask);
+}
+
+void SDL2Wrapper::SDL_FreeSurface(SDL_Surface *surface)
+{
+    ::SDL_FreeSurface(surface);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_LoadBMPFile(const char *file)
+{
+    return ::SDL_LoadBMP(file);
+}
+
+void SDL2Wrapper::SDL_FillRect(SDL_Surface *surface, SDL_Rect *rect, Uint32 color)
+{
+    ::SDL_FillRect(surface, rect, color);
+}
+
+Uint32 SDL2Wrapper::SDL_MapRGB(const SDL_PixelFormat *format, Uint8 r, Uint8 g, Uint8 b)
+{
+    return ::SDL_MapRGB(format, r, g, b);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_CreateSurfaceWithColor(int width, int height, Color color)
+{
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, color.r, color.g, color.b));
+    return surface;
+}
+
+SDL_Texture *SDL2Wrapper::SDL_CreateTextureFromSurface(SDL_Renderer *renderer, SDL_Surface *surface)
+{
+    return ::SDL_CreateTextureFromSurface(renderer, surface);
+}
+
+void SDL2Wrapper::SDL_RenderCopy(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rect)
+{
+    ::SDL_RenderCopy(renderer, texture, NULL, rect);
+}
+
+void SDL2Wrapper::SDL_DestroyTexture(SDL_Texture *texture)
+{
+    ::SDL_DestroyTexture(texture);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_Img_Load(const char *file)
+{
+    return ::IMG_Load(file);
+}
+
+const char *SDL2Wrapper::SDL_Img_GetError()
+{
+    return ::IMG_GetError();
+}
+
+TTF_Font *SDL2Wrapper::SDL_TTF_OpenFont(const char *file, int size) {
+    return ::TTF_OpenFont(file, size);
+}
+
+void SDL2Wrapper::SDL_TTF_CloseFont(TTF_Font *font) {
+    ::TTF_CloseFont(font);
+}
+
+SDL_Surface *SDL2Wrapper::SDL_TTF_RenderText_Solid(TTF_Font *font, const char *text, Color color) {
+    SDL_Color sdl_color;
+
+    sdl_color.r = (color.r >= 0 && color.r <= 255) ? color.r : 255;
+    sdl_color.g = (color.g >= 0 && color.g <= 255) ? color.g : 255;
+    sdl_color.b = (color.b >= 0 && color.b <= 255) ? color.b : 255;
+    sdl_color.a = (color.a >= 0 && color.a <= 255) ? color.a : 255;
+    return ::TTF_RenderText_Solid(font, text, sdl_color);
+}
+
+void SDL2Wrapper::SDL_TTF_Quit() {
+    return ::TTF_Quit();
+}
+
+int SDL2Wrapper::SDL_TTF_Init() {
+    return ::TTF_Init();
+}

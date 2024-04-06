@@ -16,14 +16,14 @@ class AGraphicalModule : public IGraphicalModule {
 
         // Window methods
         virtual void createWindow(const std::string& name, const std::vector<int>& size = {1920, 1080}) = 0;
-        virtual void initWindow(const std::string& name, const std::vector<int>& size = {1920, 1080}) = 0;
         virtual void displayWindow() = 0;
         virtual void destroyWindow() = 0;
         virtual bool isWindowOpen() = 0;
-        virtual Input parseKeyboard() = 0;
-        virtual void showMap(std::vector<std::vector<Tiles>>& map) = 0;
 
         // Misc methods
+        virtual Input parseKeyboard() = 0;
+        virtual void showMap(const std::vector<std::vector<Tiles>>& map) = 0;
+        virtual void initAssets(const std::vector<std::shared_ptr<AEntities>>& entities) = 0;
         std::string getLibraryType() const;
     protected:
         std::string _libraryType;
