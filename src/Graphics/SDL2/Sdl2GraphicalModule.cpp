@@ -64,6 +64,42 @@ bool Sdl2GraphicalModule::isWindowOpen() {
     return this->_isOpen;
 }
 
+std::unordered_map<SDL_KeyCode, Input> keymap = {
+    {SDLK_ESCAPE, ESC},
+    {SDLK_UP, CHANGE_GAME},
+    {SDLK_RIGHT, CHANGE_LIB},
+    {SDLK_TAB, MENU},
+    {SDLK_SPACE, SPACE},
+    {SDLK_z, UP},
+    {SDLK_q, LEFT},
+    {SDLK_s, DOWN},
+    {SDLK_d, RIGHT},
+    {SDLK_r, RELOAD},
+    {SDLK_RETURN, ENTER},
+    {SDLK_a, A},
+    {SDLK_b, B},
+    {SDLK_c, C},
+    {SDLK_e, E},
+    {SDLK_f, F},
+    {SDLK_g, G},
+    {SDLK_h, H},
+    {SDLK_i, I},
+    {SDLK_j, J},
+    {SDLK_k, K},
+    {SDLK_l, L},
+    {SDLK_m, M},
+    {SDLK_n, N},
+    {SDLK_o, O},
+    {SDLK_p, P},
+    {SDLK_t, T},
+    {SDLK_u, U},
+    {SDLK_v, V},
+    {SDLK_w, W},
+    {SDLK_x, X},
+    {SDLK_y, Y},
+    {SDLK_BACKSPACE, DELETE},
+};
+
 Input Sdl2GraphicalModule::parseKeyboard() {
     while (SDL2Wrapper::SDL_PollEvent(&this->_event)) {
         if (this->_event.type == SDL_QUIT)
@@ -71,42 +107,8 @@ Input Sdl2GraphicalModule::parseKeyboard() {
         if (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE)
             return ESC;
         if (this->_event.type == SDL_KEYDOWN) {
-            switch (this->_event.key.keysym.sym) {
-                case SDLK_ESCAPE: return ESC;
-                case SDLK_UP: return CHANGE_GAME;
-                case SDLK_RIGHT: return CHANGE_LIB;
-                case SDLK_TAB: return MENU;
-                case SDLK_SPACE: return SPACE;
-                case SDLK_z: return UP;
-                case SDLK_q: return LEFT;
-                case SDLK_s: return DOWN;
-                case SDLK_d: return RIGHT;
-                case SDLK_r: return RELOAD;
-                case SDLK_RETURN: return ENTER;
-                case SDLK_a: return A;
-                case SDLK_b: return B;
-                case SDLK_c: return C;
-                case SDLK_e: return E;
-                case SDLK_f: return F;
-                case SDLK_g: return G;
-                case SDLK_h: return H;
-                case SDLK_i: return I;
-                case SDLK_j: return J;
-                case SDLK_k: return K;
-                case SDLK_l: return L;
-                case SDLK_m: return M;
-                case SDLK_n: return N;
-                case SDLK_o: return O;
-                case SDLK_p: return P;
-                case SDLK_t: return T;
-                case SDLK_u: return U;
-                case SDLK_v: return V;
-                case SDLK_w: return W;
-                case SDLK_x: return X;
-                case SDLK_y: return Y;
-                case SDLK_BACKSPACE: return DELETE;
-                default: return NONE;
-            }
+            if (keymap.find(static_cast<SDL_KeyCode>(this->_event.key.keysym.sym)) != keymap.end())
+                return keymap[static_cast<SDL_KeyCode>(this->_event.key.keysym.sym)];
         }
     }
     return NONE;
