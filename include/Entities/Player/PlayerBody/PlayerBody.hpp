@@ -15,5 +15,5 @@ class PlayerBody : public AEntities {
         PlayerBody(std::pair<int, int> pos);
         PlayerBody(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
 
-        EntityType getType() const override;
+        EntityType getType() const;
 };

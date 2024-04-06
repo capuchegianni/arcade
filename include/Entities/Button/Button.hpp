@@ -13,6 +13,6 @@ class Button : public AEntities {
     public:
         Button(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
 
-        EntityType getType() const override;
+        EntityType getType() const;
 };
 

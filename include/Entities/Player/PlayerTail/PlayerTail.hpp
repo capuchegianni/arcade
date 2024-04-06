@@ -15,7 +15,7 @@ class PlayerTail : public AEntities {
         PlayerTail(std::pair<int, int> pos);
         PlayerTail(double speed, std::pair<int, int> pos, std::string texturePath, ASCII ascii, std::string name);
 
-        EntityType getType() const override;
+        EntityType getType() const;
         void setLastPos(std::pair<int, int> pos);
         std::pair<int, int> getLastPos() const;
 
