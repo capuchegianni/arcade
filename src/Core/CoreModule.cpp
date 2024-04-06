@@ -174,14 +174,7 @@ void CoreModule::reloadGame(bool isChanging) {
         else
             this->_currentGame = {this->_currentGame.first + 1, this->_gameLibs[this->_currentGame.first + 1]};
     }
-    if (this->_currentGame.second == "defaultMenu" || this->_currentGame.second == "lib/arcade_menu.so")
-        this->_menuIsRunning = true;
-    else
-        this->_menuIsRunning = false;
-    if (this->_currentGame.second == "defaultMenu")
-        this->startMenu();
-    else
-        this->changeGame("createGame");
+    this->changeGame("createGame");
 }
 
 void CoreModule::handleEvents(const Input& input) {
