@@ -62,19 +62,19 @@ void Snake::playerLose()
 
     switch(this->_direction) {
         case NORTH:
-            if (this->_map[headPos.second - 1][headPos.first].getEntities().size() != 1 || this->_map[headPos.second - 1][headPos.first].getEntities()[0]->getType() == BLOCK)
+            if (this->_map[headPos.second][headPos.first].getEntities().size() > 2 || this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == BLOCK)
                 this->_gameStatus = GameStatus::OVER;
             break;
         case SOUTH:
-            if (this->_map[headPos.second + 1][headPos.first].getEntities().size() != 1 || this->_map[headPos.second + 1][headPos.first].getEntities()[0]->getType() == BLOCK)
+            if (this->_map[headPos.second][headPos.first].getEntities().size() > 2 || this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == BLOCK)
                 this->_gameStatus = GameStatus::OVER;
             break;
         case EAST:
-            if (this->_map[headPos.second][headPos.first + 1].getEntities().size() != 1 || this->_map[headPos.second][headPos.first + 1].getEntities()[0]->getType() == BLOCK)
+            if (this->_map[headPos.second][headPos.first].getEntities().size() > 2 || this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == BLOCK)
                 this->_gameStatus = GameStatus::OVER;
             break;
         case WEST:
-            if (this->_map[headPos.second][headPos.first - 1].getEntities().size() != 1 || this->_map[headPos.second][headPos.first - 1].getEntities()[0]->getType() == BLOCK)
+            if (this->_map[headPos.second][headPos.first].getEntities().size() > 2 || this->_map[headPos.second][headPos.first].getEntities()[0]->getType() == BLOCK)
                 this->_gameStatus = GameStatus::OVER;
             break;
         default:
@@ -204,9 +204,9 @@ void Snake::placePlayer()
     }
     for (size_t i = 0; i < this->_player.getBody().size(); i++) {
         bodyPos = this->_player.getBody()[i].getPos();
-        this->_map[bodyPos.second][bodyPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[bodyPos.second][bodyPos.first].getEntities()[0], std::make_shared<PlayerBody>(1, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII('B', Color()), "PlayerBody")});
+        this->_map[bodyPos.second][bodyPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(0, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII(' ', Color()), "Empty"), this->_map[bodyPos.second][bodyPos.first].getEntities()[0], std::make_shared<PlayerBody>(1, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII('B', Color()), "PlayerBody")});
     }
-    this->_map[tailPos.second][tailPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{this->_map[tailPos.second][tailPos.first].getEntities()[0], std::make_shared<PlayerTail>(1, std::make_pair(tailPos.first, tailPos.second), "", ASCII('T', Color()), "PlayerTail")});
+    this->_map[tailPos.second][tailPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(0, std::make_pair(bodyPos.first, bodyPos.second), "", ASCII(' ', Color()), "Empty"), this->_map[tailPos.second][tailPos.first].getEntities()[0], std::make_shared<PlayerTail>(1, std::make_pair(tailPos.first, tailPos.second), "", ASCII('T', Color()), "PlayerTail")});
 }
 
 void Snake::movePlayer()
@@ -309,6 +309,8 @@ void Snake::eatFruit()
         this->_score += 10;
         this->_lastChronoRefresh = this->_chronoRefresh;
         this->_chronoRefresh -= 5;
+        if (this->_chronoRefresh < 100)
+            this->_chronoRefresh = 100;
         this->spawnFruit();
         this->_map[headPos.second][headPos.first].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Empty>(1, std::make_pair(headPos.first, headPos.second), "", ASCII(' ', Color()), "Empty")});
         this->_player.getBody().clear();
@@ -328,6 +330,8 @@ void Snake::speedBoost(Input key)
 {
     if (key == SPACE && this->_speedBoost == false) {
         this->_chronoRefresh -= 100;
+        if (this->_chronoRefresh < 100)
+            this->_chronoRefresh = 100;
         this->_speedBoost = true;
     } else if (key == SPACE && this->_speedBoost == true) {
         this->_chronoRefresh = this->_lastChronoRefresh;
