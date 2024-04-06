@@ -51,4 +51,5 @@ class CoreModule : public ICoreModule {
         std::pair<int, std::string> _currentGraphic = {0, ""};
         bool _menuIsGame = false;
         Menu _menu;
+        bool _menuIsRunning = false;
 };

@@ -29,8 +29,6 @@ void CoreModule::getGraphicsList() {
     for (const auto& file : std::filesystem::directory_iterator("lib")) {
         if (file.path().string().rfind(".so") != file.path().string().size() - 3)
             continue;
-        if (file.path().string() == "lib/arcade_menu.so")
-            continue;
         try {
             LdlWrapper lib;
             lib.openLib(file.path().string());
@@ -57,6 +55,7 @@ void CoreModule::getGameList() {
         if (file.path().string() == "lib/arcade_menu.so") {
             this->_menuIsGame = true;
             this->_currentGame = {i, file.path().string()};
+            this->_menuIsRunning = true;
         }
         try {
             LdlWrapper lib;
@@ -76,6 +75,7 @@ void CoreModule::getGameList() {
         std::cout << "No menu library found, creating default menu" << std::endl;
         this->_gameLibs[i] = "defaultMenu";
         this->_currentGame = {this->_gameLibs.size() - 1, this->_gameLibs[this->_gameLibs.size() - 1]};
+        this->_menuIsRunning = true;
     }
 }
 
@@ -113,6 +113,7 @@ void CoreModule::startWindow() {
 }
 
 void CoreModule::startMenu() {
+    this->_menuIsRunning = true;
     if (this->_menuIsGame) {
         for (auto& game : this->_gameLibs) {
             if (game.second == "lib/arcade_menu.so")
@@ -133,6 +134,10 @@ void CoreModule::reloadGame(bool isChanging) {
         else
             this->_currentGame = {this->_currentGame.first + 1, this->_gameLibs[this->_currentGame.first + 1]};
     }
+    if (this->_currentGame.second == "defaultMenu" || this->_currentGame.second == "lib/arcade_menu.so")
+        this->_menuIsRunning = true;
+    else
+        this->_menuIsRunning = false;
     if (this->_currentGame.second == "defaultMenu")
         this->startMenu();
     else
@@ -157,6 +162,13 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case CHANGE_GAME:
+        if (this->_menuIsRunning) {
+            if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+                newGame = this->_menu.catchInput(input);
+            else
+                this->getGameModule()->catchInput(input);
+            break;
+        }
         this->reloadGame(true);
         break;
 
@@ -165,6 +177,13 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case RELOAD:
+        if (this->_menuIsRunning) {
+            if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+                this->_menu.catchInput(input);
+            else
+                this->getGameModule()->catchInput(input);
+            break;
+        }
         this->reloadGame(false);
         break;
 
