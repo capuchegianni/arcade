@@ -289,15 +289,21 @@ void Snake::changeDirection(Input key)
 
 void Snake::spawnFruit()
 {
-    int x = 0;
-    int y = 0;
+    int randomNumber = rand() % 10 + 1;
+    int fruitCount = (randomNumber <= 7) ? 1 : (randomNumber <= 9) ? 2 : 3;
 
-    do {
-        x = rand() % (this->_map[0].size() - 2) + 1;
-        y = rand() % (this->_map.size() - 2) + 1;
-    } while (this->_map[y][x].getEntities()[0]->getType() != EMPTY);
-    this->_map[y][x].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Fruit>(1, std::make_pair(x, y), "", ASCII('@', Color()), "Fruit")});
+    for (int i = 0; i < fruitCount; ++i) {
+        int x = 0;
+        int y = 0;
 
+        do {
+            x = rand() % (this->_map[0].size() - 3) + 1;
+            y = rand() % (this->_map.size() - 3) + 1;
+        } while (this->_map[y][x].getEntities()[0]->getType() != EMPTY);
+
+        std::cout << "Fruit spawned at x: " << x << " y: " << y << std::endl;
+        this->_map[y][x].setEntities(std::vector<std::shared_ptr<AEntities>>{std::make_shared<Fruit>(1, std::make_pair(x, y), "", ASCII('@', Color()), "Fruit")});
+    }
 }
 
 void Snake::eatFruit()
