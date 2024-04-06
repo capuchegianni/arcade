@@ -109,8 +109,6 @@ void Menu::initMap() {
     if (this->_isInitialized)
         return;
 
-    this->getScoreFileInfos();
-
     std::pair<int, int> graphicButtonPos = std::make_pair(50, 60);
     std::pair<int, int> gameButtonPos = std::make_pair(270, 60);
 

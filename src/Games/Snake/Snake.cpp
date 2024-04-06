@@ -21,6 +21,7 @@ Snake::Snake() : AGameModule("Snake")
     this->_map.resize(19);
     this->_gameStatus = GameStatus::RUNNING;
     this->_loadingMap = true;
+    this->_gameName = "snake";
 }
 
 std::vector<std::shared_ptr<AEntities>> Snake::initAllEntities() const
@@ -80,6 +81,10 @@ void Snake::playerLose()
             break;
     }
     if (this->_gameStatus == GameStatus::OVER) {
+        if (this->_highScores.find(this->_playerName) == this->_highScores.end())
+            this->_highScores[this->_playerName] = this->_score;
+        else if (this->_highScores[this->_playerName] < this->_score)
+            this->_highScores[this->_playerName] = this->_score;
         this->_direction = STOP;
         this->_lastDirection = EAST;
         this->_chronoRefresh = 200;
@@ -89,7 +94,7 @@ void Snake::playerLose()
         this->clearPlayer();
         this->_player.getBody().clear();
         this->_map.clear();
-        this->_map.resize(20);
+        this->_map.resize(19);
         this->_loadingMap = true;
     }
 }

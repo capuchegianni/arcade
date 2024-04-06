@@ -21,6 +21,7 @@ Nibbler::Nibbler() : AGameModule("Nibbler")
     this->_map.resize(19);
     this->_gameStatus = GameStatus::RUNNING;
     this->_fruitNb = 28;
+    this->_gameName = "nibbler";
 }
 
 std::vector<std::shared_ptr<AEntities>> Nibbler::initAllEntities() const
@@ -67,7 +68,7 @@ void Nibbler::playerWin()
         this->_mapNb == 10 ? this->_mapNb = 1 : this->_mapNb++;
         this->_player.getBody().clear();
         this->_map.clear();
-        this->_map.resize(20);
+        this->_map.resize(19);
         this->_fruitNb = 28;
         this->_loadingMap = true;
     }
@@ -98,6 +99,10 @@ void Nibbler::playerLose()
             break;
     }
     if (this->_gameStatus == GameStatus::OVER) {
+        if (this->_highScores.find(this->_playerName) == this->_highScores.end())
+            this->_highScores[this->_playerName] = this->_score;
+        else if (this->_highScores[this->_playerName] < this->_score)
+            this->_highScores[this->_playerName] = this->_score;
         this->_direction = STOP;
         this->_lastDirection = EAST;
         this->_chronoRefresh = 200;
@@ -107,7 +112,7 @@ void Nibbler::playerLose()
         this->clearPlayer();
         this->_player.getBody().clear();
         this->_map.clear();
-        this->_map.resize(20);
+        this->_map.resize(19);
         this->_fruitNb = 28;
         this->_loadingMap = true;
     }

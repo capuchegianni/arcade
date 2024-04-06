@@ -52,4 +52,5 @@ class CoreModule : public ICoreModule {
         bool _menuIsGame = false;
         Menu _menu;
         bool _menuIsRunning = false;
+        std::string _player = "";
 };

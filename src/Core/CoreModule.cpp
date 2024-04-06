@@ -91,16 +91,27 @@ void CoreModule::checkFile(const std::string& path) const {
 }
 
 void CoreModule::startGame() {
-    if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+    if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu") {
         this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
-    else
+        this->_menu.getScoreFileInfos();
+    } else
         this->changeGame("createGame");
     while(this->getGraphicalModule()->isWindowOpen()) {
         if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu") {
+            if (this->_menuIsRunning) {
+                this->_player = this->_menu.getPlayer();
+                if (this->_player == "")
+                    this->_player = "Anonymous";
+            }
             this->getGraphicalModule()->showMap(this->_menu.getMap());
             this->getGraphicalModule()->displayWindow();
             this->handleEvents(this->getGraphicalModule()->parseKeyboard());
         } else {
+            if (this->_menuIsRunning) {
+                this->_player = this->_gameModule->getPlayerName();
+                if (this->_player == "")
+                    this->_player = "Anonymous";
+            }
             this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
             this->getGraphicalModule()->displayWindow();
             this->handleEvents(this->getGraphicalModule()->parseKeyboard());
@@ -124,11 +135,40 @@ void CoreModule::startMenu() {
         this->closeGameLib();
         this->_currentGame = {this->_gameLibs.size() - 1, this->_gameLibs[this->_gameLibs.size() - 1]};
         this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
+        this->_menu.getScoreFileInfos();
     }
+}
+
+static void updateHighScoreFile(const std::map<std::string, int>& oldScores, const std::string& gameName) {
+    std::map<std::pair<std::string, std::string>, int> newScores;
+
+    std::ifstream fileIn("assets/scores.txt");
+    std::string line;
+    while (std::getline(fileIn, line)) {
+        std::istringstream ss(line);
+        std::string fileGameName, playerName, scoreStr;
+        std::getline(ss, fileGameName, ':');
+        std::getline(ss, playerName, ':');
+        std::getline(ss, scoreStr, ':');
+        newScores[std::make_pair(fileGameName, playerName)] = std::stoi(scoreStr);
+    }
+    fileIn.close();
+
+    for (const auto& pair : oldScores) {
+        if (newScores[std::make_pair(gameName, pair.first)] < pair.second)
+            newScores[std::make_pair(gameName, pair.first)] = pair.second;
+    }
+
+    std::ofstream fileOut("assets/scores.txt");
+    for (const auto& pair : newScores) {
+        fileOut << pair.first.first << ':' << pair.first.second << ':' << pair.second << '\n';
+    }
+    fileOut.close();
 }
 
 void CoreModule::reloadGame(bool isChanging) {
     if (isChanging) {
+        updateHighScoreFile(this->_gameModule->getHighScore(), this->_gameModule->getGameName());
         if (this->_currentGame.first == static_cast<int>(this->_gameLibs.size() - 1))
             this->_currentGame = {0, this->_gameLibs[0]};
         else
@@ -149,15 +189,18 @@ void CoreModule::handleEvents(const Input& input) {
 
     switch (input) {
     case ESC:
+        if (!_menuIsRunning)
+            updateHighScoreFile(this->_gameModule->getHighScore(), this->_gameModule->getGameName());
         this->getGraphicalModule()->destroyWindow();
         break;
 
     case CHANGE_LIB:
         this->changeGraphics("createLib");
         this->startWindow();
-        if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu")
+        if (!this->_menuIsGame && this->_currentGame.second == "defaultMenu") {
             this->getGraphicalModule()->initAssets(this->_menu.initAllEntities());
-        else
+            this->_menu.getScoreFileInfos();
+        } else
             this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
         break;
 
@@ -173,6 +216,7 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case MENU:
+        updateHighScoreFile(this->_gameModule->getHighScore(), this->_gameModule->getGameName());
         this->startMenu();
         break;
 
@@ -274,4 +318,5 @@ void CoreModule::changeGame(const std::string& func) {
     this->closeGameLib();
     this->loadGameLibrary(this->_currentGame.second, func);
     this->getGraphicalModule()->initAssets(this->getGameModule()->initAllEntities());
+    this->getGameModule()->setPlayerName(this->_player);
 }
