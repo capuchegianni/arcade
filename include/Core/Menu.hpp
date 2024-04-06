@@ -21,6 +21,9 @@ class Menu {
         void setGraphicsLibs(std::map<int, std::string> graphicsLibs);
         void setGameLibs(std::map<int, std::string> gameLibs);
         std::vector<std::vector<Tiles>> getMap() const;
+        void setPlayer(const std::string& player);
+        std::string getPlayer() const;
+        void getScoreFileInfos();
 
     private:
         int _selectedGame = 0;
@@ -29,4 +32,5 @@ class Menu {
         std::map<int, std::string> _gameLibs = {};
         std::vector<std::vector<Tiles>> _map = {};
         bool _isInitialized = false;
+        std::map<std::pair<std::string, std::string>, std::string> _scores = {};
 };

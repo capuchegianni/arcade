@@ -52,61 +52,76 @@ bool NcursesGraphicalModule::isWindowOpen() {
     return this->_isOpen;
 }
 
+std::unordered_map<int, Input> keymap = {
+    {27, ESC},
+    {KEY_UP, CHANGE_GAME},
+    {KEY_RIGHT, CHANGE_LIB},
+    {9, MENU},
+    {32, SPACE},
+    {122, UP},
+    {113, LEFT},
+    {115, DOWN},
+    {100, RIGHT},
+    {114, RELOAD},
+    {10, ENTER},
+    {97, A},
+    {98, B},
+    {99, C},
+    {101, E},
+    {102, F},
+    {103, G},
+    {104, H},
+    {105, I},
+    {106, J},
+    {107, K},
+    {108, L},
+    {109, M},
+    {110, N},
+    {111, O},
+    {112, P},
+    {116, T},
+    {117, U},
+    {118, V},
+    {119, W},
+    {120, X},
+    {121, Y},
+    {KEY_BACKSPACE, DELETE},
+};
+
 Input NcursesGraphicalModule::parseKeyboard() {
     int key = NcursesWrapper::n_getch();
 
-    switch (key) {
-        case 27:
-            return ESC;
-
-        case KEY_UP:
-            return CHANGE_GAME;
-
-        case KEY_RIGHT:
-            return CHANGE_LIB;
-
-        case 114:
-            return RELOAD;
-
-        case 9:
-            return MENU;
-
-        case 122:
-            return UP;
-
-        case 113:
-            return LEFT;
-
-        case 115:
-            return DOWN;
-
-        case 100:
-            return RIGHT;
-
-        case 32:
-            return SPACE;
-
-        case 10:
-            return ENTER;
-    }
+    if (keymap.find(key) != keymap.end())
+        return keymap[key];
     return NONE;
 }
 
 static void displayText(const std::string &text, const std::pair<int, int> &pos, const Color& color) {
-    std::pair<int, int> newPos = std::make_pair((int)pos.first / 100, (int)pos.second);
+    std::pair<int, int> newPos = std::make_pair(static_cast<int>(pos.second / 10), static_cast<int>(pos.first / 10));
 
-    if (color.r == 0 && color.g == 162 && color.b == 255) {
+    if (color.r > 200 && color.g > 200 && color.b > 200) {
+        if (text == "<")
+            NcursesWrapper::n_mvprintw(newPos.first, newPos.second + 5, text);
+        else
+            NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+        return;
+    }
+    if (color.r > 200) {
+        if (color.g > 200) {
+            NcursesWrapper::n_attron(COLOR_PAIR(2));
+            NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+            NcursesWrapper::n_attroff(COLOR_PAIR(2));
+        } else {
+            NcursesWrapper::n_attron(COLOR_PAIR(3));
+            NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
+            NcursesWrapper::n_attroff(COLOR_PAIR(3));
+        }
+        return;
+    }
+    if (color.b > 200) {
         NcursesWrapper::n_attron(COLOR_PAIR(1));
         NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
         NcursesWrapper::n_attroff(COLOR_PAIR(1));
-    }
-    if (color.r == 239 && color.g == 255 && color.b == 0) {
-        NcursesWrapper::n_attron(COLOR_PAIR(2));
-        NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
-        NcursesWrapper::n_attroff(COLOR_PAIR(2));
-    }
-    if (color.r == 0 && color.g == 0 && color.b == 0) {
-        NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
     }
 }
 
@@ -137,5 +152,6 @@ void NcursesGraphicalModule::initAssets(const std::vector<std::shared_ptr<AEntit
     (void)entities;
     NcursesWrapper::n_init_pair(1, COLOR_BLACK, COLOR_BLUE);
     NcursesWrapper::n_init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+    NcursesWrapper::n_init_pair(3, COLOR_BLACK, COLOR_RED);
     return;
 }

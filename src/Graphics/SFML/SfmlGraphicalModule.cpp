@@ -65,6 +65,28 @@ std::unordered_map<sf::Keyboard::Key, Input> keymap = {
     {sf::Keyboard::D, RIGHT},
     {sf::Keyboard::R, RELOAD},
     {sf::Keyboard::Enter, ENTER},
+    {sf::Keyboard::A, A},
+    {sf::Keyboard::B, B},
+    {sf::Keyboard::C, C},
+    {sf::Keyboard::E, E},
+    {sf::Keyboard::F, F},
+    {sf::Keyboard::G, G},
+    {sf::Keyboard::H, H},
+    {sf::Keyboard::I, I},
+    {sf::Keyboard::J, J},
+    {sf::Keyboard::K, K},
+    {sf::Keyboard::L, L},
+    {sf::Keyboard::M, M},
+    {sf::Keyboard::N, N},
+    {sf::Keyboard::O, O},
+    {sf::Keyboard::P, P},
+    {sf::Keyboard::T, T},
+    {sf::Keyboard::U, U},
+    {sf::Keyboard::V, V},
+    {sf::Keyboard::W, W},
+    {sf::Keyboard::X, X},
+    {sf::Keyboard::Y, Y},
+    {sf::Keyboard::BackSpace, DELETE},
 };
 
 Input SfmlGraphicalModule::parseKeyboard() {
@@ -72,9 +94,8 @@ Input SfmlGraphicalModule::parseKeyboard() {
         if (this->_event.type == sf::Event::Closed)
             return ESC;
         if (this->_event.type == sf::Event::KeyPressed) {
-            auto it = keymap.find(this->_event.key.code);
-            if (it != keymap.end())
-                return it->second;
+            if (keymap.find(this->_event.key.code) != keymap.end())
+                return keymap[this->_event.key.code];
         }
     }
     return NONE;
@@ -114,7 +135,7 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, sf::RenderWi
 
     sprite.setTexture(texture);
     sprite.setPosition(entity->getPos().first, entity->getPos().second);
-    sprite.setScale(1.2, 1.2);
+    sprite.setScale(entity->getSpeed(), entity->getSpeed());
     window.draw(sprite);
     window.draw(textToDisplay);
 }

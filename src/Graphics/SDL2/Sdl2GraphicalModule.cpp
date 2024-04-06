@@ -71,28 +71,42 @@ Input Sdl2GraphicalModule::parseKeyboard() {
         if (this->_event.type == SDL_WINDOWEVENT && this->_event.window.event == SDL_WINDOWEVENT_CLOSE)
             return ESC;
         if (this->_event.type == SDL_KEYDOWN) {
-            if (this->_event.key.keysym.sym == SDLK_ESCAPE)
-                return ESC;
-            if (this->_event.key.keysym.sym == SDLK_UP)
-                return CHANGE_GAME;
-            if (this->_event.key.keysym.sym == SDLK_RIGHT)
-                return CHANGE_LIB;
-            if (this->_event.key.keysym.sym == SDLK_TAB)
-                return MENU;
-            if (this->_event.key.keysym.sym == SDLK_r)
-                return RELOAD;
-            if (this->_event.key.keysym.sym == SDLK_RETURN)
-                return ENTER;
-            if (this->_event.key.keysym.sym == SDLK_SPACE)
-                return SPACE;
-            if (this->_event.key.keysym.sym == SDLK_z)
-                return UP;
-            if (this->_event.key.keysym.sym == SDLK_s)
-                return DOWN;
-            if (this->_event.key.keysym.sym == SDLK_q)
-                return LEFT;
-            if (this->_event.key.keysym.sym == SDLK_d)
-                return RIGHT;
+            switch (this->_event.key.keysym.sym) {
+                case SDLK_ESCAPE: return ESC;
+                case SDLK_UP: return CHANGE_GAME;
+                case SDLK_RIGHT: return CHANGE_LIB;
+                case SDLK_TAB: return MENU;
+                case SDLK_SPACE: return SPACE;
+                case SDLK_z: return UP;
+                case SDLK_q: return LEFT;
+                case SDLK_s: return DOWN;
+                case SDLK_d: return RIGHT;
+                case SDLK_r: return RELOAD;
+                case SDLK_RETURN: return ENTER;
+                case SDLK_a: return A;
+                case SDLK_b: return B;
+                case SDLK_c: return C;
+                case SDLK_e: return E;
+                case SDLK_f: return F;
+                case SDLK_g: return G;
+                case SDLK_h: return H;
+                case SDLK_i: return I;
+                case SDLK_j: return J;
+                case SDLK_k: return K;
+                case SDLK_l: return L;
+                case SDLK_m: return M;
+                case SDLK_n: return N;
+                case SDLK_o: return O;
+                case SDLK_p: return P;
+                case SDLK_t: return T;
+                case SDLK_u: return U;
+                case SDLK_v: return V;
+                case SDLK_w: return W;
+                case SDLK_x: return X;
+                case SDLK_y: return Y;
+                case SDLK_BACKSPACE: return DELETE;
+                default: return NONE;
+            }
         }
     }
     return NONE;
@@ -117,11 +131,11 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, const std::m
 
     SDL_Texture* texture = assets.at(entity->getName());
     if (entity->getName() == "Arrow") {
-        SDL_Rect rect = {entity->getPos().first + 15, entity->getPos().second + 8, 25, 25};
+        SDL_Rect rect = {entity->getPos().first - 15, entity->getPos().second, 25, 25};
 
         SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
     } else {
-        TTF_Font *font = SDL2Wrapper::SDL_TTF_OpenFont("assets/fonts/arial/arial_bold.ttf", 12);
+        TTF_Font *font = SDL2Wrapper::SDL_TTF_OpenFont("assets/fonts/arial/arial.ttf", 20);
         if (!font)
             throw Sdl2Error(SDL2Wrapper::SDL_GetError());
         SDL_Surface *surface = SDL2Wrapper::SDL_TTF_RenderText_Solid(font, entity->imageToDisplay().first.c_str(), Color(0, 0, 0));
@@ -130,10 +144,17 @@ static void displayButton(const std::shared_ptr<AEntities>& entity, const std::m
         SDL_Texture *textTexture = SDL2Wrapper::SDL_CreateTextureFromSurface(renderer, surface);
         if (!textTexture)
             throw Sdl2Error(SDL2Wrapper::SDL_GetError());
-        SDL_Rect rect = {entity->getPos().first + 15, entity->getPos().second + 8, 150, 32};
+        int textSize = entity->imageToDisplay().first.length() * 20;
+        SDL_Rect textRect = {
+            entity->getPos().first + 3,
+            entity->getPos().second + 3,
+            static_cast<int>(textSize > 150 ? 150 : textSize) - 5,
+            20
+        };
+        SDL_Rect rect = {entity->getPos().first, entity->getPos().second, 150, 32};
 
         SDL2Wrapper::SDL_RenderCopy(renderer, texture, &rect);
-        SDL2Wrapper::SDL_RenderCopy(renderer, textTexture, &rect);
+        SDL2Wrapper::SDL_RenderCopy(renderer, textTexture, &textRect);
         SDL2Wrapper::SDL_FreeSurface(surface);
         SDL2Wrapper::SDL_TTF_CloseFont(font);
         SDL2Wrapper::SDL_DestroyTexture(textTexture);
