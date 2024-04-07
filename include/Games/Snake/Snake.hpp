@@ -10,10 +10,7 @@
 
 #include "../AGameModule.hpp"
 #include "../../GlobalClasses/Errors.hpp"
-#include "../../Entities/Player/Player.hpp"
-#include "../../Entities/Player/PlayerHead/PlayerHead.hpp"
-#include "../../Entities/Player/PlayerBody/PlayerBody.hpp"
-#include "../../Entities/Player/PlayerTail/PlayerTail.hpp"
+#include "../../Entities/Player.hpp"
 #include "../../Entities/Entities.hpp"
 
 class Snake : public AGameModule {

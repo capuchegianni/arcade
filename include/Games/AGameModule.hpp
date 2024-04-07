@@ -8,7 +8,6 @@
 #ifndef AGAMES_HPP_
 #define AGAMES_HPP_
 
-#include "../Libs.hpp"
 #include "IGameModule.hpp"
 
 class AGameModule : public IGameModule {

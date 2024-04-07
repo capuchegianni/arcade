@@ -91,10 +91,7 @@ set(nibbler_src
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
     src/Entities/Entities.cpp
-    src/Entities/Player/Player.cpp
-    src/Entities/Player/PlayerHead/PlayerHead.cpp
-    src/Entities/Player/PlayerBody/PlayerBody.cpp
-    src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Player.cpp
 )
 
 set(snake_src
@@ -105,10 +102,7 @@ set(snake_src
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
     src/Entities/Entities.cpp
-    src/Entities/Player/Player.cpp
-    src/Entities/Player/PlayerHead/PlayerHead.cpp
-    src/Entities/Player/PlayerBody/PlayerBody.cpp
-    src/Entities/Player/PlayerTail/PlayerTail.cpp
+    src/Entities/Player.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})
