@@ -12,7 +12,6 @@ AGameModule::AGameModule(const std::string gameName) : _gameName(gameName)
     this->_score = 0;
     this->_gameStatus = GameStatus::RUNNING;
     this->_playerName = "";
-    this->_player = Player();
 }
 
 int AGameModule::getScore() const

@@ -14,6 +14,7 @@ extern "C" std::shared_ptr<AGameModule> createGame()
 
 Snake::Snake() : AGameModule("Snake")
 {
+    this->_player = Player();
     this->_mapNb = 1;
     this->_direction = STOP;
     this->_lastDirection = EAST;
@@ -343,4 +344,9 @@ void Snake::speedBoost(Input key)
         this->_chronoRefresh = this->_lastChronoRefresh;
         this->_speedBoost = false;
     }
+}
+
+void Snake::updateGame()
+{
+    return;
 }

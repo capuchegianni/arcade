@@ -28,9 +28,7 @@ set(core_src
     src/Core/CoreModule.cpp
     src/Core/LdlWrapper.cpp
     src/Entities/AEntities.cpp
-    src/Entities/Button/Button.cpp
-    src/Entities/Empty/Empty.cpp
-    src/Entities/Background/Background.cpp
+    src/Entities/Entities.cpp
     src/Core/Menu.cpp
 )
 
@@ -92,13 +90,11 @@ set(nibbler_src
     src/Games/Nibbler/Nibbler.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
-    src/Entities/Empty/Empty.cpp
-    src/Entities/Fruit/Fruit.cpp
+    src/Entities/Entities.cpp
     src/Entities/Player/Player.cpp
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
-    src/Entities/Wall/Wall.cpp
 )
 
 set(snake_src
@@ -108,13 +104,11 @@ set(snake_src
     src/Games/Snake/Snake.cpp
     src/Games/AGameModule.cpp
     src/Entities/AEntities.cpp
-    src/Entities/Empty/Empty.cpp
-    src/Entities/Fruit/Fruit.cpp
+    src/Entities/Entities.cpp
     src/Entities/Player/Player.cpp
     src/Entities/Player/PlayerHead/PlayerHead.cpp
     src/Entities/Player/PlayerBody/PlayerBody.cpp
     src/Entities/Player/PlayerTail/PlayerTail.cpp
-    src/Entities/Wall/Wall.cpp
 )
 
 add_library(arcade_nibbler SHARED ${nibbler_src})

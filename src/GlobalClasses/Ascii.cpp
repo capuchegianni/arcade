@@ -19,11 +19,3 @@ char ASCII::getAscii() const {
 Color ASCII::getColor() const {
     return this->_color;
 }
-
-void ASCII::setAscii(char ascii) {
-    this->_ascii = ascii;
-}
-
-void ASCII::setColor(Color color) {
-    this->_color = color;
-}

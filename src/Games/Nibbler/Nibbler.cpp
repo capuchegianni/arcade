@@ -14,6 +14,7 @@ extern "C" std::shared_ptr<AGameModule> createGame()
 
 Nibbler::Nibbler() : AGameModule("Nibbler")
 {
+    this->_player = Player();
     this->_mapNb = 1;
     this->_direction = STOP;
     this->_lastDirection = EAST;
@@ -432,4 +433,9 @@ void Nibbler::speedBoost(Input key)
         this->_chronoRefresh = this->_lastChronoRefresh;
         this->_speedBoost = false;
     }
+}
+
+void Nibbler::updateGame()
+{
+    return;
 }

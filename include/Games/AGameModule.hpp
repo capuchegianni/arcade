@@ -10,7 +10,6 @@
 
 #include "../Libs.hpp"
 #include "IGameModule.hpp"
-#include "../Entities/Player/Player.hpp"
 
 class AGameModule : public IGameModule {
     public:
@@ -36,6 +35,7 @@ class AGameModule : public IGameModule {
         std::string getGameName() const;
         void setGameName(std::string name);
         virtual std::vector<std::shared_ptr<AEntities>> initAllEntities() const = 0;
+        virtual void updateGame() = 0;
 
         // inputs
         virtual void catchInput(Input key = NONE) = 0;
@@ -47,15 +47,6 @@ class AGameModule : public IGameModule {
         std::string _gameName = "";
         int _score = 0;
         std::map<std::string, int> _highScores = {};
-        Direction _direction = Direction::EAST;
-        Direction _lastDirection = Direction::EAST;
-        Player _player;
-        int _mapNb = 1;
-        int _fruitNb = 0;
-        bool _loadingMap = true;
-        unsigned int _chronoRefresh = 200;
-        unsigned int _lastChronoRefresh = 200;
-        bool _speedBoost = false;
 };
 
 #endif /* !AGAMES_HPP_ */

@@ -14,10 +14,8 @@ class ASCII {
         ASCII() = default;
         ASCII(char ascii, Color color);
 
-        char getAscii() const;
         Color getColor() const;
-        void setAscii(char ascii);
-        void setColor(Color color);
+        char getAscii() const;
 
     private:
         char _ascii = 0;

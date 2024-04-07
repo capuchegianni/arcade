@@ -6,9 +6,6 @@
 */
 
 #include "../../include/Core/Menu.hpp"
-#include "../../include/Entities/Button/Button.hpp"
-#include "../../include/Entities/Empty/Empty.hpp"
-#include "../../include/Entities/Background/Background.hpp"
 
 Menu::Menu() {
     this->_map.resize(4);

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../Libs.hpp"
+#include "../Entities/Entities.hpp"
 
 class Menu {
     public:
