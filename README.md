@@ -23,7 +23,7 @@ We decided to work along with the following groups:
   - [sacha.polerowicz@epitech.eu](https://github.com/Sachaplr)
   - [jules.weishaus@epitech.eu](https://github.com/ImPoulpitos)
   - [isaac.levy-piquet@epitech.eu](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
-  - [hugos.denis@epitech.eu]()
+  - [hugo.denis@epitech.eu]()
   - [robin.caboche@epitech.eu]()
   - [nicolas.nguyen@epitech.eu]()
 
@@ -40,9 +40,12 @@ To run the project you will need to have at least the following libraries instal
 
 ### Installing
 
-First, you need to clone the repository:
+First, you can fork the project on github using this small button
+![fork_button](./doc/image.png)
+
+and then clone the project:
 ```bash
-git clone git@github.com:EpitechPromo2027/B-OOP-400-LIL-4-1-arcade-elouan.rigomont.git
+git clone git@github.com:repository_name.git
 ```
 
 Next, you can compile the project by running the following commands:
