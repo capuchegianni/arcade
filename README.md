@@ -41,6 +41,7 @@ To run the project you will need to have at least the following libraries instal
 ### Installing
 
 First, you can fork the project on github using this small button
+
 ![fork_button](./doc/image.png)
 
 and then clone the project:
