@@ -97,11 +97,11 @@ Input NcursesGraphicalModule::parseKeyboard() {
 }
 
 static void displayText(const std::string &text, const std::pair<int, int> &pos, const Color& color) {
-    std::pair<int, int> newPos = std::make_pair(static_cast<int>(pos.second / 10), static_cast<int>(pos.first / 10));
+    std::pair<int, int> newPos = std::make_pair(static_cast<int>(pos.second / 9), static_cast<int>(pos.first / 9));
 
     if (color.r > 200 && color.g > 200 && color.b > 200) {
         if (text == "<")
-            NcursesWrapper::n_mvprintw(newPos.first, newPos.second + 5, text);
+            NcursesWrapper::n_mvprintw(newPos.first, newPos.second + 10, text);
         else
             NcursesWrapper::n_mvprintw(newPos.first, newPos.second, text);
         return;

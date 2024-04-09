@@ -112,6 +112,7 @@ void CoreModule::startGame() {
                 if (this->_player == "")
                     this->_player = "Anonymous";
             }
+            this->getGameModule()->updateGame();
             this->getGraphicalModule()->showMap(this->getGameModule()->getMap());
             this->getGraphicalModule()->displayWindow();
             this->handleEvents(this->getGraphicalModule()->parseKeyboard());
@@ -209,8 +210,10 @@ void CoreModule::handleEvents(const Input& input) {
         break;
 
     case MENU:
-        updateHighScoreFile(this->_gameModule->getHighScore(), this->_gameModule->getGameName());
-        this->startMenu();
+        if (!_menuIsRunning) {
+            updateHighScoreFile(this->_gameModule->getHighScore(), this->_gameModule->getGameName());
+            this->startMenu();
+        }
         break;
 
     case RELOAD:
